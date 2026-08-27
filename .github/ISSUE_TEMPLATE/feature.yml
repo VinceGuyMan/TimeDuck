@@ -1,0 +1,20 @@
+name: Feature
+description: A small change that still fits a desktop timer with a duck.
+title: "[feat] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: TimeDuck does not add AI, accounts, cloud sync, todos, calendars, or telemetry. See CONTRIBUTING.md.
+  - type: textarea
+    id: ask
+    attributes:
+      label: What do you want
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it belongs in a small local timer
+    validations:
+      required: true

@@ -1,0 +1,1 @@
+## What\n\n-\n\n## Why\n\n-\n\n## Tested\n\n- [ ] `./build.sh --test`\n- [ ] Timer / Pomodoro / Stopwatch still start, pause, and reset\n- [ ] Window hide keeps an active timer alive in the menu bar (if touched)\n\n## Out of scope check\n\nThis change does **not** add network, accounts, cloud, todos, or third-party packages.\n

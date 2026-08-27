@@ -1,0 +1,36 @@
+name: Bug
+description: Something in the shipping timer, duck, audio, or persistence is wrong.
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: File against the real app. Include a screenshot of the window when you can.
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Mode
+      options: [Timer, Pomodoro, Stopwatch, Mini HUD, Menu bar, Audio, Persistence, Other]
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: TimeDuck version
+      placeholder: "1.0.0"
+    validations:
+      required: true
+  - type: input
+    id: macos
+    attributes:
+      label: macOS version
+      placeholder: "15.x / 14.x / 13.x / 12.x"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps
+      placeholder: What you did, what you expected, what happened.
+    validations:
+      required: true
