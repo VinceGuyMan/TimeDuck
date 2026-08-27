@@ -5,13 +5,13 @@ All stills and the window GIF are captured from the shipping TimeDuck v1.0.0 bui
 | File | Source |
 | --- | --- |
 | `screenshot-timer.png` | Full window, Timer mode, 01:00, Sleepy Cap |
-| `screenshot-timer-classic.png` | Full window, Classic Duck |
 | `screenshot-target-reached.png` | Timer complete overlay |
 | `screenshot-mini-hud.png` | Compact HUD, stopwatch running |
 | `demo-timer.gif` | Live window recording |
-| `app-icon.png` / `app-icon-128.png` / `app-icon-512.png` | Production icon |
-| `costume-lineup.png` | Official mascot pack lineup |
-| `mascot-poster.png` | Official mascot spec sheet |
-| `social-preview.png` | 1280x640 composite for the repo social image |
+| `app-icon.png` | Production icon (1024x1024) |
+| `mascot-showcase.png` | Official mascot specification & personality showcase |
+| `costume-showcase.png` | Official costume lineup (7 hats) |
+| `theme-showcase.png` | Official theme palettes (5 CRT themes) |
+| `social-preview.png` | Canonical composite for repository social image |
 
 After cloning, set Settings → General → Social preview to `docs/github/social-preview.png`.

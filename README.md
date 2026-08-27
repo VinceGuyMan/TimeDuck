@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/github/app-icon-128.png" width="96" height="96" alt="TimeDuck app icon">
+  <img src="docs/github/app-icon.png" width="96" height="96" alt="TimeDuck app icon">
 </p>
 
 <h1 align="center">TimeDuck</h1>
@@ -57,17 +57,23 @@ When a countdown lands:
 
 ## Duck, costumes, themes
 
-Seven hats (`H`) and five CRT palettes (`T`), drawn as nearest-neighbor pixels — the same sprites that run in the window.
+The duck is an animated desktop companion with real personality. Pet the duck, drop breadcrumbs with <kbd>B</kbd>, or trigger hops and quacks with <kbd>Q</kbd>. Behavior shifts dynamically with the clock: **Relaxed**, **Mission**, **Focus**, **Suspicious**, **Urgency**, **Victory**, **Break**, and **Sleepy**.
 
 <p align="center">
-  <img src="docs/github/costume-lineup.png" alt="Official TimeDuck costume lineup">
+  <img src="docs/github/mascot-showcase.png" alt="TimeDuck mascot specification and personality showcase">
+</p>
+
+Seven hats (<kbd>H</kbd>) and five CRT palettes (<kbd>T</kbd>), drawn as nearest-neighbor pixels — the exact same sprites rendered in the window.
+
+<p align="center">
+  <img src="docs/github/costume-showcase.png" alt="Official TimeDuck costume lineup">
 </p>
 
 <p align="center">
-  <img src="docs/github/mascot-poster.png" alt="TimeDuck mascot specification poster">
+  <img src="docs/github/theme-showcase.png" alt="Official TimeDuck CRT theme palettes">
 </p>
 
-| Costumes | Themes |
+| Costumes (<kbd>H</kbd>) | Themes (<kbd>T</kbd>) |
 | --- | --- |
 | Classic Duck | Arcade Neon |
 | Wizard Hat | Game Boy DMG |
@@ -76,8 +82,6 @@ Seven hats (`H`) and five CRT palettes (`T`), drawn as nearest-neighbor pixels �
 | Barista | Duck Pond |
 | Sleepy Cap | |
 | Royal Crown | |
-
-Pet the duck. Drop breadcrumbs with `B`. Hop/quack with `Q`. Behavior shifts with the clock: Relaxed, Mission, Focus, Suspicious, Urgency, Victory, Break, Sleepy.
 
 ---
 
