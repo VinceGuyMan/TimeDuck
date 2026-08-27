@@ -12,15 +12,16 @@ TimeDuck is designed to be a small, charming, native macOS timer utility and des
 - Zero external dependencies.
 - 100% local, offline, and private.
 
-### What We Do NOT Add (Out of Scope):
+### Architectural Non-Goals & Strict Out-of-Scope Items:
 - AI or LLM integrations
-- User accounts or authentication
-- Cloud synchronization
-- Task managers, todo lists, or project boards
-- Calendar integrations
-- Productivity scoring, gamification, or achievements
-- Telemetry, analytics, or background networking
-- External libraries, frameworks, or package bloat
+- User accounts, registration, or authentication
+- Cloud synchronization or remote databases
+- Heavy task managers, complex project boards, or issue trackers
+- Social feeds, leaderboards, or manipulative gamification
+- Telemetry, analytics, tracking, or background networking
+- Third-party binary frameworks, package bloat, or Electron wrappers
+
+Core additions must preserve TimeDuck's lightweight footprint (<25MB RAM, ~0% idle CPU), instant launch, and 100% offline privacy. Future major capabilities (such as optional clock-replacement modes) must strictly retain the app's handcrafted pixel-art identity and zero-dependency architecture.
 
 ## Development & Building
 
