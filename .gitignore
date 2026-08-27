@@ -1,0 +1,39 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Build & Release Artifacts
+build/
+dist/
+bin/
+*.dSYM/
+*.app/
+*.dmg
+*.zip
+
+# Swift & SwiftPM
+.build/
+Packages/
+*.swiftmodule
+*.swiftdoc
+*.swiftinterface
+
+# Xcode
+DerivedData/
+*.xcuserdatad/
+*.xcscmblueprint
+xcuserdata/
+*.xccheckout
+*.moved-aside
+
+# Temporary & Editor
+*.swp
+*.swo
+*.tmp
+*~
+.idea/
+.vscode/
