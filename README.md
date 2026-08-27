@@ -57,6 +57,10 @@ When a countdown lands:
 
 ## Duck, costumes, themes
 
+<p align="center">
+  <img src="docs/github/animations/anim_blink_cycle.gif" width="64" height="64" alt="TimeDuck idle blink animation">
+</p>
+
 The duck is an animated desktop companion with real personality. Pet the duck, drop breadcrumbs with <kbd>B</kbd>, or trigger hops and quacks with <kbd>Q</kbd>. Behavior shifts dynamically with the clock: **Relaxed**, **Mission**, **Focus**, **Suspicious**, **Urgency**, **Victory**, **Break**, and **Sleepy**.
 
 <p align="center">
@@ -151,6 +155,10 @@ Principles worth keeping:
 
 ## Privacy
 
+<p align="center">
+  <img src="docs/github/animations/anim_tactical_scan.gif" width="64" height="64" alt="TimeDuck tactical perimeter scan">
+</p>
+
 TimeDuck is a local utility.
 
 - No sockets, no analytics, no crash reporter
@@ -164,6 +172,10 @@ TimeDuck is a local utility.
 This is a timer with a duck, not a productivity suite. Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a PR. Out of scope: AI, accounts, sync, todos, calendars, gamification, telemetry, package bloat.
 
 ---
+
+<p align="center">
+  <img src="docs/github/animations/anim_waddle_stride.gif" width="64" height="64" alt="TimeDuck waddling stride">
+</p>
 
 ## License
 
