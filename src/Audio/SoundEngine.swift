@@ -281,16 +281,77 @@ final class SoundEngine {
 
     // MARK: - Theme Music System
 
-    private func resolveThemeURL() -> URL? {
-        // 1. Canonical App Bundle Location: Contents/Resources/Audio/TimeDuckTheme.m4a
-        if let url = Bundle.main.url(forResource: "TimeDuckTheme", withExtension: "m4a", subdirectory: "Audio") {
+    enum SoundtrackTrack: Int, Codable, CaseIterable {
+        case alpha = 0 // "POND GROOVE" (TimeDuckTheme.m4a)
+        case beta = 1  // "NIGHT FOCUS" (TimeDuckNightTheme.m4a - placeholder slot)
+
+        var title: String {
+            switch self {
+            case .alpha: return "POND GROOVE (THEME ALPHA)"
+            case .beta:  return "NIGHT FOCUS (THEME BETA)"
+            }
+        }
+
+        var filename: String {
+            switch self {
+            case .alpha: return "TimeDuckTheme"
+            case .beta:  return "TimeDuckNightTheme"
+            }
+        }
+    }
+
+    var currentTrack: SoundtrackTrack {
+        get {
+            let raw = UserDefaults.standard.object(forKey: "td.soundtrack") as? Int ?? 0
+            return SoundtrackTrack(rawValue: raw) ?? .alpha
+        }
+        set {
+            UserDefaults.standard.set(newValue.rawValue, forKey: "td.soundtrack")
+            if musicPlayer != nil {
+                let wasPlaying = musicPlayer?.isPlaying ?? false
+                musicPlayer?.stop()
+                musicPlayer = nil
+                if wasPlaying && musicEnabled {
+                    startMusic()
+                }
+            }
+        }
+    }
+
+    func selectTrack(_ track: SoundtrackTrack) {
+        currentTrack = track
+    }
+
+    func cycleTrack() -> SoundtrackTrack {
+        let all = SoundtrackTrack.allCases
+        let nextIdx = (currentTrack.rawValue + 1) % all.count
+        let next = all[nextIdx]
+        selectTrack(next)
+        return next
+    }
+
+    func resolveThemeURL(for track: SoundtrackTrack? = nil) -> URL? {
+        let targetTrack = track ?? currentTrack
+        let name = targetTrack.filename
+
+        // 1. Canonical App Bundle Location: Contents/Resources/Audio/<name>.m4a
+        if let url = Bundle.main.url(forResource: name, withExtension: "m4a", subdirectory: "Audio") {
             return url
         }
         // 2. Development / CLI / Test fallback
-        let localPath = "Resources/Audio/TimeDuckTheme.m4a"
+        let localPath = "Resources/Audio/\(name).m4a"
         if FileManager.default.fileExists(atPath: localPath) {
             return URL(fileURLWithPath: localPath)
         }
+
+        // Graceful fallback: If Theme Beta is selected but its audio asset is pending release, fallback to Theme Alpha
+        if targetTrack != .alpha {
+            #if DEBUG
+            print("[TimeDuck SoundEngine] Soundtrack \(targetTrack.title) asset '\(name).m4a' not found. Gracefully falling back to Theme Alpha.")
+            #endif
+            return resolveThemeURL(for: .alpha)
+        }
+
         return nil
     }
 

@@ -401,6 +401,10 @@ final class TimeDuckView: NSObject {
     }
 
     func spawnConfetti(_ n: Int) {
+        if NSWorkspace.shared.accessibilityDisplayShouldReduceMotion {
+            // Respect system reduced motion: skip high-velocity particles
+            return
+        }
         var rng = SystemRandomNumberGenerator()
         let ox = Double(duckX + 6), oy = Double(duckGroundY - 10)
         for _ in 0..<n {
@@ -541,7 +545,7 @@ final class TimeDuckView: NSObject {
                 spawnConfetti(75)
                 flapUntil = now.addingTimeInterval(1.2)
                 confettiPulse = now
-                let quip = brain.onTimerComplete(mode: .timer, isWorkPomodoro: false)
+                let quip = brain.onTimerComplete(mode: .timer, isWorkPomodoro: false, hat: currentHat)
                 speak(quip)
             }
             didRecordCompletion = true
@@ -559,7 +563,7 @@ final class TimeDuckView: NSObject {
                 spawnConfetti(75)
                 flapUntil = now.addingTimeInterval(1.2)
                 confettiPulse = now
-                let quip = brain.onTimerComplete(mode: .pomodoro, isWorkPomodoro: pomo.phase == .work)
+                let quip = brain.onTimerComplete(mode: .pomodoro, isWorkPomodoro: pomo.phase == .work, hat: currentHat)
                 speak(quip)
             }
             didRecordCompletion = true
@@ -746,8 +750,8 @@ final class TimeDuckView: NSObject {
         let dx = m.duckSpriteX
         let dy = m.duckSpriteY
         let rows = miniDuckRows(t, running: running, now: now)
-        canvas.drawSprite(rows, x: dx, y: dy, map: getDuckColorMap(), flip: false)
-        drawDuckHat(currentHat, duckX: dx, duckY: dy, flip: false)
+        canvas.drawSprite(rows, x: dx, y: dy, map: getDuckColorMap(rareEvent: brain.activeRareEvent), flip: false)
+        drawDuckHat(currentHat, duckX: dx, duckY: dy, duckRows: rows, t: t, isRunning: running, isCelebrating: isFinished && !alarmDismissed, flip: false)
 
         // Bottom Progress Bar
         drawMiniProgressBar(t, x: m.progressBarRect.x, y: m.progressBarRect.y, w: m.progressBarRect.w)
@@ -1208,10 +1212,19 @@ final class TimeDuckView: NSObject {
         if now < hopUntil && !running && !celebrate { dy -= 3 }
 
         // Draw Base Duck
-        canvas.drawSprite(rows, x: duckX, y: dy, map: getDuckColorMap(), flip: flip)
+        canvas.drawSprite(rows, x: duckX, y: dy, map: getDuckColorMap(rareEvent: brain.activeRareEvent), flip: flip)
 
-        // Draw Hat Overlay
-        drawDuckHat(currentHat, duckX: duckX, duckY: dy, flip: flip)
+        // Draw Hat Overlay via Living Wardrobe Attachment Engine
+        drawDuckHat(
+            currentHat,
+            duckX: duckX,
+            duckY: dy,
+            duckRows: rows,
+            t: t,
+            isRunning: running,
+            isCelebrating: celebrate,
+            flip: flip
+        )
 
         // Draw Speech Bubble if active
         if let msg = speechText, now < speechUntil {
@@ -1219,21 +1232,30 @@ final class TimeDuckView: NSObject {
         }
     }
 
-    private func drawDuckHat(_ hat: DuckHat, duckX: Int, duckY: Int, flip: Bool) {
+    private func drawDuckHat(
+        _ hat: DuckHat,
+        duckX: Int,
+        duckY: Int,
+        duckRows: [String],
+        t: Double,
+        isRunning: Bool,
+        isCelebrating: Bool,
+        flip: Bool
+    ) {
         guard hat != .none else { return }
-        let rows: [String]
-        switch hat {
-        case .wizard:    rows = HAT_WIZARD
-        case .detective: rows = HAT_DETECTIVE
-        case .cyber:     rows = HAT_CYBER
-        case .barista:   rows = HAT_BARISTA
-        case .sleepcap:  rows = HAT_SLEEPCAP
-        case .crown:     rows = HAT_CROWN
-        case .none:      return
-        }
-        var hatY = duckY - 4
-        if brain.currentPose == .sitting { hatY += 1 }
-        canvas.drawSprite(rows, x: duckX, y: hatY, map: getDuckColorMap(), flip: flip)
+        let anchor = DuckAnchorResolver.resolve(rows: duckRows)
+        let (hatRows, xOff, yOff, hatFlip) = AccessoryAttachment.getSprite(
+            for: hat,
+            anchor: anchor,
+            t: t,
+            isRunning: isRunning,
+            isCelebrating: isCelebrating
+        )
+        guard !hatRows.isEmpty else { return }
+        let finalFlip = flip ? !hatFlip : hatFlip
+        let drawX = duckX + (flip ? -xOff : xOff)
+        let drawY = duckY + yOff
+        canvas.drawSprite(hatRows, x: drawX, y: drawY, map: getDuckColorMap(rareEvent: brain.activeRareEvent), flip: finalFlip)
     }
 
     // MARK: - Titlebar Glyphs

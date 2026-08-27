@@ -23,6 +23,17 @@ enum DuckPose: Equatable {
     case lookingBack
     case grooving
     case shuffling
+    case featherRuffle
+    case curiousPeek
+}
+
+// MARK: - Rare Secret Event Types (Wave 2)
+
+enum RareSecretEventType: String, CaseIterable, Equatable {
+    case goldenDuck
+    case ghostGlitch
+    case ufoBeam
+    case victoryShades
 }
 
 // MARK: - Behavior Phases
@@ -79,14 +90,19 @@ struct DuckPhrase {
             "AT YOUR SERVICE.",
             "OPERATIONAL DUCK.",
             "ALL QUIET.",
-            "FEATHERS ALIGNED."
+            "FEATHERS ALIGNED.",
+            "LATE NIGHT FOCUS.",
+            "BURNING POND OIL.",
+            "FEATHER CALIBRATION OK.",
+            "CHRONO-POND OPERATIONAL."
         ],
         "timerReady": [
             "PRESS SPACE, BOSS.",
             "TIMER LOCKED IN.",
             "READY WHEN YOU ARE.",
             "COUNTDOWN ARMED.",
-            "STANDING BY."
+            "STANDING BY.",
+            "AWAITING LAUNCH."
         ],
         "timerStart": [
             "QUACK TO WORK.",
@@ -97,14 +113,19 @@ struct DuckPhrase {
             "ENGAGING TIMER.",
             "NO DISTRACTIONS.",
             "CHRONO-QUACK!",
-            "COUNTDOWN COMMENCED."
+            "COUNTDOWN COMMENCED.",
+            "TACTICAL COUNTDOWN.",
+            "MISSION CLOCK COMMENCED.",
+            "TARGET SIGHTED."
         ],
         "timerEarly": [
             "PACING WELL.",
             "IN THE ZONE.",
             "STEADY FLIGHT.",
             "MOMENTUM BUILDING.",
-            "LOOK AT YOU GO."
+            "LOOK AT YOU GO.",
+            "AERODYNAMIC GLIDE.",
+            "RADAR CLEAR."
         ],
         "timerHalfway": [
             "HALFWAY THERE.",
@@ -112,14 +133,18 @@ struct DuckPhrase {
             "HOLD THE LINE.",
             "STILL WATCHING.",
             "SMOOTH SAILING.",
-            "HALFWAY POINT."
+            "HALFWAY POINT.",
+            "CROSSING THE MIDPOINT.",
+            "HALF THE POND CROSSED."
         ],
         "timerAlmost": [
             "FINAL STRETCH.",
             "ALMOST HOME.",
             "FINISH STRONG.",
             "DON'T STOP NOW.",
-            "BRING IT HOME."
+            "BRING IT HOME.",
+            "TERMINAL APPROACH.",
+            "PREPARING VICTORY QUACK."
         ],
         "timerFinal": [
             "FINAL SECONDS!",
@@ -134,7 +159,8 @@ struct DuckPhrase {
             "CLOCK SUSPENDED.",
             "STANDING BY.",
             "RESTING WINGS.",
-            "COFFEE TIME?"
+            "COFFEE TIME?",
+            "TEMPORARY CEASEFIRE."
         ],
         "timerResumed": [
             "AND WE'RE BACK.",
@@ -151,7 +177,10 @@ struct DuckPhrase {
             "TARGET REACHED.",
             "VICTORY QUACK!",
             "YOU DID IT.",
-            "FEATHERS UNRUFFLED."
+            "FEATHERS UNRUFFLED.",
+            "FLAWLESS EXECUTION.",
+            "FEATHERS OF GLORY.",
+            "PRECISION MISSION CLEAR."
         ],
         "stopwatchRunning": [
             "CLOCK TICKING.",
@@ -179,7 +208,9 @@ struct DuckPhrase {
             "NO SOCIAL MEDIA.",
             "HEAD DOWN.",
             "DEEP WORK TIME.",
-            "QUACK TO WORK."
+            "QUACK TO WORK.",
+            "DEEP POND FOCUS.",
+            "CONCENTRATION LOCK."
         ],
         "pomoBreak": [
             "TACTICAL BREAK.",
@@ -188,14 +219,18 @@ struct DuckPhrase {
             "BREAD BREAK.",
             "RECHARGE BATTERIES.",
             "SIP WATER.",
-            "WELL EARNED."
+            "WELL EARNED.",
+            "HYDRATION PROTOCOL.",
+            "POND STROLL TIME."
         ],
         "pomoStreak": [
             "STREAK LOOKING GOOD.",
             "PRODUCTIVITY BEAST.",
             "UNSTOPPABLE FLOCK.",
             "ANOTHER ONE DOWN.",
-            "POMODORO MASTER."
+            "POMODORO MASTER.",
+            "LEGENDARY DUCK STREAK.",
+            "UNBREAKABLE FLOCK."
         ],
         "wakeUp": [
             "WAKING UP.",
@@ -218,7 +253,8 @@ struct DuckPhrase {
             "BREAD AT 240°.",
             "CHRONO-SURGE NOMINAL.",
             "TOP SECRET QUACK.",
-            "TACTICAL WADDLE."
+            "TACTICAL WADDLE.",
+            "COSMIC POND ALIGNED."
         ]
     ]
 
@@ -265,6 +301,14 @@ struct DuckPhrase {
             case .barista: pool = ["DOUBLE ESPRESSO.", "FRESH ROAST.", "CAFFEINE APPLIED."]
             case .sleepcap: pool = ["NIGHT OPS.", "COZY DUTY.", "BEDTIME TIMING."]
             case .crown: pool = ["ROYAL QUACK.", "KING OF THE POND.", "BOW TO THE DUCK."]
+            case .bandanaMidnight: pool = ["TACTICAL OPS.", "STEALTH PROTOCOL.", "SHADOW DUCK."]
+            case .bandanaCrimson: pool = ["RONIN SPIRIT.", "CRIMSON RESOLVE.", "BLADE OF FOCUS."]
+            case .bandanaForestCamo: pool = ["CANOPY CAMOUFLAGE.", "WOODLAND PATROL.", "UNDETECTED."]
+            case .bandanaDesertCamo: pool = ["DESERT DUCK.", "HEATWAVE OPS.", "SANDSTORM FOCUS."]
+            case .pumpkin: pool = ["SPOOKY QUACK.", "PUMPKIN POWER.", "GOURD VIBES."]
+            case .witch: pool = ["BREWING FOCUS.", "COVEN OF QUACKS.", "SPELLCASTING."]
+            case .winterBeanie: pool = ["COZY KNIT.", "SNOW POND READY.", "WARM FEATHERS."]
+            case .festiveSanta: pool = ["HO HO QUACK!", "FESTIVE CHEER.", "HOLIDAY SPIRIT."]
             }
         case .themeChange(let theme):
             switch theme {
@@ -273,6 +317,9 @@ struct DuckPhrase {
             case .amber: pool = ["WARM AMBER GLOW.", "AMBER RETRO.", "VINTAGE CRT."]
             case .synthwave: pool = ["VAPORWAVE POND.", "RETRO GLOW.", "SYNTHWAVE DUCK."]
             case .pond: pool = ["NATURAL HABITAT.", "HOME SWEET POND.", "FRESH WATER."]
+            case .terminal: pool = ["PHOSPHOR MATRIX.", "VT220 GREEN.", "MAINFRAME DUCK."]
+            case .paperwhite: pool = ["CRISP E-INK.", "PAPER WHITE FOCUS.", "MINIMALIST POND."]
+            case .electricPond: pool = ["HIGH VOLTAGE POND.", "ELECTRIC NIGHT.", "NEON SHOCKWAVE."]
             }
         }
 
@@ -307,6 +354,19 @@ final class DuckBrain {
     // Rare event tracking
     private var rareEventUntil = Date.distantPast
     private var nextRareEventCheck = Date().addingTimeInterval(Double.random(in: 45...120))
+    private(set) var activeRareEvent: RareSecretEventType? = nil
+    private var forcedRareEvent: RareSecretEventType? = nil
+
+    /// Deterministic test seam for testing rare secret events.
+    func forceRareEvent(_ event: RareSecretEventType?) {
+        forcedRareEvent = event
+    }
+
+    func clearRareEvent() {
+        activeRareEvent = nil
+        forcedRareEvent = nil
+        rareEventUntil = .distantPast
+    }
 
     /// Returns true if an active non-standard idle animation is currently playing
     var hasActivePose: Bool {
@@ -389,12 +449,17 @@ final class DuckBrain {
             performRandomIdleAction(gridW: gridW, duckCurX: duckCurX, onWanderTarget: onWanderTarget, onSpeak: onSpeak)
         }
 
-        // Rare Idle Event Roll (occasional delight)
+        // Rare Idle Event Roll (occasional delight, rate-limited by elapsed time)
         if currentPhase == .relaxed && now > nextRareEventCheck && now >= poseUntil {
             nextRareEventCheck = now.addingTimeInterval(Double.random(in: 90...240))
-            if Int.random(in: 1...10) == 1 { // 10% chance when window fires
-                triggerRareEvent(onSpeak: onSpeak)
+            if forcedRareEvent != nil || Int.random(in: 1...10) == 1 { // 10% chance when window fires
+                triggerRareEvent(type: forcedRareEvent, onSpeak: onSpeak)
             }
+        }
+
+        // Clear expired rare events
+        if now >= rareEventUntil && activeRareEvent != nil {
+            activeRareEvent = nil
         }
 
         // Reset pose if time expired
@@ -410,19 +475,25 @@ final class DuckBrain {
         onSpeak: (String, Double) -> Void
     ) {
         let roll = Int.random(in: 0...100)
-        if roll < 22 {
+        if roll < 16 {
             // Preen wing feathers
             setPose(.preening, duration: 1.8)
-        } else if roll < 42 {
+        } else if roll < 30 {
+            // Feather ruffle / wing shake (Wave 1)
+            setPose(.featherRuffle, duration: 1.6)
+        } else if roll < 44 {
+            // Curious peek / inquisitive look (Wave 1)
+            setPose(.curiousPeek, duration: 2.0)
+        } else if roll < 58 {
             // Sit down cozy loaf
             setPose(.sitting, duration: 3.5)
-        } else if roll < 62 {
+        } else if roll < 72 {
             // Head tilt / look up at timer
             setPose(.headTilt, duration: 2.2)
-        } else if roll < 78 {
+        } else if roll < 84 {
             // Foot shuffle fidget
             setPose(.shuffling, duration: 1.4)
-        } else if roll < 90 {
+        } else if roll < 92 {
             // Suspicious side eye
             setPose(.sideEye, duration: 1.8)
         } else {
@@ -435,25 +506,24 @@ final class DuckBrain {
         }
     }
 
-    private func triggerRareEvent(onSpeak: (String, Double) -> Void) {
-        let roll = Int.random(in: 0...3)
-        switch roll {
-        case 0:
-            // Tactical perimeter scan
-            setPose(.tactical, duration: 2.4)
-            onSpeak("PERIMETER CLEAR.", 2.2)
-        case 1:
-            // Tiny groove bob
-            setPose(.grooving, duration: 2.5)
-            onSpeak("♪ CHRONO-GROOVE ♪", 2.2)
-        case 2:
-            // Looking back
-            setPose(.lookingBack, duration: 2.0)
-            onSpeak(DuckPhrase.get(for: .rare), 2.4)
-        default:
-            // Direct stare with quip
-            setPose(.sideEye, duration: 2.2)
-            onSpeak(DuckPhrase.get(for: .rare), 2.4)
+    func triggerRareEvent(type: RareSecretEventType? = nil, onSpeak: (String, Double) -> Void) {
+        let event = type ?? forcedRareEvent ?? RareSecretEventType.allCases.randomElement() ?? .goldenDuck
+        activeRareEvent = event
+        rareEventUntil = Date().addingTimeInterval(3.0)
+
+        switch event {
+        case .goldenDuck:
+            setPose(.celebrating, duration: 3.0)
+            onSpeak("✨ GOLDEN DUCK ASCENSION ✨", 2.8)
+        case .ghostGlitch:
+            setPose(.sideEye, duration: 2.6)
+            onSpeak("░▒▓ PHANTOM QUACK ▓▒░", 2.6)
+        case .ufoBeam:
+            setPose(.headTilt, duration: 2.8)
+            onSpeak("🛸 POND CONTACT: CLASS 4 🛸", 2.8)
+        case .victoryShades:
+            setPose(.grooving, duration: 3.0)
+            onSpeak("😎 ULTRA-SHADES ENGAGED 😎", 2.8)
         }
     }
 
@@ -488,7 +558,17 @@ final class DuckBrain {
         return DuckPhrase.get(for: cat)
     }
 
-    func onTimerPause(mode: Mode) -> String {
+    func onTimerPause(mode: Mode, hat: DuckHat = .none) -> String {
+        if let action = CostumeBehavior.onTimerPause(hat: hat) {
+            switch action {
+            case .customPose(let pose, let dur, let phrase):
+                setPose(pose, duration: dur)
+                if let p = phrase { return p }
+            case .customPhrase(let p):
+                setPose(.sideEye, duration: 1.4)
+                return p
+            }
+        }
         setPose(.sideEye, duration: 1.4)
         return DuckPhrase.get(for: .timerPaused)
     }
@@ -498,12 +578,37 @@ final class DuckBrain {
         return DuckPhrase.get(for: .timerResumed)
     }
 
-    func onTimerComplete(mode: Mode, isWorkPomodoro: Bool) -> String {
+    func onTimerComplete(mode: Mode, isWorkPomodoro: Bool, hat: DuckHat = .none) -> String {
+        if let action = CostumeBehavior.onTimerComplete(hat: hat) {
+            switch action {
+            case .customPose(let pose, let dur, let phrase):
+                setPose(pose, duration: dur)
+                if let p = phrase { return p }
+            case .customPhrase(let p):
+                setPose(.celebrating, duration: 3.0)
+                return p
+            }
+        }
         setPose(.celebrating, duration: 3.0)
         if mode == .pomodoro {
             return isWorkPomodoro ? DuckPhrase.get(for: .timerComplete) : DuckPhrase.get(for: .pomoBreak)
         }
         return DuckPhrase.get(for: .timerComplete)
+    }
+
+    func onBreakStart(hat: DuckHat = .none) -> String {
+        if let action = CostumeBehavior.onBreakStart(hat: hat) {
+            switch action {
+            case .customPose(let pose, let dur, let phrase):
+                setPose(pose, duration: dur)
+                if let p = phrase { return p }
+            case .customPhrase(let p):
+                setPose(.relaxing, duration: 3.0)
+                return p
+            }
+        }
+        setPose(.relaxing, duration: 3.0)
+        return DuckPhrase.get(for: .pomoBreak)
     }
 
     func onLap() -> String {
@@ -596,6 +701,10 @@ final class DuckBrain {
                 return Int(t * 5) % 2 == 0 ? DUCK_BOB : DUCK_BASE
             case .shuffling:
                 return Int(t * 6) % 2 == 0 ? DUCK_SHUFFLE_A : DUCK_SHUFFLE_B
+            case .featherRuffle:
+                return Int(t * 5) % 2 == 0 ? DUCK_RUFFLE_A : DUCK_RUFFLE_B
+            case .curiousPeek:
+                return Int(t * 4) % 2 == 0 ? DUCK_PEEK_A : DUCK_PEEK_B
             default:
                 break
             }

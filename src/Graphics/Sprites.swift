@@ -35,8 +35,8 @@ let FONT5: [Character: [UInt8]] = [
 ]
 
 // MARK: - Duck Sprites & Costume Map
-func getDuckColorMap() -> [Character: Color] {
-    [
+func getDuckColorMap(rareEvent: RareSecretEventType? = nil) -> [Character: Color] {
+    var map: [Character: Color] = [
         "y": Pal.duckBody, "d": Pal.duckShad, "o": Pal.duckBill,
         "k": Pal.duckEye,  "w": Pal.white,    "p": Pal.cheek,
         "b": Pal.cyan,     "v": Pal.violet,   "m": Pal.magenta,
@@ -44,6 +44,27 @@ func getDuckColorMap() -> [Character: Color] {
         "s": Pal.sweat,    "-": Pal.duckEye,  "^": Pal.duckEye,
         "z": Pal.cyan
     ]
+    if let rare = rareEvent {
+        switch rare {
+        case .goldenDuck:
+            map["y"] = rgb(255, 225, 60)
+            map["d"] = rgb(220, 160, 20)
+            map["w"] = rgb(255, 255, 200)
+            map["o"] = rgb(255, 140, 20)
+        case .ghostGlitch:
+            map["y"] = rgb(160, 235, 255)
+            map["d"] = rgb(90, 150, 220)
+            map["o"] = rgb(120, 210, 255)
+            map["p"] = rgb(200, 140, 255)
+        case .ufoBeam:
+            map["y"] = rgb(100, 255, 180)
+            map["d"] = rgb(40, 180, 110)
+        case .victoryShades:
+            map["k"] = Pal.cyan
+            map["w"] = Pal.cyan
+        }
+    }
+    return map
 }
 
 // ── Base Idle & Tail Wag Frames ──────────────────────────────────────────────
@@ -396,6 +417,60 @@ let DUCK_SHUFFLE_B: [String] = [
     "...oo...oo..."
 ]
 
+// Feather ruffle / wing shake frames (Wave 1)
+let DUCK_RUFFLE_A: [String] = [
+    "....yyyy.....",
+    "...yyyyyy....",
+    "...yyykwy....",
+    "..yyyyyyooo..",
+    "ddyyyyyyyoo..",
+    ".dddyyyyyy...",
+    "ddddyyyyyy...",
+    "..ddddyyyyy..",
+    "..ddyyyyyyy..",
+    "...oo..oo...."
+]
+
+let DUCK_RUFFLE_B: [String] = [
+    "....yyyy.....",
+    "...yyyyyy....",
+    "...yyykwy....",
+    "..yyyyyyooo..",
+    ".dyyyyyyyoo..",
+    "ddddyyyyyyy..",
+    ".dddyyyyyyy..",
+    ".ddddyyyyyy..",
+    "..ddyyyyyyy..",
+    "...oo..oo...."
+]
+
+// Curious head tilt / peek frames (Wave 1)
+let DUCK_PEEK_A: [String] = [
+    "....yyyyy....",
+    "...yyyyyyy...",
+    "...yyykwyy...",
+    "..yyyyyyyooo.",
+    ".dyyyyyyyoo..",
+    ".ddyyyyyyy...",
+    "dddyyyyyyy...",
+    ".ddddyyyyyy..",
+    "..ddyyyyyyy..",
+    "...oo..oo...."
+]
+
+let DUCK_PEEK_B: [String] = [
+    ".....yyyyy...",
+    "....yyyyyyy..",
+    "....yyykwyy..",
+    "...yyyyyyyooo",
+    "..dyyyyyyyoo.",
+    "..ddyyyyyyy..",
+    ".dddyyyyyyy..",
+    "..ddddyyyyy..",
+    "..ddyyyyyyy..",
+    "...oo..oo...."
+]
+
 // Deep cozy sleep
 let DUCK_SLEEP_DEEP: [String] = [
     ".............",
@@ -410,7 +485,7 @@ let DUCK_SLEEP_DEEP: [String] = [
     "..oooooooo..."
 ]
 
-// ── Hat Overlays ─────────────────────────────────────────────────────────────
+// ── Hat & Costume Overlays (Living Wardrobe) ─────────────────────────────────
 
 let HAT_WIZARD: [String] = [
     ".....v.......",
@@ -418,6 +493,19 @@ let HAT_WIZARD: [String] = [
     "...vvavv.....",
     "..vvvvvvv....",
     ".vvvvvvvvv...",
+    ".............",
+    ".............",
+    "............."
+]
+
+let HAT_WIZARD_ALT: [String] = [
+    "......v......",
+    "....vvv......",
+    "...vvavv.....",
+    "..vvvvvvv....",
+    ".vvvvvvvvv...",
+    ".............",
+    ".............",
     "............."
 ]
 
@@ -427,23 +515,29 @@ let HAT_DETECTIVE: [String] = [
     "...aaaaaa....",
     "..aaaaaaaa...",
     "aaaaaaaaaaaa.",
+    ".............",
+    ".............",
     "............."
 ]
 
 let HAT_CYBER: [String] = [
     ".............",
     ".............",
-    "....bbbbbb...",
-    "...bbbbbbbb..",
     ".............",
+    ".............",
+    ".............",
+    ".....bbbb....",
+    "....bbbbbb...",
     "............."
 ]
 
 let HAT_BARISTA: [String] = [
     ".............",
     "...wwwwww....",
-    "...wwwwww....",
+    "..wwwwwwww...",
     "..gggggggg...",
+    ".gggggggggg..",
+    ".............",
     ".............",
     "............."
 ]
@@ -454,6 +548,19 @@ let HAT_SLEEPCAP: [String] = [
     "..rrrrrrrr...",
     ".rrrrrrrrr...",
     "wwwwwwwwwww..",
+    ".............",
+    ".............",
+    "............."
+]
+
+let HAT_SLEEPCAP_ALT: [String] = [
+    "...rrrrrww...",
+    "..rrrrrrrw...",
+    ".rrrrrrrrr...",
+    ".rrrrrrrrr...",
+    "wwwwwwwwwww..",
+    ".............",
+    ".............",
     "............."
 ]
 
@@ -463,5 +570,155 @@ let HAT_CROWN: [String] = [
     "...aaaaa.....",
     "...aaaaa.....",
     "..rrrrrrr....",
+    ".............",
+    ".............",
     "............."
 ]
+
+// ── Tactical Bandana Collection (Wave 1 / Wave 4 Redesign) ───────────────────
+
+let HAT_BANDANA_MIDNIGHT: [String] = [
+    ".............",
+    ".............",
+    ".............",
+    ".............",
+    "...kd........",
+    ".kk.kddwddk..",
+    "kdd..........",
+    ".kk.........."
+]
+
+let HAT_BANDANA_MIDNIGHT_ALT: [String] = [
+    ".............",
+    ".............",
+    ".............",
+    ".............",
+    "...kd........",
+    "kdd.kddwddk..",
+    ".kk..........",
+    "..k.........."
+]
+
+let HAT_BANDANA_CRIMSON: [String] = [
+    ".............",
+    ".............",
+    ".............",
+    ".............",
+    "...kr........",
+    ".rk.rrrrwrrk.",
+    "krr..........",
+    ".rk.........."
+]
+
+let HAT_BANDANA_CRIMSON_ALT: [String] = [
+    ".............",
+    ".............",
+    ".............",
+    ".............",
+    "...kr........",
+    "krr.rrrrwrrk.",
+    ".rk..........",
+    "..r.........."
+]
+
+let HAT_BANDANA_FOREST: [String] = [
+    ".............",
+    ".............",
+    ".............",
+    ".............",
+    "...kg........",
+    ".gk.gdggdkg..",
+    "kgd..........",
+    ".gk.........."
+]
+
+let HAT_BANDANA_FOREST_ALT: [String] = [
+    ".............",
+    ".............",
+    ".............",
+    ".............",
+    "...kg........",
+    "kgd.gdggdkg..",
+    ".gk..........",
+    "..g.........."
+]
+
+let HAT_BANDANA_DESERT: [String] = [
+    ".............",
+    ".............",
+    ".............",
+    ".............",
+    "...ka........",
+    ".ak.adaddka..",
+    "kad..........",
+    ".ak.........."
+]
+
+let HAT_BANDANA_DESERT_ALT: [String] = [
+    ".............",
+    ".............",
+    ".............",
+    ".............",
+    "...ka........",
+    "kad.adaddka..",
+    ".ak..........",
+    "..a.........."
+]
+
+// ── Seasonal Costumes (Wave 3) ───────────────────────────────────────────────
+
+let HAT_PUMPKIN: [String] = [
+    ".....g.......",
+    "....aaaa.....",
+    "...aaooaa....",
+    "..aaooaoaa...",
+    "..aaaaaaaa...",
+    ".............",
+    ".............",
+    "............."
+]
+
+let HAT_WITCH: [String] = [
+    "......v......",
+    ".....vvv.....",
+    "....vvavv....",
+    "...vvvvvvv...",
+    ".vvvvvvvvvvv.",
+    ".............",
+    ".............",
+    "............."
+]
+
+let HAT_WINTER_BEANIE: [String] = [
+    ".....w.......",
+    "....bbb......",
+    "...bbbbbb....",
+    "..bbbbbbbb...",
+    ".wwwwwwwwww..",
+    ".............",
+    ".............",
+    "............."
+]
+
+let HAT_FESTIVE_SANTA: [String] = [
+    "....rrrrw....",
+    "...rrrrrrw...",
+    "..rrrrrrrr...",
+    ".rrrrrrrrr...",
+    "wwwwwwwwwww..",
+    ".............",
+    ".............",
+    "............."
+]
+
+let HAT_FESTIVE_SANTA_ALT: [String] = [
+    "...rrrrrw....",
+    "..rrrrrrrw...",
+    ".rrrrrrrrr...",
+    ".rrrrrrrrr...",
+    "wwwwwwwwwww..",
+    ".............",
+    ".............",
+    "............."
+]
+

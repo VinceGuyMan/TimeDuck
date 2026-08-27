@@ -42,4 +42,22 @@ final class PixelHostView: NSView {
             userInfo: nil
         ))
     }
+
+    // MARK: - Accessibility (VoiceOver & Assistive Tech)
+
+    override func isAccessibilityElement() -> Bool {
+        true
+    }
+
+    override func accessibilityRole() -> NSAccessibility.Role? {
+        .group
+    }
+
+    override func accessibilityLabel() -> String? {
+        "TimeDuck Desktop Companion and Precision Timer"
+    }
+
+    override func accessibilityHelp() -> String? {
+        "Space to start/pause. 1, 2, 3 to switch modes. H to cycle hats. T to cycle themes. Q to pet duck."
+    }
 }
