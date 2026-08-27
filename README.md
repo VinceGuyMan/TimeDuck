@@ -110,9 +110,23 @@ Seven hats (<kbd>H</kbd>) and five CRT palettes (<kbd>T</kbd>), drawn as nearest
 
 ---
 
-## Run it
+## Install & Run
 
-**Requirements:** macOS 12 Monterey or later. Prebuilt binary in this tree targets Apple Silicon; build from source on Intel.
+### Homebrew (Apple Silicon)
+
+```bash
+brew tap VinceGuyMan/tap
+brew install --cask timeduck
+```
+
+> **Gatekeeper note:** TimeDuck is ad-hoc signed while validating community demand. If macOS blocks first launch, click **Open Anyway** in *System Settings → Privacy & Security*, or run:
+> ```bash
+> xattr -d com.apple.quarantine /Applications/TimeDuck.app
+> ```
+
+### Build from source
+
+**Requirements:** macOS 12 Monterey or later.
 
 ```bash
 ./build.sh --app          # -> build/TimeDuck.app
@@ -120,8 +134,6 @@ Seven hats (<kbd>H</kbd>) and five CRT palettes (<kbd>T</kbd>), drawn as nearest
 ./build.sh --test         # unit suite
 ./build.sh --clean
 ```
-
-First launch on a fresh Mac: right-click the app then Open if Gatekeeper blocks the ad-hoc signature.
 
 Audio: original looping TimeDuck Theme (`Resources/Audio/TimeDuckTheme.m4a`) plus procedural 8-bit clicks, urgency ticks, fanfare, and swept quacks. Music and SFX toggle independently.
 
