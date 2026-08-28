@@ -67,7 +67,7 @@ The screenshots below are captured directly from the shipping v1.0.0 release.
 | **Menu Bar Companion** | Native macOS menu bar accessory (`LSUIElement`). Displays live countdown in the status bar, offers quick starts, and keeps timing active even when the main window is hidden. |
 
 <p align="center">
-  <img src="docs/github/screenshot-mini-hud.png" alt="TimeDuck mini HUD stopwatch with Pause, Lap, and duck">
+  <img src="docs/github/screenshot-mini-hud.webp" alt="TimeDuck mini HUD stopwatch with Pause, Lap, and duck">
 </p>
 
 When a countdown completes:
