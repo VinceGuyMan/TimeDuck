@@ -73,7 +73,7 @@ The screenshots below are captured directly from the shipping v1.0.0 release.
 When a countdown completes:
 
 <p align="center">
-  <img src="docs/github/screenshot-target-reached.png" alt="TimeDuck target reached overlay with confetti">
+  <img src="docs/github/screenshot-target-reached.webp" alt="TimeDuck countdown running">
 </p>
 
 ---
