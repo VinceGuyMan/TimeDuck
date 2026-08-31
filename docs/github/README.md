@@ -14,5 +14,6 @@ All stills and the window GIF are captured from the shipping TimeDuck v1.0.0 bui
 | `theme-showcase.png` | Official theme palettes (5 CRT themes) |
 | `social-preview.png` | Canonical composite for repository social image |
 | `animations/` | Official mascot animation GIFs (`anim_blink_cycle.gif`, `anim_tactical_scan.gif`, `anim_waddle_stride.gif`) |
+| `roadmap.png` | Public roadmap poster used in `ROADMAP.md` |
 
 After cloning, set Settings → General → Social preview to `docs/github/social-preview.png`.

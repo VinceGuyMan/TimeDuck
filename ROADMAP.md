@@ -4,6 +4,10 @@ Welcome to the public development roadmap for **TimeDuck**, the living pixel duc
 
 This roadmap outlines where TimeDuck has been, what is available now, and where future updates are headed.
 
+<p align="center">
+  <img src="docs/github/roadmap.png" alt="TimeDuck public roadmap poster covering v1.1 through v1.9">
+</p>
+
 ---
 
 ## Release Schedule & Overview
