@@ -23,6 +23,8 @@ enum DuckPose: Equatable {
     case lookingBack
     case grooving
     case shuffling
+    case featherRuffle
+    case curiousPeek
 }
 
 // MARK: - Behavior Phases
@@ -79,14 +81,25 @@ struct DuckPhrase {
             "AT YOUR SERVICE.",
             "OPERATIONAL DUCK.",
             "ALL QUIET.",
-            "FEATHERS ALIGNED."
+            "FEATHERS ALIGNED.",
+            "CHRONO-POND READY.",
+            "BEAK CALIBRATION OK.",
+            "OPTIMAL WADDLE.",
+            "POND RADAR CLEAR.",
+            "POND SURFACE: CALM.",
+            "FLOAT EFFICIENCY: 100%.",
+            "JUST A DUCK AND A CLOCK.",
+            "LATE NIGHT FOCUS.",
+            "BURNING POND OIL."
         ],
         "timerReady": [
             "PRESS SPACE, BOSS.",
             "TIMER LOCKED IN.",
             "READY WHEN YOU ARE.",
             "COUNTDOWN ARMED.",
-            "STANDING BY."
+            "STANDING BY.",
+            "FLIGHT PLAN READY.",
+            "CLOCK PRIMED."
         ],
         "timerStart": [
             "QUACK TO WORK.",
@@ -97,14 +110,21 @@ struct DuckPhrase {
             "ENGAGING TIMER.",
             "NO DISTRACTIONS.",
             "CHRONO-QUACK!",
-            "COUNTDOWN COMMENCED."
+            "COUNTDOWN COMMENCED.",
+            "TACTICAL COUNTDOWN.",
+            "MISSION CLOCK COMMENCED.",
+            "TARGET SIGHTED.",
+            "TIME IS ROLLING.",
+            "FOCUS ENGINES FIRED."
         ],
         "timerEarly": [
             "PACING WELL.",
             "IN THE ZONE.",
             "STEADY FLIGHT.",
             "MOMENTUM BUILDING.",
-            "LOOK AT YOU GO."
+            "LOOK AT YOU GO.",
+            "SMOOTH RHYTHM.",
+            "CRUISING SPEED."
         ],
         "timerHalfway": [
             "HALFWAY THERE.",
@@ -112,21 +132,29 @@ struct DuckPhrase {
             "HOLD THE LINE.",
             "STILL WATCHING.",
             "SMOOTH SAILING.",
-            "HALFWAY POINT."
+            "HALFWAY POINT.",
+            "CROSSING THE MIDPOINT.",
+            "HALF THE POND CROSSED.",
+            "MIDPOINT REACHED."
         ],
         "timerAlmost": [
             "FINAL STRETCH.",
             "ALMOST HOME.",
             "FINISH STRONG.",
             "DON'T STOP NOW.",
-            "BRING IT HOME."
+            "BRING IT HOME.",
+            "TERMINAL APPROACH.",
+            "VICTORY QUACK PRIMED.",
+            "RUNWAY IN SIGHT."
         ],
         "timerFinal": [
             "FINAL SECONDS!",
             "COUNTING DOWN!",
             "BRACE FOR QUACK!",
             "STAND BY!",
-            "HOMESTRETCH!"
+            "HOMESTRETCH!",
+            "3... 2... 1...",
+            "VICTORY IN SIGHT!"
         ],
         "timerPaused": [
             "TACTICAL PAUSE.",
@@ -134,14 +162,18 @@ struct DuckPhrase {
             "CLOCK SUSPENDED.",
             "STANDING BY.",
             "RESTING WINGS.",
-            "COFFEE TIME?"
+            "COFFEE TIME?",
+            "HOVERING IN PLACE.",
+            "TIME ON ICE."
         ],
         "timerResumed": [
             "AND WE'RE BACK.",
             "RESUMING MISSION.",
             "QUACK IN ACTION.",
             "UNPAUSED.",
-            "CLOCK ROLLING."
+            "CLOCK ROLLING.",
+            "BACK IN FLIGHT.",
+            "MOMENTUM RESTORED."
         ],
         "timerComplete": [
             "MISSION COMPLETE.",
@@ -151,27 +183,34 @@ struct DuckPhrase {
             "TARGET REACHED.",
             "VICTORY QUACK!",
             "YOU DID IT.",
-            "FEATHERS UNRUFFLED."
+            "FEATHERS UNRUFFLED.",
+            "FLAWLESS EXECUTION.",
+            "FEATHERS OF GLORY.",
+            "PRECISION MISSION CLEAR.",
+            "CHRONO-VICTORY!"
         ],
         "stopwatchRunning": [
             "CLOCK TICKING.",
             "PRECISION TIMING.",
             "EVERY MILLISECOND.",
-            "TRACKING TIME."
+            "TRACKING TIME.",
+            "WATCHING HUNDREDTHS."
         ],
         "stopwatchLong": [
             "ENDURANCE RUN.",
             "MARATHON DUCK.",
             "TIME WARP.",
             "EPIC FLIGHT.",
-            "LONG VOYAGE."
+            "LONG VOYAGE.",
+            "UNSTOPPABLE CLOCK."
         ],
         "stopwatchLap": [
             "NICE LAP.",
             "SPLIT LOGGED.",
             "FAST SPLIT!",
             "RECORDED.",
-            "KEEP PACING."
+            "KEEP PACING.",
+            "SPLIT IN THE BOOKS."
         ],
         "pomoFocus": [
             "FOCUS, HUMAN.",
@@ -179,7 +218,9 @@ struct DuckPhrase {
             "NO SOCIAL MEDIA.",
             "HEAD DOWN.",
             "DEEP WORK TIME.",
-            "QUACK TO WORK."
+            "QUACK TO WORK.",
+            "ZERO DISTRACTIONS.",
+            "PRODUCTIVITY SURGE."
         ],
         "pomoBreak": [
             "TACTICAL BREAK.",
@@ -188,14 +229,16 @@ struct DuckPhrase {
             "BREAD BREAK.",
             "RECHARGE BATTERIES.",
             "SIP WATER.",
-            "WELL EARNED."
+            "WELL EARNED.",
+            "POND STROLL TIME."
         ],
         "pomoStreak": [
             "STREAK LOOKING GOOD.",
             "PRODUCTIVITY BEAST.",
             "UNSTOPPABLE FLOCK.",
             "ANOTHER ONE DOWN.",
-            "POMODORO MASTER."
+            "POMODORO MASTER.",
+            "FOCUS MACHINE."
         ],
         "wakeUp": [
             "WAKING UP.",
@@ -222,7 +265,8 @@ struct DuckPhrase {
         ]
     ]
 
-    private static var lastSpoken: String? = nil
+    private static var recentHistory: [String] = []
+    private static let historyMaxCapacity = 25
 
     static func get(for category: Category) -> String {
         let pool: [String]
@@ -258,27 +302,42 @@ struct DuckPhrase {
             }
         case .hatChange(let hat):
             switch hat {
-            case .none: pool = ["AERODYNAMIC.", "FEATHERS FREE.", "SLEEK."]
-            case .wizard: pool = ["MAGIC DUCK.", "YOU SHALL NOT SLACK.", "CASTING FOCUS."]
-            case .detective: pool = ["MYSTERY SOLVED.", "THE CLOCK DID IT.", "INVESTIGATING TIME."]
-            case .cyber: pool = ["NEO-DUCK 2077.", "CYBER-POND READY.", "SYSTEM OVERCLOCK."]
-            case .barista: pool = ["DOUBLE ESPRESSO.", "FRESH ROAST.", "CAFFEINE APPLIED."]
-            case .sleepcap: pool = ["NIGHT OPS.", "COZY DUTY.", "BEDTIME TIMING."]
-            case .crown: pool = ["ROYAL QUACK.", "KING OF THE POND.", "BOW TO THE DUCK."]
+            case .none:              pool = ["AERODYNAMIC.", "FEATHERS FREE.", "SLEEK."]
+            case .wizard:            pool = ["MAGIC DUCK.", "YOU SHALL NOT SLACK.", "CASTING FOCUS."]
+            case .detective:         pool = ["MYSTERY SOLVED.", "THE CLOCK DID IT.", "INVESTIGATING TIME."]
+            case .cyber:             pool = ["NEO-DUCK 2077.", "CYBER-POND READY.", "SYSTEM OVERCLOCK."]
+            case .barista:           pool = ["DOUBLE ESPRESSO.", "FRESH ROAST.", "CAFFEINE APPLIED."]
+            case .sleepcap:          pool = ["NIGHT OPS.", "COZY DUTY.", "BEDTIME TIMING."]
+            case .crown:             pool = ["ROYAL QUACK.", "KING OF THE POND.", "BOW TO THE DUCK."]
+            case .bandanaMidnight:   pool = ["TACTICAL OPS.", "STEALTH PROTOCOL.", "SHADOW DUCK."]
+            case .bandanaCrimson:    pool = ["RONIN SPIRIT.", "CRIMSON RESOLVE.", "BLADE OF FOCUS."]
+            case .bandanaForestCamo: pool = ["CANOPY CAMOUFLAGE.", "WOODLAND PATROL.", "UNDETECTED."]
+            case .bandanaDesertCamo: pool = ["DESERT DUCK.", "HEATWAVE OPS.", "SANDSTORM FOCUS."]
             }
         case .themeChange(let theme):
             switch theme {
-            case .arcade: pool = ["NEON ARCADE GLOW.", "ARCADE VIBES.", "HIGH SCORE MODE."]
-            case .gameboy: pool = ["8-BIT NOSTALGIA.", "DMG GREEN.", "RETRO BRICK."]
-            case .amber: pool = ["WARM AMBER GLOW.", "AMBER RETRO.", "VINTAGE CRT."]
-            case .synthwave: pool = ["VAPORWAVE POND.", "RETRO GLOW.", "SYNTHWAVE DUCK."]
-            case .pond: pool = ["NATURAL HABITAT.", "HOME SWEET POND.", "FRESH WATER."]
+            case .arcade:       pool = ["NEON ARCADE GLOW.", "ARCADE VIBES.", "HIGH SCORE MODE."]
+            case .gameboy:      pool = ["8-BIT NOSTALGIA.", "DMG GREEN.", "RETRO BRICK."]
+            case .amber:        pool = ["WARM AMBER GLOW.", "AMBER RETRO.", "VINTAGE CRT."]
+            case .synthwave:    pool = ["VAPORWAVE POND.", "RETRO GLOW.", "SYNTHWAVE DUCK."]
+            case .pond:         pool = ["NATURAL HABITAT.", "HOME SWEET POND.", "FRESH WATER."]
+            case .terminal:     pool = ["PHOSPHOR MATRIX.", "VT220 GREEN.", "MAINFRAME DUCK."]
+            case .paperwhite:   pool = ["CRISP E-INK.", "PAPER WHITE FOCUS.", "MINIMALIST POND."]
+            case .electricPond: pool = ["HIGH VOLTAGE POND.", "ELECTRIC NIGHT.", "NEON SHOCKWAVE."]
             }
         }
 
-        let candidates = pool.count > 1 ? pool.filter { $0 != lastSpoken } : pool
-        let chosen = candidates.randomElement() ?? pool.first ?? "QUACK."
-        lastSpoken = chosen
+        // Anti-repetition: avoid repeating immediate previous phrase
+        let lastSpoken = recentHistory.last
+        let nonImmediate = pool.count > 1 ? pool.filter { $0 != lastSpoken } : pool
+        let freshCandidates = nonImmediate.filter { !recentHistory.contains($0) }
+        let chosen = (!freshCandidates.isEmpty ? freshCandidates.randomElement() : nonImmediate.randomElement()) ?? pool.first ?? "QUACK."
+
+        recentHistory.append(chosen)
+        if recentHistory.count > historyMaxCapacity {
+            recentHistory.removeFirst()
+        }
+
         return chosen
     }
 }
@@ -385,7 +444,7 @@ final class DuckBrain {
 
         // Autonomous Idle Actions (when relaxed & not busy)
         if currentPhase == .relaxed && now > nextIdleAction && now >= poseUntil {
-            nextIdleAction = now.addingTimeInterval(Double.random(in: 12...28))
+            nextIdleAction = now.addingTimeInterval(Double.random(in: 10...24))
             performRandomIdleAction(gridW: gridW, duckCurX: duckCurX, onWanderTarget: onWanderTarget, onSpeak: onSpeak)
         }
 
@@ -410,19 +469,25 @@ final class DuckBrain {
         onSpeak: (String, Double) -> Void
     ) {
         let roll = Int.random(in: 0...100)
-        if roll < 22 {
+        if roll < 18 {
             // Preen wing feathers
             setPose(.preening, duration: 1.8)
-        } else if roll < 42 {
+        } else if roll < 34 {
             // Sit down cozy loaf
             setPose(.sitting, duration: 3.5)
-        } else if roll < 62 {
+        } else if roll < 48 {
             // Head tilt / look up at timer
             setPose(.headTilt, duration: 2.2)
-        } else if roll < 78 {
+        } else if roll < 62 {
+            // Feather ruffle / wing shake (Wave 1)
+            setPose(.featherRuffle, duration: 1.8)
+        } else if roll < 74 {
+            // Curious peek / tilt (Wave 1)
+            setPose(.curiousPeek, duration: 2.0)
+        } else if roll < 84 {
             // Foot shuffle fidget
             setPose(.shuffling, duration: 1.4)
-        } else if roll < 90 {
+        } else if roll < 92 {
             // Suspicious side eye
             setPose(.sideEye, duration: 1.8)
         } else {
@@ -596,6 +661,10 @@ final class DuckBrain {
                 return Int(t * 5) % 2 == 0 ? DUCK_BOB : DUCK_BASE
             case .shuffling:
                 return Int(t * 6) % 2 == 0 ? DUCK_SHUFFLE_A : DUCK_SHUFFLE_B
+            case .featherRuffle:
+                return Int(t * 5) % 2 == 0 ? DUCK_RUFFLE_A : DUCK_RUFFLE_B
+            case .curiousPeek:
+                return Int(t * 4) % 2 == 0 ? DUCK_PEEK_A : DUCK_PEEK_B
             default:
                 break
             }

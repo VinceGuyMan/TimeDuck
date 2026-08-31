@@ -21,6 +21,8 @@ struct TestRunner {
         StatusDuckTests.runAll()
         ViewportTransformTests.runAll()
         CompactLayoutTests.runAll()
+        Wave1Tests.runAll()
+        WhatsNewTests.runAll()
 
         let elapsed = String(format: "%.3fs", Date().timeIntervalSince(startTime))
         print("")

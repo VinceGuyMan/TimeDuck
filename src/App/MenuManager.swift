@@ -10,7 +10,6 @@ final class MenuManager: NSObject {
     private var statusItem: NSStatusItem?
     private var statusHeaderItem: NSMenuItem?
     private var statsSummaryItem: NSMenuItem?
-    private var toggleWindowItem: NSMenuItem?
     private var soundToggleItem: NSMenuItem?
     private var musicToggleItem: NSMenuItem?
 
@@ -35,6 +34,7 @@ final class MenuManager: NSObject {
         mainMenu.addItem(appMenuItem)
         let appSubmenu = NSMenu()
         appSubmenu.addItem(withTitle: "About TimeDuck", action: #selector(delegate.showAbout(_:)), keyEquivalent: "").target = delegate
+        appSubmenu.addItem(withTitle: "What's New in TimeDuck…", action: #selector(delegate.showWhatsNew(_:)), keyEquivalent: "").target = delegate
         appSubmenu.addItem(.separator())
         appSubmenu.addItem(withTitle: "Hide TimeDuck", action: #selector(NSApplication.hide(_:)), keyEquivalent: "h")
         appSubmenu.addItem(withTitle: "Hide Others", action: #selector(NSApplication.hideOtherApplications(_:)), keyEquivalent: "h").keyEquivalentModifierMask = [.command, .option]
@@ -94,6 +94,7 @@ final class MenuManager: NSObject {
         let windowMenuItem = NSMenuItem(title: "Window", action: nil, keyEquivalent: "")
         mainMenu.addItem(windowMenuItem)
         let windowSubmenu = NSMenu(title: "Window")
+        windowSubmenu.addItem(withTitle: "Show TimeDuck", action: #selector(delegate.menuShowTimeDuck(_:)), keyEquivalent: "").target = delegate
         windowSubmenu.addItem(withTitle: "Toggle Mini Mode", action: #selector(delegate.menuToggleMini(_:)), keyEquivalent: "m").target = delegate
         windowSubmenu.addItem(withTitle: "Toggle Always On Top", action: #selector(delegate.menuTogglePin(_:)), keyEquivalent: "p").target = delegate
         windowSubmenu.addItem(.separator())
@@ -121,6 +122,13 @@ final class MenuManager: NSObject {
 
         let menu = NSMenu()
 
+        // 1. Show TimeDuck (Direct, reliable window foregrounding option at top)
+        let showWin = NSMenuItem(title: "Show TimeDuck", action: #selector(delegate.menuShowTimeDuck(_:)), keyEquivalent: "")
+        showWin.target = delegate
+        menu.addItem(showWin)
+
+        menu.addItem(.separator())
+
         let header = NSMenuItem(title: "TimeDuck Ready", action: nil, keyEquivalent: "")
         header.isEnabled = false
         menu.addItem(header)
@@ -130,13 +138,6 @@ final class MenuManager: NSObject {
         stats.isEnabled = false
         menu.addItem(stats)
         statsSummaryItem = stats
-
-        menu.addItem(.separator())
-
-        let toggleWin = NSMenuItem(title: "Show TimeDuck", action: #selector(delegate.toggleWindowVisibility(_:)), keyEquivalent: "")
-        toggleWin.target = delegate
-        menu.addItem(toggleWin)
-        toggleWindowItem = toggleWin
 
         menu.addItem(.separator())
 
@@ -212,6 +213,10 @@ final class MenuManager: NSObject {
 
         menu.addItem(.separator())
 
+        let whatsNew = NSMenuItem(title: "What's New in TimeDuck…", action: #selector(delegate.showWhatsNew(_:)), keyEquivalent: "")
+        whatsNew.target = delegate
+        menu.addItem(whatsNew)
+
         let about = NSMenuItem(title: "About TimeDuck", action: #selector(delegate.showAbout(_:)), keyEquivalent: "")
         about.target = delegate
         menu.addItem(about)
@@ -285,7 +290,6 @@ final class MenuManager: NSObject {
 
         statusHeaderItem?.title = fullTitle
         statsSummaryItem?.title = "Today: \(delegate.stats.todayPomodoros) pomos · \(Fmt.durationWords(delegate.stats.todayFocusSeconds)) focus"
-        toggleWindowItem?.title = delegate.isWindowVisible ? "Hide TimeDuck" : "Show TimeDuck"
         soundToggleItem?.state = delegate.snd.enabled ? .on : .off
         musicToggleItem?.state = delegate.snd.musicEnabled ? .on : .off
     }

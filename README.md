@@ -16,11 +16,18 @@
   <img alt="Homebrew Cask" src="https://img.shields.io/badge/Homebrew-VinceGuyMan%2Ftap%2Ftimeduck-FBB040?style=flat-square&logo=homebrew">
   <img alt="Offline" src="https://img.shields.io/badge/privacy-100%25%20offline-2ea44f?style=flat-square">
   <img alt="License MIT" src="https://img.shields.io/badge/license-MIT-7c5cff?style=flat-square">
-  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-ff4d8d?style=flat-square">
+  <img alt="Version" src="https://img.shields.io/badge/version-1.1.0-ff4d8d?style=flat-square">
 </p>
 
 <p align="center">
-  <img src="docs/github/screenshot-timer.png" alt="TimeDuck v1.0.0 countdown timer with CRT scanlines and the pixel duck in a sleepy cap">
+  <a href="https://github.com/VinceGuyMan/TimeDuck/releases/tag/v1.1.0"><strong>Download v1.1.0 Release</strong></a> ·
+  <a href="ROADMAP.md"><strong>Roadmap &amp; Update Plan</strong></a> ·
+  <a href="docs/RELEASE_NOTES_1.1.0.md"><strong>Release Notes</strong></a> ·
+  <a href="CHANGELOG.md"><strong>Changelog</strong></a>
+</p>
+
+<p align="center">
+  <img src="docs/github/screenshot-timer.png" alt="TimeDuck countdown timer with CRT scanlines and the pixel duck in a sleepy cap">
 </p>
 
 <p align="center">
@@ -30,6 +37,21 @@
 TimeDuck is a lightweight, open-source native macOS AppKit desktop timer and focus companion. It combines wall-clock-accurate countdown, stopwatch, and Pomodoro timing with an animated pixel duck who breathes, waddles, sleeps, eats breadcrumbs, and celebrates when your session is complete.
 
 Zero external dependencies. Zero telemetry. No accounts, no cloud sync, and no background networking. Everything runs locally on your Mac with instant startup and state saved to a single local JSON file.
+
+---
+
+## What's New in v1.1 — Tactical & Expressive
+
+TimeDuck v1.1 brings a major expression and customization update:
+
+- **4 Tactical Bandanas**: Midnight Operative, Crimson Ronin, Forest Camo, and Desert Camo headwear with trailing fluttering ties.
+- **Richer Expressive Idle Life**: Multi-frame Feather Ruffle wing shake and Curious Peek inquisitive head tilt.
+- **3 New CRT Themes**: Terminal Green (VT220 phosphor), Paperwhite (glare-free e-ink grayscale), and Electric Pond (high-voltage neon navy & cyan).
+- **Expanded Situational Dialogue**: Over 20 new context-aware lines across late-night sessions, tactical countdowns, and progress milestones, backed by anti-repetition memory.
+- **Version-Aware Update Experience**: Automatic one-time-per-version "What's New / What's Next" release announcement popup.
+- **Menu Bar "Show TimeDuck"**: Instantly bring the existing window to the front from the menu bar without resetting active timers.
+
+See the [v1.1 Release Notes](docs/RELEASE_NOTES_1.1.0.md) and [Changelog](CHANGELOG.md) for full details.
 
 ---
 
@@ -47,7 +69,7 @@ brew tap VinceGuyMan/tap
 brew install --cask timeduck
 ```
 
-> **Gatekeeper disclosure:** TimeDuck v1.0.0 is ad-hoc signed while establishing initial distribution. If macOS blocks first launch, click **Open Anyway** in *System Settings → Privacy & Security*, or run:
+> **Gatekeeper disclosure:** TimeDuck v1.1.0 is ad-hoc signed for open-source distribution. If macOS blocks first launch, click **Open Anyway** in *System Settings → Privacy & Security*, or run:
 > ```bash
 > xattr -d com.apple.quarantine /Applications/TimeDuck.app
 > ```
@@ -56,7 +78,7 @@ brew install --cask timeduck
 
 ## What you actually get
 
-The screenshots below are captured directly from the shipping v1.0.0 release.
+The screenshots below are captured directly from the shipping release.
 
 | Mode | What it does |
 | --- | --- |
@@ -90,7 +112,7 @@ The duck is an animated desktop companion with dynamic behavioral states. Pet th
   <img src="docs/github/mascot-showcase.png" alt="TimeDuck mascot specification and personality showcase">
 </p>
 
-TimeDuck features seven shipping costumes (<kbd>H</kbd>) and five retro CRT color palettes (<kbd>T</kbd>), rendered using crisp nearest-neighbor pixel graphics:
+TimeDuck features eleven costumes (<kbd>H</kbd>) and eight retro CRT color palettes (<kbd>T</kbd>), rendered using crisp nearest-neighbor pixel graphics:
 
 <p align="center">
   <img src="docs/github/costume-showcase.png" alt="Official TimeDuck costume lineup">
@@ -107,8 +129,12 @@ TimeDuck features seven shipping costumes (<kbd>H</kbd>) and five retro CRT colo
 | Detective Cap | Amber CRT |
 | Cyber Shades | Synthwave |
 | Barista | Duck Pond |
-| Sleepy Cap | |
-| Royal Crown | |
+| Sleepy Cap | Terminal Green |
+| Royal Crown | Paperwhite |
+| Tactical (Midnight) | Electric Pond |
+| Crimson Ronin | |
+| Forest Camo | |
+| Desert Camo | |
 
 ---
 
@@ -158,7 +184,7 @@ Timing accuracy never relies on the UI display refresh loop. All remaining and e
 
 ```
 src/
-├── App/        Window management, menu bar, persistence, hotkeys
+├── App/        Window management, menu bar, What's New popup, persistence, hotkeys
 ├── Audio/      Theme playback + cached PCM audio synthesis
 ├── Engine/     Countdown, Pomodoro, Stopwatch, Duck Brain, Stats
 ├── Graphics/   Software pixel stage, CRT scanlines, sprites, palettes
@@ -185,11 +211,17 @@ TimeDuck is built with an offline-first philosophy:
 
 ---
 
+## A Note of Gratitude
+
+Thank you to everyone who has downloaded, shared, starred, or simply spent some focus time with TimeDuck. Your support means a lot, and I'm excited to keep making this little duck stranger, livelier, and more useful with every update.
+
+---
+
 ## Contributing & Project Scope
 
 TimeDuck is intentionally designed as a focused, delightful desktop timer and companion instrument—not an enterprise productivity suite.
 
-Please review [CONTRIBUTING.md](CONTRIBUTING.md) before opening pull requests. Our core design rule is keeping the application fast, lightweight, and offline. Any future additions must preserve TimeDuck's zero-telemetry privacy, native performance, and handcrafted pixel-art character.
+Please review [CONTRIBUTING.md](CONTRIBUTING.md) and our [Public Roadmap](ROADMAP.md) before opening pull requests. Our core design rule is keeping the application fast, lightweight, and offline. Any future additions must preserve TimeDuck's zero-telemetry privacy, native performance, and handcrafted pixel-art character.
 
 ---
 

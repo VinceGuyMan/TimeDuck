@@ -69,7 +69,7 @@ function run_tests() {
     echo "▸ Compiling TimeDuck test runner…"
     mkdir -p "$BUILD_DIR"
     
-    TEST_SOURCES="src/Engine/TimerEngine.swift src/Engine/StatsTracker.swift src/Engine/Formatting.swift src/Engine/DuckBrain.swift src/Graphics/Sprites.swift src/Graphics/StatusDuck.swift src/Graphics/ViewportTransform.swift src/Graphics/CompactLayout.swift src/Graphics/PixelCanvas.swift src/Graphics/Theme.swift src/App/AppVersion.swift src/App/Persistence.swift Tests/TestHarness.swift Tests/TestRunner.swift $(find Tests/TimeDuckTests -name "*.swift")"
+    TEST_SOURCES="src/Engine/TimerEngine.swift src/Engine/StatsTracker.swift src/Engine/Formatting.swift src/Engine/DuckBrain.swift src/Audio/SoundEngine.swift src/Graphics/Sprites.swift src/Graphics/StatusDuck.swift src/Graphics/ViewportTransform.swift src/Graphics/CompactLayout.swift src/Graphics/PixelCanvas.swift src/Graphics/Theme.swift src/Views/PixelHostView.swift src/App/AppVersion.swift src/App/Persistence.swift src/App/WhatsNew.swift Tests/TestHarness.swift Tests/TestRunner.swift $(find Tests/TimeDuckTests -name "*.swift")"
     
     swiftc -O -target "$TARGET_TRIPLE" -o "$TEST_RUNNER" $TEST_SOURCES
     echo "✓ Test runner compiled at $TEST_RUNNER"

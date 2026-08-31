@@ -4,7 +4,7 @@
 import Foundation
 
 enum AppVersion {
-    static let version = "1.0.0"
+    static let version = "1.1.0"
     static let build = "1"
     static let appName = "TimeDuck"
     static let subtitle = "Living Pixel Duck Desktop Companion & Precision Instrument"

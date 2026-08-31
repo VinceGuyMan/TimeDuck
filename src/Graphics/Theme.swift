@@ -18,14 +18,20 @@ enum ThemeType: Int, Codable, CaseIterable {
     case amber = 2
     case synthwave = 3
     case pond = 4
+    case terminal = 5
+    case paperwhite = 6
+    case electricPond = 7
 
     var displayName: String {
         switch self {
-        case .arcade:    return "ARCADE NEON"
-        case .gameboy:   return "GAME BOY DMG"
-        case .amber:     return "AMBER CRT"
-        case .synthwave: return "SYNTHWAVE"
-        case .pond:      return "DUCK POND"
+        case .arcade:       return "ARCADE NEON"
+        case .gameboy:      return "GAME BOY DMG"
+        case .amber:        return "AMBER CRT"
+        case .synthwave:    return "SYNTHWAVE"
+        case .pond:         return "DUCK POND"
+        case .terminal:     return "TERMINAL GREEN"
+        case .paperwhite:   return "PAPERWHITE"
+        case .electricPond: return "ELECTRIC POND"
         }
     }
 }
@@ -38,16 +44,33 @@ enum DuckHat: Int, Codable, CaseIterable {
     case barista = 4
     case sleepcap = 5
     case crown = 6
+    case bandanaMidnight = 7
+    case bandanaCrimson = 8
+    case bandanaForestCamo = 9
+    case bandanaDesertCamo = 10
 
     var displayName: String {
         switch self {
-        case .none:      return "CLASSIC DUCK"
-        case .wizard:    return "WIZARD HAT"
-        case .detective: return "DETECTIVE CAP"
-        case .cyber:     return "CYBER SHADES"
-        case .barista:   return "BARISTA"
-        case .sleepcap:  return "SLEEPY CAP"
-        case .crown:     return "ROYAL CROWN"
+        case .none:              return "CLASSIC DUCK"
+        case .wizard:            return "WIZARD HAT"
+        case .detective:         return "DETECTIVE CAP"
+        case .cyber:             return "CYBER SHADES"
+        case .barista:           return "BARISTA"
+        case .sleepcap:          return "SLEEPY CAP"
+        case .crown:             return "ROYAL CROWN"
+        case .bandanaMidnight:   return "TACTICAL (MIDNIGHT)"
+        case .bandanaCrimson:    return "CRIMSON RONIN"
+        case .bandanaForestCamo: return "FOREST CAMO"
+        case .bandanaDesertCamo: return "DESERT CAMO"
+        }
+    }
+
+    var isTacticalBandana: Bool {
+        switch self {
+        case .bandanaMidnight, .bandanaCrimson, .bandanaForestCamo, .bandanaDesertCamo:
+            return true
+        default:
+            return false
         }
     }
 }
@@ -217,18 +240,110 @@ enum ThemeRegistry {
         sweat: rgb(115, 215, 255)
     )
 
-    static func active() -> ThemeDefinition {
-        switch current {
-        case .arcade:    return arcadeTheme
-        case .gameboy:   return gameboyTheme
-        case .amber:     return amberTheme
-        case .synthwave: return synthwaveTheme
-        case .pond:      return pondTheme
+    static let terminalTheme = ThemeDefinition(
+        bg: rgb(4, 16, 6),
+        bgDeep: rgb(2, 8, 3),
+        panel: rgb(8, 28, 12),
+        panelHi: rgb(16, 48, 20),
+        grid: rgb(12, 38, 16),
+        ink: rgb(51, 255, 51),
+        inkDim: rgb(26, 140, 36),
+        inkFaint: rgb(14, 70, 20),
+        green: rgb(51, 255, 51),
+        greenDim: rgb(20, 110, 30),
+        amber: rgb(180, 255, 60),
+        amberDim: rgb(90, 140, 20),
+        red: rgb(255, 80, 60),
+        redDim: rgb(130, 25, 20),
+        cyan: rgb(80, 255, 180),
+        magenta: rgb(180, 255, 120),
+        violet: rgb(90, 210, 100),
+        duckBody: rgb(77, 255, 77),
+        duckShad: rgb(30, 160, 45),
+        duckBill: rgb(255, 190, 40),
+        duckEye: rgb(4, 16, 6),
+        white: rgb(210, 255, 210),
+        cheek: rgb(40, 180, 50),
+        sweat: rgb(100, 255, 200)
+    )
+
+    static let paperwhiteTheme = ThemeDefinition(
+        bg: rgb(238, 242, 246),
+        bgDeep: rgb(222, 228, 236),
+        panel: rgb(248, 250, 252),
+        panelHi: rgb(255, 255, 255),
+        grid: rgb(195, 205, 218),
+        ink: rgb(18, 28, 42),
+        inkDim: rgb(92, 110, 132),
+        inkFaint: rgb(150, 166, 186),
+        green: rgb(16, 140, 72),
+        greenDim: rgb(80, 180, 120),
+        amber: rgb(195, 115, 12),
+        amberDim: rgb(230, 165, 60),
+        red: rgb(205, 38, 48),
+        redDim: rgb(240, 110, 120),
+        cyan: rgb(12, 125, 175),
+        magenta: rgb(160, 45, 130),
+        violet: rgb(95, 60, 165),
+        duckBody: rgb(245, 180, 25),
+        duckShad: rgb(195, 135, 15),
+        duckBill: rgb(225, 95, 25),
+        duckEye: rgb(18, 28, 42),
+        white: rgb(255, 255, 255),
+        cheek: rgb(235, 130, 140),
+        sweat: rgb(70, 160, 225)
+    )
+
+    static let electricPondTheme = ThemeDefinition(
+        bg: rgb(8, 14, 26),
+        bgDeep: rgb(4, 7, 14),
+        panel: rgb(14, 26, 48),
+        panelHi: rgb(22, 42, 74),
+        grid: rgb(28, 40, 68),
+        ink: rgb(0, 240, 255),
+        inkDim: rgb(45, 135, 175),
+        inkFaint: rgb(24, 70, 95),
+        green: rgb(0, 255, 160),
+        greenDim: rgb(0, 120, 80),
+        amber: rgb(255, 210, 0),
+        amberDim: rgb(140, 110, 0),
+        red: rgb(255, 50, 100),
+        redDim: rgb(130, 20, 50),
+        cyan: rgb(0, 240, 255),
+        magenta: rgb(255, 0, 180),
+        violet: rgb(150, 50, 255),
+        duckBody: rgb(255, 225, 30),
+        duckShad: rgb(205, 160, 10),
+        duckBill: rgb(255, 120, 20),
+        duckEye: rgb(8, 14, 26),
+        white: rgb(255, 255, 255),
+        cheek: rgb(255, 100, 170),
+        sweat: rgb(0, 240, 255)
+    )
+
+    static func definition(for type: ThemeType) -> ThemeDefinition {
+        switch type {
+        case .arcade:       return arcadeTheme
+        case .gameboy:      return gameboyTheme
+        case .amber:        return amberTheme
+        case .synthwave:    return synthwaveTheme
+        case .pond:         return pondTheme
+        case .terminal:     return terminalTheme
+        case .paperwhite:   return paperwhiteTheme
+        case .electricPond: return electricPondTheme
         }
+    }
+
+    static func active() -> ThemeDefinition {
+        definition(for: current)
     }
 }
 
 enum Pal {
+    static func definition(for type: ThemeType) -> ThemeDefinition {
+        ThemeRegistry.definition(for: type)
+    }
+
     static var bg: Color { ThemeRegistry.active().bg }
     static var bgDeep: Color { ThemeRegistry.active().bgDeep }
     static var panel: Color { ThemeRegistry.active().panel }
@@ -262,6 +377,18 @@ func rainbow(_ t: Double, vq: Double = 1.0) -> Color {
     }
     if ThemeRegistry.current == .amber {
         return Int(t * 3) % 2 == 0 ? Pal.amber : Pal.green
+    }
+    if ThemeRegistry.current == .terminal {
+        let v = Int(t * 4) % 3
+        return v == 0 ? Pal.green : (v == 1 ? Pal.greenDim : Pal.white)
+    }
+    if ThemeRegistry.current == .paperwhite {
+        let v = Int(t * 5) % 4
+        return v == 0 ? Pal.cyan : (v == 1 ? Pal.green : (v == 2 ? Pal.amber : Pal.red))
+    }
+    if ThemeRegistry.current == .electricPond {
+        let v = Int(t * 4) % 3
+        return v == 0 ? Pal.cyan : (v == 1 ? Pal.amber : Pal.magenta)
     }
     let h = (t.truncatingRemainder(dividingBy: 1.0)) * 6.0
     let i = Int(h) % 6

@@ -1223,13 +1223,17 @@ final class TimeDuckView: NSObject {
         guard hat != .none else { return }
         let rows: [String]
         switch hat {
-        case .wizard:    rows = HAT_WIZARD
-        case .detective: rows = HAT_DETECTIVE
-        case .cyber:     rows = HAT_CYBER
-        case .barista:   rows = HAT_BARISTA
-        case .sleepcap:  rows = HAT_SLEEPCAP
-        case .crown:     rows = HAT_CROWN
-        case .none:      return
+        case .wizard:            rows = HAT_WIZARD
+        case .detective:         rows = HAT_DETECTIVE
+        case .cyber:             rows = HAT_CYBER
+        case .barista:           rows = HAT_BARISTA
+        case .sleepcap:          rows = HAT_SLEEPCAP
+        case .crown:             rows = HAT_CROWN
+        case .bandanaMidnight:   rows = HAT_BANDANA_MIDNIGHT
+        case .bandanaCrimson:    rows = HAT_BANDANA_CRIMSON
+        case .bandanaForestCamo: rows = HAT_BANDANA_FOREST
+        case .bandanaDesertCamo: rows = HAT_BANDANA_DESERT
+        case .none:              return
         }
         var hatY = duckY - 4
         if brain.currentPose == .sitting { hatY += 1 }

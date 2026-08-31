@@ -21,6 +21,8 @@ let FONT3: [Character: [UInt8]] = [
     "<": [1,2,4,2,1], "=": [0,7,0,7,0], "*": [5,2,7,2,5], "#": [5,7,5,7,5],
     ",": [0,0,0,2,4], "'": [2,2,0,0,0], "\"": [5,5,0,0,0], "|": [2,2,2,2,2],
     "[": [3,2,2,2,3], "]": [6,2,2,2,6], "^": [2,5,0,0,0], "@": [7,5,7,4,3],
+    "&": [2,5,2,5,3], "•": [0,2,2,0,0], "·": [0,0,2,0,0], "▸": [4,6,7,6,4],
+    "►": [4,6,7,6,4], "~": [0,5,2,0,0],
     " ": [0,0,0,0,0]
 ]
 
@@ -396,6 +398,60 @@ let DUCK_SHUFFLE_B: [String] = [
     "...oo...oo..."
 ]
 
+// Feather ruffle / wing shake frames (Wave 1)
+let DUCK_RUFFLE_A: [String] = [
+    "....yyyy.....",
+    "...yyyyyy....",
+    "...yyykwy....",
+    "..yyyyyyooo..",
+    "ddyyyyyyyoo..",
+    ".dddyyyyyy...",
+    "ddddyyyyyy...",
+    "..ddddyyyyy..",
+    "..ddyyyyyyy..",
+    "...oo..oo...."
+]
+
+let DUCK_RUFFLE_B: [String] = [
+    "....yyyy.....",
+    "...yyyyyy....",
+    "...yyykwy....",
+    "..yyyyyyooo..",
+    ".dyyyyyyyoo..",
+    "ddddyyyyyyy..",
+    ".dddyyyyyyy..",
+    ".ddddyyyyyy..",
+    "..ddyyyyyyy..",
+    "...oo..oo...."
+]
+
+// Curious head tilt / peek frames (Wave 1)
+let DUCK_PEEK_A: [String] = [
+    "....yyyyy....",
+    "...yyyyyyy...",
+    "...yyykwyy...",
+    "..yyyyyyyooo.",
+    ".dyyyyyyyoo..",
+    ".ddyyyyyyy...",
+    "dddyyyyyyy...",
+    ".ddddyyyyyy..",
+    "..ddyyyyyyy..",
+    "...oo..oo...."
+]
+
+let DUCK_PEEK_B: [String] = [
+    ".....yyyyy...",
+    "....yyyyyyy..",
+    "....yyykwyy..",
+    "...yyyyyyyooo",
+    "..dyyyyyyyoo.",
+    "..ddyyyyyyy..",
+    ".dddyyyyyyy..",
+    "..ddddyyyyy..",
+    "..ddyyyyyyy..",
+    "...oo..oo...."
+]
+
 // Deep cozy sleep
 let DUCK_SLEEP_DEEP: [String] = [
     ".............",
@@ -465,3 +521,51 @@ let HAT_CROWN: [String] = [
     "..rrrrrrr....",
     "............."
 ]
+
+// ── Tactical Bandana Collection (Wave 1) ─────────────────────────────────────
+
+let HAT_BANDANA_MIDNIGHT: [String] = [
+    ".............",
+    ".............",
+    ".............",
+    ".............",
+    "...kd........",
+    ".kk.kddwddk..",
+    "kdd..........",
+    ".kk.........."
+]
+
+let HAT_BANDANA_CRIMSON: [String] = [
+    ".............",
+    ".............",
+    ".............",
+    ".............",
+    "...kr........",
+    ".rk.rrrrwrrk.",
+    "krr..........",
+    ".rk.........."
+]
+
+let HAT_BANDANA_FOREST: [String] = [
+    ".............",
+    ".............",
+    ".............",
+    ".............",
+    "...kg........",
+    ".gk.gdggdkg..",
+    "kgd..........",
+    ".gk.........."
+]
+let HAT_BANDANA_FOREST_CAMO = HAT_BANDANA_FOREST
+
+let HAT_BANDANA_DESERT: [String] = [
+    ".............",
+    ".............",
+    ".............",
+    ".............",
+    "...ka........",
+    ".ak.adaddka..",
+    "kad..........",
+    ".ak.........."
+]
+let HAT_BANDANA_DESERT_CAMO = HAT_BANDANA_DESERT

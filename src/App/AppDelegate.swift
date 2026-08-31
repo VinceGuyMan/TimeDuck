@@ -97,6 +97,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         if snd.musicEnabled {
             snd.startMusic()
         }
+
+        // Check for first launch of new version to display What's New
+        if WhatsNewManager.shared.shouldPresentAutomatically() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
+                self?.showWhatsNew(nil)
+            }
+        }
     }
 
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
@@ -769,6 +776,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
     // MARK: - Menu Bar Action Bridges
 
+    @objc func showWhatsNew(_ sender: Any?) {
+        WhatsNewWindowController.shared.show(
+            announcement: WhatsNewCatalog.current,
+            snd: snd,
+            parentWindow: window,
+            acknowledgeOnDismiss: true
+        )
+    }
+
+    @objc func menuShowTimeDuck(_ sender: Any?) {
+        showWindow()
+    }
+
     @objc func showAbout(_ sender: Any?) {
         let alert = NSAlert()
         alert.messageText = AppVersion.fullDisplayString
@@ -777,7 +797,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
         • Precision stopwatch, countdown timer & Pomodoro focus engine
         • Original TimeDuck Theme soundtrack & procedural 8-bit chiptunes
-        • 5 authentic retro CRT color palettes & customizable costumes
+        • 8 authentic retro CRT color palettes & customizable costumes
         • Playful duck companion with dynamic mood and reactions
         • Zero telemetry, fully offline, native macOS utility
 
