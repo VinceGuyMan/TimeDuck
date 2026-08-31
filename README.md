@@ -27,7 +27,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/github/screenshot-timer.png" alt="TimeDuck countdown timer with CRT scanlines and the pixel duck in a sleepy cap">
+  <img src="docs/github/NewHero.gif" alt="TimeDuck countdown timer with CRT scanlines and the pixel duck in a sleepy cap">
 </p>
 
 <p align="center">
