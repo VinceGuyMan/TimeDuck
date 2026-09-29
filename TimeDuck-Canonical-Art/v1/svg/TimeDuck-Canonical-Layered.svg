@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 10" width="260" height="200" shape-rendering="crispEdges">
+  <defs>
+    <!-- TimeDuck Canonical Character Colors -->
+    <style>
+      .duck-body { fill: #FFD84D; }
+      .duck-shad { fill: #C9A62E; }
+      .duck-bill { fill: #FF8A3C; }
+      .duck-eye  { fill: #141420; }
+      .duck-sclera { fill: #FFFFFF; }
+      .duck-cheek { fill: #FF9FB2; }
+    </style>
+  </defs>
+
+  <!-- Tail Feathers (Z=10) -->
+  <g id="tail" class="duck-shad">
+    <rect x="1" y="4" width="1" height="1"/>
+    <rect x="1" y="5" width="2" height="1"/>
+    <rect x="0" y="6" width="3" height="1"/>
+  </g>
+
+  <!-- Body Core & Torso (Z=20) -->
+  <g id="body" class="duck-body">
+    <rect x="2" y="4" width="7" height="1"/>
+    <rect x="3" y="5" width="7" height="1"/>
+    <rect x="3" y="6" width="7" height="1"/>
+    <rect x="5" y="7" width="6" height="1"/>
+    <rect x="4" y="8" width="7" height="1"/>
+  </g>
+
+  <!-- Underbelly & Wing Shading (Z=30) -->
+  <g id="shading-underbelly" class="duck-shad">
+    <rect x="1" y="7" width="4" height="1"/>
+    <rect x="2" y="8" width="2" height="1"/>
+  </g>
+
+  <!-- Head Crown & Skull (Z=50) -->
+  <g id="head" class="duck-body">
+    <rect x="4" y="0" width="4" height="1"/>
+    <rect x="3" y="1" width="6" height="1"/>
+    <rect x="3" y="2" width="3" height="1"/>
+    <rect x="8" y="2" width="1" height="1"/>
+    <rect x="2" y="3" width="6" height="1"/>
+  </g>
+
+  <!-- Beak Bill (Z=60) -->
+  <g id="beak" class="duck-bill">
+    <rect x="8" y="3" width="3" height="1"/>
+    <rect x="9" y="4" width="2" height="1"/>
+  </g>
+
+  <!-- Eye (Z=70) -->
+  <g id="eyes">
+    <rect id="eye-pupil" x="6" y="2" width="1" height="1" class="duck-eye"/>
+    <rect id="eye-sclera" x="7" y="2" width="1" height="1" class="duck-sclera"/>
+  </g>
+
+  <!-- Feet (Z=80) -->
+  <g id="feet" class="duck-bill">
+    <rect id="foot-left" x="3" y="9" width="2" height="1"/>
+    <rect id="foot-right" x="7" y="9" width="2" height="1"/>
+  </g>
+</svg>

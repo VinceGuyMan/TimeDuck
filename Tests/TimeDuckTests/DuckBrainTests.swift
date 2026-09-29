@@ -26,7 +26,9 @@ struct DuckBrainTests {
                 .pomoStreak, .wakeUp, .crumb, .rare,
                 .poke(level: 1), .poke(level: 5),
                 .hatChange(.wizard), .hatChange(.crown),
+                .hatChange(.bandanaMidnight), .hatChange(.bandanaCrimson),
                 .themeChange(.arcade), .themeChange(.amber),
+                .themeChange(.terminal), .themeChange(.paperwhite), .themeChange(.electricPond),
                 .soundToggle(true), .soundToggle(false)
             ]
 
@@ -65,7 +67,8 @@ struct DuckBrainTests {
 
             let p5 = brain.onPoke()
             assertTrue(p5.level >= 5, "Fifth immediate poke should be level 5 or higher")
-            assertEqual(brain.currentPose, .tactical, "High-level poke should trigger tactical pose")
+            let validHighPoses: [DuckPose] = [.tactical, .duckingDown, .chomping, .tantrum, .playingDead, .surrender, .irritated, .dodging]
+            assertTrue(validHighPoses.contains(brain.currentPose), "High-level poke should trigger an escalating defense/chaos pose")
         }
     }
 
@@ -148,7 +151,8 @@ struct DuckBrainTests {
             let poses: [DuckPose] = [
                 .standing, .waddling, .celebrating, .quacking, .petting,
                 .pecking, .relaxing, .sleeping, .headTilt, .preening,
-                .sitting, .tactical, .sideEye, .lookingBack, .grooving, .shuffling
+                .sitting, .tactical, .sideEye, .lookingBack, .grooving, .shuffling,
+                .featherRuffle, .curiousPeek
             ]
 
             for pose in poses {

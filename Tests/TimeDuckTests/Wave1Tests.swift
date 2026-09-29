@@ -4,6 +4,7 @@
 // - New idle animations (feather ruffle, curious peek)
 // - Expanded phrase engine (20+ lines, context categories, anti-repetition)
 // - 3 New CRT Palettes (Terminal Green, Paperwhite, Electric Pond)
+// - State persistence compatibility with new hats and themes
 
 import Foundation
 
@@ -15,6 +16,7 @@ struct Wave1Tests {
         testFeatherRuffleAndCuriousPeekAnimations()
         testExpandedPhraseEngine()
         testNewCRTPalettes()
+        testStatePersistenceWithNewHatsAndThemes()
     }
 
     static func testTacticalBandanaSprites() {
@@ -27,7 +29,7 @@ struct Wave1Tests {
             ]
 
             for (idx, bandana) in bandanas.enumerated() {
-                assertEqual(bandana.count, 8, "Bandana sprite #\(idx) should have 8 rows in Living Wardrobe")
+                assertEqual(bandana.count, 8, "Bandana sprite #\(idx) should have 8 rows")
                 for row in bandana {
                     assertEqual(row.count, 13, "Bandana sprite #\(idx) row length should be 13 chars")
                 }
@@ -66,6 +68,8 @@ struct Wave1Tests {
             )
             assertEqual(ruffleRowsA.count, 10, "Feather ruffle frame A must have 10 rows")
             assertEqual(ruffleRowsB.count, 10, "Feather ruffle frame B must have 10 rows")
+            assertEqual(ruffleRowsA, DUCK_RUFFLE_A, "Frame A must match DUCK_RUFFLE_A")
+            assertEqual(ruffleRowsB, DUCK_RUFFLE_B, "Frame B must match DUCK_RUFFLE_B")
 
             // 2. Curious Peek
             brain.setPose(.curiousPeek, duration: 2.0)
@@ -81,6 +85,8 @@ struct Wave1Tests {
             )
             assertEqual(peekRowsA.count, 10, "Curious peek frame A must have 10 rows")
             assertEqual(peekRowsB.count, 10, "Curious peek frame B must have 10 rows")
+            assertEqual(peekRowsA, DUCK_PEEK_A, "Frame A must match DUCK_PEEK_A")
+            assertEqual(peekRowsB, DUCK_PEEK_B, "Frame B must match DUCK_PEEK_B")
         }
     }
 
@@ -119,6 +125,95 @@ struct Wave1Tests {
             }
             // Restore default
             ThemeRegistry.current = .arcade
+        }
+    }
+
+    static func testStatePersistenceWithNewHatsAndThemes() {
+        runTest("testStatePersistenceWithNewHatsAndThemes") {
+            let bandanaHats: [DuckHat] = [.bandanaMidnight, .bandanaCrimson, .bandanaForestCamo, .bandanaDesertCamo]
+            let newThemes: [ThemeType] = [.terminal, .paperwhite, .electricPond]
+
+            for hat in bandanaHats {
+                let state = PersistedState(
+                    mode: 0,
+                    swBanked: 0,
+                    swRunning: false,
+                    swStartISO: nil,
+                    lapsSplits: [],
+                    lapsTotals: [],
+                    tmDuration: 300,
+                    tmRemainingAtStop: 300,
+                    tmRunning: false,
+                    tmEndISO: nil,
+                    tmCompletionRecorded: false,
+                    pomoPhase: 0,
+                    pomoCycles: 0,
+                    pomoWorkDuration: 1500,
+                    pomoShortBreakDuration: 300,
+                    pomoLongBreakDuration: 900,
+                    pomoRemainingAtStop: 1500,
+                    pomoRunning: false,
+                    pomoEndISO: nil,
+                    pomoCompletionRecorded: false,
+                    theme: 0,
+                    hat: hat.rawValue,
+                    crt: true,
+                    todayFocusSecs: 0,
+                    todayPomos: 0,
+                    streakDays: 1,
+                    lastActiveDate: "2026-08-31"
+                )
+
+                let encoder = JSONEncoder()
+                let data = try encoder.encode(state)
+                let decoder = JSONDecoder()
+                let decoded = try decoder.decode(PersistedState.self, from: data)
+
+                assertEqual(decoded.hat, hat.rawValue, "Decoded hat raw value must match original \(hat)")
+                let decodedHat = decoded.hat.flatMap { DuckHat(rawValue: $0) }
+                assertEqual(decodedHat, hat, "Decoded DuckHat must match \(hat)")
+            }
+
+            for theme in newThemes {
+                let state = PersistedState(
+                    mode: 0,
+                    swBanked: 0,
+                    swRunning: false,
+                    swStartISO: nil,
+                    lapsSplits: [],
+                    lapsTotals: [],
+                    tmDuration: 300,
+                    tmRemainingAtStop: 300,
+                    tmRunning: false,
+                    tmEndISO: nil,
+                    tmCompletionRecorded: false,
+                    pomoPhase: 0,
+                    pomoCycles: 0,
+                    pomoWorkDuration: 1500,
+                    pomoShortBreakDuration: 300,
+                    pomoLongBreakDuration: 900,
+                    pomoRemainingAtStop: 1500,
+                    pomoRunning: false,
+                    pomoEndISO: nil,
+                    pomoCompletionRecorded: false,
+                    theme: theme.rawValue,
+                    hat: 0,
+                    crt: true,
+                    todayFocusSecs: 0,
+                    todayPomos: 0,
+                    streakDays: 1,
+                    lastActiveDate: "2026-08-31"
+                )
+
+                let encoder = JSONEncoder()
+                let data = try encoder.encode(state)
+                let decoder = JSONDecoder()
+                let decoded = try decoder.decode(PersistedState.self, from: data)
+
+                assertEqual(decoded.theme, theme.rawValue, "Decoded theme raw value must match original \(theme)")
+                let decodedTheme = decoded.theme.flatMap { ThemeType(rawValue: $0) }
+                assertEqual(decodedTheme, theme, "Decoded ThemeType must match \(theme)")
+            }
         }
     }
 }

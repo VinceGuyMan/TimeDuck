@@ -5,6 +5,9 @@
 import Foundation
 
 final class StatsTracker: Codable {
+    // Defensive persistence limits, intentionally well above realistic use.
+    private static let maximumCount = 1_000_000
+    private static let maximumFocusSeconds: TimeInterval = 360_000_000_000
     var todayFocusSeconds: TimeInterval = 0
     var todayPomodoros: Int = 0
     var streakDays: Int = 1
@@ -12,6 +15,30 @@ final class StatsTracker: Codable {
 
     init() {
         lastActiveDateStr = StatsTracker.todayKey()
+        checkDayRollover()
+    }
+
+    func restoreState(
+        todayFocusSeconds: TimeInterval,
+        todayPomodoros: Int,
+        streakDays: Int,
+        lastActiveDate: String
+    ) {
+        self.todayFocusSeconds = todayFocusSeconds.isFinite
+            ? min(max(0, todayFocusSeconds), StatsTracker.maximumFocusSeconds)
+            : 0
+        self.todayPomodoros = min(max(0, todayPomodoros), StatsTracker.maximumCount)
+        self.streakDays = min(max(1, streakDays), StatsTracker.maximumCount)
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.timeZone = Calendar.current.timeZone
+        formatter.isLenient = false
+        if formatter.date(from: lastActiveDate) != nil {
+            lastActiveDateStr = lastActiveDate
+        } else {
+            lastActiveDateStr = StatsTracker.todayKey()
+        }
         checkDayRollover()
     }
 
@@ -53,7 +80,8 @@ final class StatsTracker: Codable {
         let prevLast = lastActiveDateStr
         checkDayRollover(now: now)
         let wasFirstToday = (todayFocusSeconds == 0 && todayPomodoros == 0)
-        todayFocusSeconds += max(0, secs)
+        let safeSeconds = secs.isFinite ? max(0, secs) : 0
+        todayFocusSeconds = min(StatsTracker.maximumFocusSeconds, todayFocusSeconds + safeSeconds)
         lastActiveDateStr = StatsTracker.todayKey(for: now)
 
         if wasFirstToday && !prevLast.isEmpty && prevLast != lastActiveDateStr {
@@ -65,7 +93,7 @@ final class StatsTracker: Codable {
                 let startOfNow = Calendar.current.startOfDay(for: now)
                 let diff = Calendar.current.dateComponents([.day], from: startOfLast, to: startOfNow).day ?? 0
                 if diff == 1 {
-                    streakDays += 1
+                    streakDays = min(StatsTracker.maximumCount, streakDays + 1)
                 } else if diff > 1 {
                     streakDays = 1
                 }
@@ -78,8 +106,9 @@ final class StatsTracker: Codable {
         let prevLast = lastActiveDateStr
         checkDayRollover(now: now)
         let wasFirstToday = (todayPomodoros == 0 && todayFocusSeconds == 0)
-        todayPomodoros += 1
-        todayFocusSeconds += max(0, duration)
+        todayPomodoros = min(StatsTracker.maximumCount, todayPomodoros + 1)
+        let safeDuration = duration.isFinite ? max(0, duration) : 0
+        todayFocusSeconds = min(StatsTracker.maximumFocusSeconds, todayFocusSeconds + safeDuration)
         lastActiveDateStr = StatsTracker.todayKey(for: now)
 
         if wasFirstToday && !prevLast.isEmpty && prevLast != lastActiveDateStr {
@@ -91,7 +120,7 @@ final class StatsTracker: Codable {
                 let startOfNow = Calendar.current.startOfDay(for: now)
                 let diff = Calendar.current.dateComponents([.day], from: startOfLast, to: startOfNow).day ?? 0
                 if diff == 1 {
-                    streakDays += 1
+                    streakDays = min(StatsTracker.maximumCount, streakDays + 1)
                 } else if diff > 1 {
                     streakDays = 1
                 }

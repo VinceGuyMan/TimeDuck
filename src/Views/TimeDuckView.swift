@@ -20,6 +20,17 @@ struct Particle {
     var grav: Double
 }
 
+struct SnoreParticle {
+    var x: Double
+    var y: Double
+    var vx: Double
+    var vy: Double
+    var life: Double
+    var maxLife: Double
+    var facingLeft: Bool
+    var isMini: Bool
+}
+
 struct Breadcrumb {
     var x: Double, y: Double
     var life: Double
@@ -61,6 +72,8 @@ final class TimeDuckView: NSObject {
     // Ambience & Pets
     private var stars: [Star] = []
     private var parts: [Particle] = []
+    private var snoreParticles: [SnoreParticle] = []
+    private var nextSnoreTime = Date.distantPast
     private var crumbs: [Breadcrumb] = []
     private var emberBudget = 0.0
     private var lastFrame = Date()
@@ -81,9 +94,11 @@ final class TimeDuckView: NSObject {
     private var stridePhase = 0.0
     private var lastUserActivity = Date()
 
-    // Speech Bubble
+    // Speech Bubble & Word-by-Word MiniUI Queue
     private var speechText: String? = nil
+    private var speechBorn = Date.distantPast
     private var speechUntil = Date.distantPast
+    private var speechWords: [String] = []
 
     // FX Bookkeeping
     private var ghostPrev = ""
@@ -94,10 +109,77 @@ final class TimeDuckView: NSObject {
     private var lastWholeSec = -1
     private var alertedTimerEnd: Date?
     private var alertedPomodoroEnd: Date?
-    var alarmDismissed = false
+    private var timerAlarmDismissed = false
+    private var pomodoroAlarmDismissed = false
+    var alarmDismissed: Bool {
+        get {
+            switch currentMode {
+            case .timer: return timerAlarmDismissed
+            case .pomodoro: return pomodoroAlarmDismissed
+            case .stopwatch: return true
+            }
+        }
+        set {
+            switch currentMode {
+            case .timer: timerAlarmDismissed = newValue
+            case .pomodoro: pomodoroAlarmDismissed = newValue
+            case .stopwatch: break
+            }
+        }
+    }
     private var confettiPulse = Date.distantPast
+    var onCompletionAlarm: (() -> Void)?
 
     let brain = DuckBrain()
+    let storyEngine = DuckStoryEngine()
+
+    // MARK: - Story Preview
+    var isPreviewingStory = false
+    var previewProgress: Double? = nil
+    var storySpeedMultiplier: Double = 1.0
+
+    // MARK: - Startup Splash Show
+    var isShowingSplash = false
+    private var splashStartTime: Date = .distantPast
+    private let splashDuration: Double = 2.8
+    private var splashVariant: Int = 0
+    private var splashReadyChimed = false
+
+    static let splashMessages = [
+        "CALIBRATING QUACK...",
+        "COUNTING BREADCRUMBS...",
+        "WINDING CLOCKWORK...",
+        "POLISHING BEAK...",
+        "SYNCHRONIZING WADDLE...",
+        "LOCATING POND...",
+        "CHECKING FEATHER BUOYANCY...",
+        "WARMING PHOSPHORS...",
+        "DUCK FOUND.",
+        "TIME ACQUIRED.",
+        "READY TO QUACK."
+    ]
+
+    func startStartupSplash() {
+        let showPref = UserDefaults.standard.object(forKey: "td.showStartupSplash") as? Bool ?? true
+        let reduceMotion = NSWorkspace.shared.accessibilityDisplayShouldReduceMotion
+        guard showPref && !reduceMotion else {
+            isShowingSplash = false
+            return
+        }
+        isShowingSplash = true
+        splashStartTime = Date()
+        splashVariant = Int.random(in: 0...3)
+        splashReadyChimed = false
+    }
+
+    func skipSplash() {
+        guard isShowingSplash else { return }
+        isShowingSplash = false
+        if !splashReadyChimed {
+            snd?.splashBootChime()
+            splashReadyChimed = true
+        }
+    }
 
     init(sw: StopwatchModel, tm: TimerModel, pomo: PomodoroModel, stats: StatsTracker) {
         self.sw = sw
@@ -106,23 +188,195 @@ final class TimeDuckView: NSObject {
         self.stats = stats
         super.init()
         seedStars()
+        setupStoryEngine()
+    }
+
+    private func setupStoryEngine() {
+        storyEngine.onSpeak = { [weak self] text, dur in
+            self?.speak(text, duration: dur)
+        }
+        storyEngine.onDuckPose = { [weak self] pose, dur in
+            self?.brain.setPose(pose, duration: dur)
+        }
+        storyEngine.onDropCrumb = { [weak self] in
+            guard let self = self else { return }
+            self.dropBreadcrumb(at: Double(self.duckX + (self.duckFlip ? -20 : 20)))
+        }
+        storyEngine.onPlaySound = { [weak self] sndName in
+            guard let self = self, let snd = self.snd else { return }
+            switch sndName {
+            case "duckBurp": snd.duckBurp()
+            case "gymTick": snd.gymTick()
+            case "cameraSweepTick": snd.cameraSweepTick()
+            case "alertBlip": snd.alertBlip()
+            case "flagPlantFanfare": snd.flagPlantFanfare()
+            default: break
+            }
+        }
+        storyEngine.onSpawnSteamPuff = { [weak self] in
+            self?.spawnSteamPuff()
+        }
+        storyEngine.onSpawnSweat = { [weak self] in
+            self?.spawnSweat()
+        }
+        storyEngine.onStoryCompleted = { [weak self] storyId in
+            guard let self = self else { return }
+            AchievementEngine.shared.evaluateEvent(
+                .storyCompleted(storyId: storyId),
+                stats: self.stats,
+                now: Date()
+            )
+        }
+    }
+
+    func getStoryContext() -> DuckStoryContext {
+        let now = Date()
+        let localHour = Calendar.current.component(.hour, from: now)
+        var p = 0.0
+        var total = 0.0
+        var rem = 0.0
+        var elapsed = 0.0
+
+        if isPreviewingStory, let prevP = previewProgress {
+            p = prevP
+            total = 300.0
+            elapsed = 300.0 * prevP
+            rem = max(0.0, total - elapsed)
+        } else {
+            switch currentMode {
+            case .timer:
+                total = tm.duration
+                rem = tm.remaining
+                elapsed = max(0.0, total - rem)
+                p = total > 0 ? min(1.0, max(0.0, elapsed / total)) : 0.0
+            case .pomodoro:
+                total = pomo.currentDuration
+                rem = pomo.remaining
+                elapsed = max(0.0, total - rem)
+                p = total > 0 ? min(1.0, max(0.0, elapsed / total)) : 0.0
+            case .stopwatch:
+                total = 300.0
+                elapsed = sw.elapsed
+                rem = max(0.0, total - elapsed)
+                p = min(1.0, max(0.0, elapsed / total))
+            }
+        }
+
+        let isAnyPaused = (currentMode == .timer && !tm.isRunning && tm.remaining < tm.duration) ||
+                          (currentMode == .pomodoro && !pomo.isRunning && pomo.remaining < pomo.currentDuration) ||
+                          (currentMode == .stopwatch && !sw.isRunning && sw.elapsed > 0)
+
+        return DuckStoryContext(
+            mode: currentMode,
+            isRunning: isPreviewingStory ? true : isAnyRunning,
+            isPaused: isPreviewingStory ? false : isAnyPaused,
+            isFinished: isPreviewingStory ? p >= 1.0 : isFinished,
+            normalizedProgress: p,
+            sessionDuration: total,
+            remainingSeconds: rem,
+            elapsedSeconds: elapsed,
+            isCompact: mini,
+            reduceMotion: NSWorkspace.shared.accessibilityDisplayShouldReduceMotion,
+            localHour: localHour,
+            currentHat: currentHat,
+            currentTheme: ThemeRegistry.current
+        )
     }
 
     /// Indicates whether high-rate animation (confetti, petting, moving, particles, idle poses) is currently occurring.
+    var storyRequiresHighRateAnimation: Bool {
+        storyEngine.isSessionStarted && (!storyEngine.isSessionPaused || storyEngine.isFinaleActive)
+    }
+
     var hasActiveAnimation: Bool {
+        if isShowingSplash { return true }
         if isEditingTime { return true }
         let now = Date()
-        if !parts.isEmpty || !crumbs.isEmpty { return true }
+        if !parts.isEmpty || !snoreParticles.isEmpty || !crumbs.isEmpty { return true }
         if now < hopUntil || now < flapUntil || now < quackUntil || now < peckUntil || now < petUntil { return true }
         if now < speechUntil || now.timeIntervalSince(toastBorn) < 1.6 { return true }
         if abs(duckTargetX - duckCurX) > 0.5 { return true }
         if isFinished && !alarmDismissed { return true }
         if brain.hasActivePose { return true }
+        if storyRequiresHighRateAnimation { return true }
         return false
     }
 
     var isFinished: Bool {
         (currentMode == .pomodoro && pomo.finished) || (currentMode == .timer && tm.finished)
+    }
+
+    func clearSleepFX() {
+        snoreParticles.removeAll()
+        nextSnoreTime = .distantPast
+    }
+
+    var activeSnoreParticleCount: Int { snoreParticles.count }
+    var activeTemporaryParticleCount: Int { parts.count }
+    var activeBreadcrumbCount: Int { crumbs.count }
+
+    func clearViewportOwnedEffects() {
+        clearSleepFX()
+        parts.removeAll()
+        crumbs.removeAll()
+        speechText = nil
+        speechUntil = .distantPast
+        toastText = nil
+        emberBudget = 0
+        petUntil = .distantPast
+        hopUntil = .distantPast
+        peckUntil = .distantPast
+    }
+
+    func clearTemporaryEffects() {
+        clearViewportOwnedEffects()
+        duckTargetX = duckCurX
+    }
+
+    func endStoryPreview() {
+        guard isPreviewingStory else { return }
+        isPreviewingStory = false
+        previewProgress = nil
+        storySpeedMultiplier = 1.0
+        storyEngine.endPreview()
+        clearTemporaryEffects()
+    }
+
+    /// Terminates previous story session, clears viewport effects, and rearms for a newly configured or reset clock session.
+    func resetStoryForClockReconfiguration() {
+        endStoryPreview()
+        clearTemporaryEffects()
+        let ctx = getStoryContext()
+        storyEngine.cancelSession(context: ctx)
+    }
+
+    func spawnSnoreParticle(
+        rows: [String],
+        duckX: Int,
+        duckY: Int,
+        flip: Bool,
+        isMini: Bool,
+        now: Date
+    ) {
+        guard now >= nextSnoreTime, snoreParticles.count < 3 else { return }
+        let billAnchor = DuckBillAnchorResolver.resolve(rows: rows, flip: flip)
+        let spawnX = Double(duckX + billAnchor.x)
+        let spawnY = Double(duckY + billAnchor.y)
+        let horizontalSpeed = isMini ? Double.random(in: 1.5...3.0) : Double.random(in: 3.5...6.0)
+        let verticalSpeed = isMini ? Double.random(in: -4.5...(-2.5)) : Double.random(in: -9.0...(-6.0))
+        snoreParticles.append(SnoreParticle(
+            x: spawnX,
+            y: spawnY,
+            vx: (billAnchor.facingLeft ? -1.0 : 1.0) * horizontalSpeed,
+            vy: verticalSpeed,
+            life: isMini ? 2.2 : 2.5,
+            maxLife: isMini ? 2.2 : 2.5,
+            facingLeft: billAnchor.facingLeft,
+            isMini: isMini
+        ))
+        nextSnoreTime = now.addingTimeInterval(
+            isMini ? Double.random(in: 2.5...3.5) : Double.random(in: 2.2...3.2)
+        )
     }
 
     // MARK: - Direct Time Entry (Inline Editing)
@@ -153,6 +407,7 @@ final class TimeDuckView: NSObject {
             snd?.tone(freq: 220, dur: 0.12, vol: 0.10, type: .square)
             return false
         }
+        resetStoryForClockReconfiguration()
         if currentMode == .timer {
             tm.setDuration(seconds)
             toast("TIMER: \(Fmt.tm(seconds))")
@@ -217,6 +472,7 @@ final class TimeDuckView: NSObject {
     }
 
     func setMini(_ m: Bool) {
+        clearViewportOwnedEffects()
         mini = m
         gridW = m ? 144 : 164
         gridH = m ? 34 : 100
@@ -274,6 +530,40 @@ final class TimeDuckView: NSObject {
     // MARK: - Interaction Surface
 
     func layoutButtons() -> [Btn] {
+        if DuckbookEngine.shared.isOpen && !mini {
+            var bs: [Btn] = []
+            let modalX = 6
+            let modalY = 8
+            let modalW = gridW - 12
+            _ = gridH - 16
+
+            // Close button (top right)
+            bs.append(Btn(id: "db-close", x: modalX + modalW - 12, y: modalY + 2, w: 9, h: 8))
+
+            // Tab buttons
+            bs.append(Btn(id: "db-tab-0", x: modalX + 6, y: modalY + 11, w: 44, h: 8))
+            bs.append(Btn(id: "db-tab-1", x: modalX + 54, y: modalY + 11, w: 52, h: 8))
+            bs.append(Btn(id: "db-tab-2", x: modalX + 110, y: modalY + 11, w: 34, h: 8))
+
+            // Companion select rows or list rows
+            let count: Int
+            switch DuckbookEngine.shared.activeTab {
+            case .companions:
+                count = TimeCompanionRegistry.shared.allCompanions.count
+            case .achievements:
+                count = AchievementEngine.shared.orderedCatalog.count
+            case .secrets:
+                count = 4
+            }
+            let start = min(max(0, DuckbookEngine.shared.scrollOffset), max(0, count - 3))
+            let end = min(count, start + 3)
+            for (rowIdx, itemIdx) in (start..<end).enumerated() {
+                let btnId = (DuckbookEngine.shared.activeTab == .companions) ? "db-comp-\(itemIdx)" :
+                            ((DuckbookEngine.shared.activeTab == .achievements) ? "db-ach-\(itemIdx)" : "db-sec-\(itemIdx)")
+                bs.append(Btn(id: btnId, x: modalX + 4, y: modalY + 21 + rowIdx * 16, w: modalW - 8, h: 15))
+            }
+            return bs
+        }
         if mini {
             let m = compactLayoutMetrics()
             var bs: [Btn] = []
@@ -294,6 +584,7 @@ final class TimeDuckView: NSObject {
         var bs: [Btn] = []
 
         // Top bar toggles
+        bs.append(Btn(id: "tgl-duckbook", x: gridW - 68, y: 1, w: 10, h: 8))
         bs.append(Btn(id: "tgl-mini", x: gridW - 57, y: 1, w: 10, h: 8))
         bs.append(Btn(id: "tgl-hat", x: gridW - 46, y: 1, w: 10, h: 8))
         bs.append(Btn(id: "tgl-theme", x: gridW - 35, y: 1, w: 10, h: 8))
@@ -337,9 +628,11 @@ final class TimeDuckView: NSObject {
     func press(_ id: String) {
         pressMap[id] = Date()
         lastUserActivity = Date()
+        clearSleepFX()
     }
 
     func toast(_ s: String) {
+        clearSleepFX()
         toastText = s
         toastBorn = Date()
         lastUserActivity = Date()
@@ -347,40 +640,76 @@ final class TimeDuckView: NSObject {
 
     func speak(_ s: String, duration: Double = 2.4) {
         speechText = s
+        speechBorn = Date()
         speechUntil = Date().addingTimeInterval(duration)
+        speechWords = s.replacingOccurrences(of: "\n", with: " ").split(separator: " ").map(String.init)
     }
 
     func duckHop() {
         hopUntil = Date().addingTimeInterval(0.40)
         quackUntil = Date().addingTimeInterval(0.35)
         lastUserActivity = Date()
+        clearSleepFX()
         snd?.quack()
     }
 
     func petDuck() {
         lastUserActivity = Date()
+        clearSleepFX()
+        let ctx = getStoryContext()
+        if storyEngine.activeStory != nil, let storyPoke = storyEngine.handleInteraction(type: "poke", context: ctx) {
+            petUntil = Date().addingTimeInterval(0.85)
+            duckHop()
+            snd?.quack()
+            speak(storyPoke, duration: 2.2)
+            return
+        }
         let res = brain.onPoke()
         petUntil = Date().addingTimeInterval(0.85)
         duckHop()
-        if res.level >= 4 {
-            spawnConfetti(15)
+        if res.isTantrum {
+            spawnConfetti(12)
+            snd?.tantrumQuacks()
+        } else if res.level >= 5 {
+            spawnConfetti(6)
+            snd?.annoyedQuack()
+        } else if res.level >= 3 {
             snd?.quack(pitch: 0.85)
+        } else if res.level == 2 {
+            snd?.quack(pitch: 1.05)
         } else {
-            spawnHearts(6 + res.level * 2)
+            spawnHearts(6)
             snd?.happyChirp()
         }
         speak(res.phrase)
+        AchievementEngine.shared.evaluateEvent(
+            .duckPoked(level: res.level, isTantrum: res.isTantrum),
+            stats: stats,
+            now: Date()
+        )
     }
 
     func dropBreadcrumb(at gx: Double? = nil) {
         let x = gx ?? Double(Int.random(in: 20..<max(25, gridW - 35)))
         let y = Double(duckGroundY - 2)
-        crumbs.append(Breadcrumb(x: x, y: y, life: 12.0))
-        duckTargetX = max(18, min(Double(gridW - 32), x - 4))
+        crumbs.append(Breadcrumb(x: x, y: y, life: 14.0))
+        if crumbs.count > 32 {
+            crumbs.removeFirst(crumbs.count - 32)
+        }
+        clearSleepFX()
+
+        // Explicit Beak Alignment Calculation:
+        // When approaching from the left, duck faces right (beak tip at x + 11 in DUCK_PECK_B).
+        // When approaching from the right, duck faces left (beak tip at x + 1 in DUCK_PECK_B).
+        let targetX: Double
+        if duckCurX + 6 <= x {
+            targetX = x - 11.0
+        } else {
+            targetX = x - 1.0
+        }
+        duckTargetX = max(18.0, min(Double(gridW - 32), targetX))
         lastUserActivity = Date()
         toast("CRUMB DROPPED")
-        let quip = brain.onCrumb()
-        speak(quip)
         snd?.happyChirp()
     }
 
@@ -388,14 +717,62 @@ final class TimeDuckView: NSObject {
         var rng = SystemRandomNumberGenerator()
         let ox = Double(duckX + 6), oy = Double(duckGroundY - 12)
         for _ in 0..<n {
-            parts.append(Particle(
+            appendParticle(Particle(
                 x: ox, y: oy,
-                vx: Double.random(in: -20...20, using: &rng),
-                vy: Double.random(in: -45...(-20), using: &rng),
+                vx: Double.random(in: -14...14, using: &rng),
+                vy: Double.random(in: -24...(-10), using: &rng),
                 life: Double.random(in: 0.8...1.4, using: &rng),
                 maxLife: 1.4,
                 c: Pal.red,
                 grav: -10
+            ))
+        }
+    }
+
+    func spawnSteamPuff() {
+        var rng = SystemRandomNumberGenerator()
+        let ox = Double(duckX + 6), oy = Double(duckGroundY - 8)
+        for _ in 0..<5 {
+            appendParticle(Particle(
+                x: ox, y: oy,
+                vx: Double.random(in: -8...8, using: &rng),
+                vy: Double.random(in: -18...(-8), using: &rng),
+                life: Double.random(in: 0.6...1.2, using: &rng),
+                maxLife: 1.2,
+                c: Pal.sweat,
+                grav: -3
+            ))
+        }
+    }
+
+    func spawnSweat() {
+        var rng = SystemRandomNumberGenerator()
+        let ox = Double(duckX + 7), oy = Double(duckGroundY - 9)
+        for _ in 0..<2 {
+            appendParticle(Particle(
+                x: ox, y: oy,
+                vx: Double.random(in: 8...16, using: &rng),
+                vy: Double.random(in: -14...(-8), using: &rng),
+                life: Double.random(in: 0.45...0.75, using: &rng),
+                maxLife: 0.75,
+                c: Pal.sweat,
+                grav: 45
+            ))
+        }
+    }
+
+    func spawnCrumbParticles() {
+        var rng = SystemRandomNumberGenerator()
+        let ox = Double(duckX + (duckFlip ? 1 : 11)), oy = Double(duckGroundY - 4)
+        for _ in 0..<4 {
+            appendParticle(Particle(
+                x: ox, y: oy,
+                vx: Double.random(in: -10...10, using: &rng),
+                vy: Double.random(in: -15...(-5), using: &rng),
+                life: Double.random(in: 0.4...0.8, using: &rng),
+                maxLife: 0.8,
+                c: Pal.amber,
+                grav: 60
             ))
         }
     }
@@ -408,7 +785,7 @@ final class TimeDuckView: NSObject {
         var rng = SystemRandomNumberGenerator()
         let ox = Double(duckX + 6), oy = Double(duckGroundY - 10)
         for _ in 0..<n {
-            parts.append(Particle(
+            appendParticle(Particle(
                 x: ox, y: oy,
                 vx: Double.random(in: -50...50, using: &rng),
                 vy: Double.random(in: -100...(-40), using: &rng),
@@ -421,7 +798,12 @@ final class TimeDuckView: NSObject {
     }
 
     func dismissAlarm() {
-        alarmDismissed = true
+        clearSleepFX()
+        switch currentMode {
+        case .timer: timerAlarmDismissed = true
+        case .pomodoro: pomodoroAlarmDismissed = true
+        case .stopwatch: break
+        }
     }
 
     // MARK: - Master Render
@@ -429,14 +811,23 @@ final class TimeDuckView: NSObject {
     func render() {
         let now = Date()
         let t = now.timeIntervalSinceReferenceDate
-        let dt = min(0.1, now.timeIntervalSince(lastFrame))
+        let dt = TimeDuckView.clampAnimationDelta(now.timeIntervalSince(lastFrame))
         lastFrame = now
+
+        if isShowingSplash {
+            renderSplash(t, now)
+            let bandY = Int(t * 22) % (gridH + 44) - 22
+            canvas.applyCRT(rowFactor: rowFactor, vig: vig, bandY: bandY, bandH: 5)
+            return
+        }
 
         canvas.fillAll(mini ? Pal.bgDeep : Pal.bg)
 
         updateDuckBrain(dt, now: now)
 
         if mini {
+            stepParticles(dt)
+            stepSnoreParticles(dt)
             renderMini(t, now)
             canvas.applyCRT(rowFactor: rowFactor, vig: vig, bandY: Int(t * 14) % (gridH + 30) - 15, bandH: 4)
             return
@@ -445,16 +836,139 @@ final class TimeDuckView: NSObject {
         drawStars(t)
         drawEmbers(dt)
         drawBreadcrumbs()
+        drawStoryScenery(zIndex: 0)
         drawChrome(t, now)
         drawClockArea(t, now)
+        drawStoryActors()
         drawDuck(t, now)
+        drawStoryScenery(zIndex: 1)
         stepParticles(dt)
         drawParticles()
+        stepSnoreParticles(dt)
+        drawSnoreParticles(nil)
 
         let bandY = Int(t * 22) % (gridH + 44) - 22
         canvas.applyCRT(rowFactor: rowFactor, vig: vig, bandY: bandY, bandH: 5)
 
         drawToastOverlay(t)
+        drawAchievementToastOverlay(now)
+
+        if DuckbookEngine.shared.isOpen && !mini {
+            drawDuckbookOverlay(t, now)
+        }
+    }
+
+    static func clampAnimationDelta(_ rawDelta: TimeInterval) -> TimeInterval {
+        min(0.1, max(0, rawDelta.isFinite ? rawDelta : 0))
+    }
+
+    // MARK: - Startup Splash Show Renderer
+
+    private func renderSplash(_ t: Double, _ now: Date) {
+        let elapsed = now.timeIntervalSince(splashStartTime)
+        if elapsed >= splashDuration {
+            skipSplash()
+            return
+        }
+
+        canvas.fillAll(Pal.bgDeep)
+        canvas.frameRect(0, 0, gridW, gridH, Pal.grid)
+        canvas.frameRect(1, 1, gridW - 2, gridH - 2, Pal.panel)
+
+        drawStars(t)
+
+        if elapsed < 0.45 {
+            // Phase 0: CRT Phosphor Beam wake
+            let beamProgress = elapsed / 0.45
+            let beamH = max(2, Int(beamProgress * Double(gridH - 10)))
+            let beamY = (gridH - beamH) / 2
+            let beamW = max(10, Int(beamProgress * Double(gridW - 20)))
+            let beamX = (gridW - beamW) / 2
+            canvas.fillRect(beamX, beamY, beamW, beamH, Pal.panelHi, a: UInt8(beamProgress * 200))
+            canvas.hline(beamX, beamX + beamW - 1, gridH / 2, Pal.white)
+        } else if elapsed < 1.35 {
+            // Phase 1: TIMEDUCK logo assembly & phosphor scan
+            let logoStr = "TIMEDUCK"
+            let logoW = PixelCanvas.heroWidth(logoStr, scale: 2)
+            let logoX = max(4, (gridW - logoW) / 2)
+            let logoY = mini ? 4 : 26
+
+            canvas.fillRect(logoX - 4, logoY - 3, logoW + 8, 18, Pal.panelHi, a: 160)
+            canvas.frameRect(logoX - 4, logoY - 3, logoW + 8, 18, Pal.green)
+            canvas.heroText(logoStr, x: logoX, y: logoY, c: Pal.green, scale: 2)
+
+            let subStr = "V\(AppVersion.version) · CHRONO COMPANION"
+            let subW = PixelCanvas.smallWidth(subStr)
+            let subX = (gridW - subW) / 2
+            canvas.smallText(subStr, x: subX, y: logoY + 22, c: Pal.amber)
+
+            let hint = "PRESS ANY KEY TO SKIP"
+            let hintW = PixelCanvas.smallWidth(hint)
+            canvas.smallText(hint, x: (gridW - hintW) / 2, y: gridH - 12, c: Pal.inkDim)
+        } else if elapsed < 2.35 {
+            // Phase 2: Duck / Egg hatch & rotating absurd loading messages
+            let eggX = (gridW - 13) / 2
+            let eggY = mini ? 6 : 28
+
+            let eggRows: [String]
+            let eggSubphase = (elapsed - 1.35) / 1.00
+            if eggSubphase < 0.35 {
+                eggRows = SPLASH_EGG_A
+            } else if eggSubphase < 0.70 {
+                eggRows = SPLASH_EGG_B
+            } else {
+                eggRows = SPLASH_EGG_HATCH
+            }
+
+            var colorMap = getDuckColorMap()
+            if splashVariant == 3 {
+                colorMap = getDuckColorMap(rareEvent: .goldenDuck)
+            }
+            canvas.drawSprite(eggRows, x: eggX, y: eggY, map: colorMap, flip: false)
+
+            let msgIdx = Int((elapsed - 1.35) * 5) % TimeDuckView.splashMessages.count
+            let msg = TimeDuckView.splashMessages[msgIdx]
+            let msgW = PixelCanvas.smallWidth(msg)
+            let msgX = max(4, (gridW - msgW) / 2)
+            canvas.smallText(msg, x: msgX, y: eggY + 16, c: Pal.green)
+
+            let pBarW = min(80, gridW - 40)
+            let pBarX = (gridW - pBarW) / 2
+            let pBarY = eggY + 25
+            let frac = min(1.0, (elapsed - 0.45) / 1.9)
+            let litW = Int(Double(pBarW) * frac)
+            for i in 0..<litW {
+                let h = Double(i) / Double(pBarW)
+                canvas.fillRect(pBarX + i, pBarY, 1, 2, rainbow(h))
+            }
+            if litW < pBarW {
+                canvas.hline(pBarX + litW, pBarX + pBarW - 1, pBarY, Pal.grid)
+                canvas.hline(pBarX + litW, pBarX + pBarW - 1, pBarY + 1, Pal.grid)
+            }
+
+            let hint = "PRESS ANY KEY TO SKIP"
+            let hintW = PixelCanvas.smallWidth(hint)
+            canvas.smallText(hint, x: (gridW - hintW) / 2, y: gridH - 12, c: Pal.inkDim)
+        } else {
+            // Phase 3: Ready! Transition
+            if !splashReadyChimed {
+                snd?.splashBootChime()
+                splashReadyChimed = true
+            }
+
+            let duckX = (gridW - 13) / 2
+            let duckY = mini ? 6 : 28
+            canvas.drawSprite(DUCK_YAY_A, x: duckX, y: duckY, map: getDuckColorMap(), flip: false)
+
+            let readyStr = "READY TO QUACK!"
+            let readyW = PixelCanvas.smallWidth(readyStr)
+            let readyX = (gridW - readyW) / 2
+            canvas.smallText(readyStr, x: readyX, y: duckY + 16, c: Pal.green)
+
+            let hint = "PRESS ANY KEY"
+            let hintW = PixelCanvas.smallWidth(hint)
+            canvas.smallText(hint, x: (gridW - hintW) / 2, y: gridH - 12, c: Pal.white)
+        }
     }
 
     func makeImage() -> CGImage? {
@@ -467,16 +981,31 @@ final class TimeDuckView: NSObject {
     private func updateDuckBrain(_ dt: Double, now: Date) {
         let dx = duckTargetX - duckCurX
         if abs(dx) > 1.0 {
-            let speed = 28.0
+            let speed = brain.isChonky ? 16.0 : 28.0 // Heavy waddle during chonky mode!
             duckCurX += (dx > 0 ? 1 : -1) * min(abs(dx), speed * dt)
             duckFlip = dx < 0
-            stridePhase += dt * 9
+            stridePhase += dt * (brain.isChonky ? 5.0 : 9.0)
         } else {
-            // Check if arrived at a breadcrumb
-            if let idx = crumbs.firstIndex(where: { abs($0.x - (duckCurX + 6)) < 8 }) {
-                peckUntil = now.addingTimeInterval(0.9)
+            // Check if arrived at a breadcrumb (explicit beak alignment hit detection)
+            let beakX = duckCurX + (duckFlip ? 1.0 : 11.0)
+            if let idx = crumbs.firstIndex(where: { abs($0.x - beakX) < 4.0 || abs($0.x - (duckCurX + 6)) < 6.0 }) {
+                peckUntil = now.addingTimeInterval(1.0)
                 crumbs.remove(at: idx)
-                snd?.quack()
+                snd?.crumbCrunch()
+                let res = brain.onCrumbEaten()
+                if res.triggeredChonky {
+                    snd?.duckBurp()
+                    spawnSteamPuff()
+                    toast("MAXIMUM CHONK!")
+                } else {
+                    spawnCrumbParticles()
+                }
+                speak(res.phrase, duration: 2.4)
+                AchievementEngine.shared.evaluateEvent(
+                    .breadcrumbFed(totalFedToday: crumbs.count, triggeredChonky: res.triggeredChonky),
+                    stats: stats,
+                    now: now
+                )
             }
         }
         duckX = Int(duckCurX)
@@ -524,6 +1053,16 @@ final class TimeDuckView: NSObject {
                 self?.speak(text, duration: dur)
             }
         )
+
+        // Story Engine Progress & Lifecycle
+        if isPreviewingStory, let currP = previewProgress, storySpeedMultiplier > 0 {
+            let advanceRate = dt * (storySpeedMultiplier / 120.0)
+            previewProgress = min(1.0, currP + advanceRate)
+        }
+
+        let ctx = getStoryContext()
+        storyEngine.updateProgress(context: ctx, now: now)
+        storyEngine.tick(dt: dt, now: now, context: ctx)
     }
 
     // MARK: - Alarm & Event Handling
@@ -534,13 +1073,14 @@ final class TimeDuckView: NSObject {
     @discardableResult
     func processTimeEvents(_ now: Date = Date()) -> Bool {
         var didRecordCompletion = false
+        var shouldPlayCompletionAlarm = false
 
         // Timer completion (always, even if not current mode)
         if tm.isFinished(at: now) && !tm.completionRecorded {
             tm.markCompletionRecorded()
             stats.addFocusSeconds(tm.duration, now: now)
-            snd?.victoryFanfare()
-            alarmDismissed = false
+            shouldPlayCompletionAlarm = true
+            timerAlarmDismissed = false
             if currentMode == .timer {
                 spawnConfetti(75)
                 flapUntil = now.addingTimeInterval(1.2)
@@ -549,6 +1089,11 @@ final class TimeDuckView: NSObject {
                 speak(quip)
             }
             didRecordCompletion = true
+            AchievementEngine.shared.evaluateEvent(
+                .timerCompleted(mode: .timer, duration: tm.duration, isWorkPomodoro: false, isMiniHUD: mini),
+                stats: stats,
+                now: now
+            )
         }
 
         // Pomodoro completion (always, even if not current mode)
@@ -557,8 +1102,8 @@ final class TimeDuckView: NSObject {
                 stats.recordPomodoroCompleted(duration: pomo.workDuration, now: now)
             }
             pomo.markCompletionRecorded()
-            snd?.victoryFanfare()
-            alarmDismissed = false
+            shouldPlayCompletionAlarm = true
+            pomodoroAlarmDismissed = false
             if currentMode == .pomodoro {
                 spawnConfetti(75)
                 flapUntil = now.addingTimeInterval(1.2)
@@ -567,6 +1112,20 @@ final class TimeDuckView: NSObject {
                 speak(quip)
             }
             didRecordCompletion = true
+            AchievementEngine.shared.evaluateEvent(
+                .timerCompleted(mode: .pomodoro, duration: pomo.workDuration, isWorkPomodoro: pomo.phase == .work, isMiniHUD: mini),
+                stats: stats,
+                now: now
+            )
+        }
+
+        if shouldPlayCompletionAlarm {
+            clearSleepFX()
+            if let onCompletionAlarm = onCompletionAlarm {
+                onCompletionAlarm()
+            } else {
+                snd?.victoryFanfare()
+            }
         }
 
         // Urgency ticks and lastWholeSec only for the visible current mode
@@ -583,6 +1142,8 @@ final class TimeDuckView: NSObject {
         }
         return didRecordCompletion
     }
+
+    // MARK: - Mini Mode (Compact Mode)
 
     // MARK: - Mini Mode (Compact Mode)
 
@@ -606,7 +1167,15 @@ final class TimeDuckView: NSObject {
             goLabel = "DONE"
         }
 
-        let modeTag = currentMode == .pomodoro ? "POMO" : (currentMode == .timer ? "TIMER" : "SW")
+        let modeTag: String
+        switch currentMode {
+        case .pomodoro:
+            modeTag = pomo.isRunning ? (pomo.phase == .work ? "FOCUS" : "BREAK") : "POMO"
+        case .timer:
+            modeTag = "TIMER"
+        case .stopwatch:
+            modeTag = "SW"
+        }
 
         return CompactLayoutMetrics(
             gridW: gridW,
@@ -670,17 +1239,40 @@ final class TimeDuckView: NSObject {
             str = Fmt.sw(sw.elapsed)
         }
 
-        // Top-Left: Mode pill / switch button
+        // Top-Left: Mode & State Badge
         let modeHovered = hoverId == "tab-cycle"
-        canvas.fillRect(m.modePillRect.x, m.modePillRect.y, m.modePillRect.w, m.modePillRect.h, Pal.panelHi)
-        canvas.frameRect(m.modePillRect.x, m.modePillRect.y, m.modePillRect.w, m.modePillRect.h, modeHovered ? Pal.white : Pal.green)
-        canvas.smallText(m.modeTag, x: m.modePillRect.x + 3, y: m.modePillRect.y + 1, c: modeHovered ? Pal.white : Pal.green)
+        let isPaused = !running && (
+            (currentMode == .pomodoro && pomo.remainingAtStop < pomo.currentDuration) ||
+            (currentMode == .timer && tm.remainingAtStop < tm.duration) ||
+            (currentMode == .stopwatch && sw.elapsed > 0)
+        )
+        let pillBorderCol: Color
+        let pillTextCol: Color
+        if isFinished && !alarmDismissed {
+            let blink = Int(t * 3) % 2 == 0
+            pillBorderCol = blink ? Pal.white : Pal.red
+            pillTextCol = blink ? Pal.white : Pal.red
+        } else if isPaused {
+            pillBorderCol = modeHovered ? Pal.white : Pal.amber
+            pillTextCol = modeHovered ? Pal.white : Pal.amber
+        } else if running {
+            let col = (currentMode == .pomodoro && pomo.phase != .work) ? Pal.cyan : Pal.green
+            pillBorderCol = modeHovered ? Pal.white : col
+            pillTextCol = modeHovered ? Pal.white : col
+        } else {
+            pillBorderCol = modeHovered ? Pal.white : Pal.inkDim
+            pillTextCol = modeHovered ? Pal.white : Pal.ink
+        }
 
-        // Top-Right: Sound toggle & Expand / Exit Compact button (strictly left of duck separator)
+        canvas.fillRect(m.modePillRect.x, m.modePillRect.y, m.modePillRect.w, m.modePillRect.h, Pal.panelHi)
+        canvas.frameRect(m.modePillRect.x, m.modePillRect.y, m.modePillRect.w, m.modePillRect.h, pillBorderCol)
+        canvas.smallText(m.modeTag, x: m.modePillRect.x + 3, y: m.modePillRect.y + 1, c: pillTextCol)
+
+        // Top-Right: Sound toggle & Expand / Exit Compact button
         drawTitleToggle("toggle-sound", x: m.soundRect.x, on: snd?.enabled ?? true, glyph: .speaker)
         drawTitleToggle("unmini", x: m.unminiRect.x, on: false, glyph: .expand)
 
-        // Center-Left: Time Digits in protected region
+        // Center-Left: Primary Time Digits in Protected Region
         let textCol: Color
         if isFinished && !alarmDismissed {
             textCol = Int(t * 4) % 2 == 0 ? Pal.white : Pal.red
@@ -706,7 +1298,7 @@ final class TimeDuckView: NSObject {
             drawCompactTime(str, x: m.timeAreaRect.x, y: m.timeAreaRect.y, maxWidth: m.maxTimeWidth, color: textCol)
         }
 
-        // Center-Right: Action buttons (GO, SEC)
+        // Center-Right: Action buttons (GO, SEC) - Clear but Quiet with Hover Emphasis
         var goLabel = "START"
         var goStyle: BtnStyle = .primary
         var secLabel = "ACTION"
@@ -738,7 +1330,20 @@ final class TimeDuckView: NSObject {
         drawButton(id: "go", label: goLabel, x: m.goRect.x, y: m.goRect.y, w: m.goRect.w, h: m.goRect.h, style: goStyle)
         drawButton(id: "sec", label: secLabel, x: m.secRect.x, y: m.secRect.y, w: m.secRect.w, h: m.secRect.h, style: secStyle)
 
-        // Far-Right: Dedicated Animated Duck Box (Protected Column)
+        // Far-Right: Dedicated Mini Stage
+        drawMiniStage(m, t: t, now: now, running: running)
+
+        // Bottom Progress Bar
+        drawMiniProgressBar(t, x: m.progressBarRect.x, y: m.progressBarRect.y, w: m.progressBarRect.w)
+    }
+
+    private func drawMiniStage(
+        _ m: CompactLayoutMetrics,
+        t: Double,
+        now: Date,
+        running: Bool
+    ) {
+        // 1. Far-Right: Dedicated Mini Stage Box (Protected Column)
         canvas.vline(m.duckX - 1, 2, gridH - 3, Pal.grid)
         canvas.fillRect(m.duckX, m.duckY, m.duckW, m.duckH, Pal.bgDeep)
 
@@ -749,12 +1354,278 @@ final class TimeDuckView: NSObject {
 
         let dx = m.duckSpriteX
         let dy = m.duckSpriteY
-        let rows = miniDuckRows(t, running: running, now: now)
-        canvas.drawSprite(rows, x: dx, y: dy, map: getDuckColorMap(rareEvent: brain.activeRareEvent), flip: false)
-        drawDuckHat(currentHat, duckX: dx, duckY: dy, duckRows: rows, t: t, isRunning: running, isCelebrating: isFinished && !alarmDismissed, flip: false)
+        var duckRows = miniDuckRows(t, running: running, now: now)
+        var duckFlip = false
+        var duckDrawX = dx
+        var duckDrawY = dy
 
-        // Bottom Progress Bar
-        drawMiniProgressBar(t, x: m.progressBarRect.x, y: m.progressBarRect.y, w: m.progressBarRect.w)
+        // 2. Duck Stories in Mini Stage
+        if storyEngine.selectedStoryId != .off, let activeStory = storyEngine.activeStory {
+            let storyId = storyEngine.selectedStoryId
+            let sceneIdx = activeStory.activeSceneIndex
+            let sceneTime = activeStory.sceneElapsedTime
+
+            if storyEngine.isFinaleActive {
+                let finaleTime = storyEngine.finaleElapsedTime
+                switch storyId {
+                case .theFeast:
+                    if let feast = activeStory as? TheFeastStory, feast.isDigesting {
+                        duckRows = feast.getSpriteOverride() ?? DUCK_BASE
+                    } else {
+                        let t = finaleTime.truncatingRemainder(dividingBy: 10.0)
+                        duckRows = (t < 5.0) ? DUCK_BASE : DUCK_IDLE_WAG
+                    }
+                case .theExpedition:
+                    let flagFrames = [PROP_MINI_SUMMIT_FLAG_A, PROP_MINI_SUMMIT_FLAG_B]
+                    let flagFrame = flagFrames[Int(finaleTime * 3) % 2]
+                    let flagX = m.duckX + 1
+                    let flagY = max(m.duckY + 1, dy + 1)
+                    canvas.drawSprite(flagFrame, x: flagX, y: flagY, map: ["k": Pal.inkDim, "r": Pal.red, "s": Pal.grid], flip: false)
+                    duckDrawX = min(m.duckX + m.duckW - 13, dx + 2)
+                    let t = finaleTime.truncatingRemainder(dividingBy: 12.0)
+                    duckRows = (t < 6.0) ? DUCK_PROUD : DUCK_BASE
+                case .nightShift:
+                    duckRows = DUCK_SLEEP_DEEP
+                case .theWod:
+                    let t = finaleTime.truncatingRemainder(dividingBy: 10.0)
+                    duckRows = (t < 5.0) ? DUCK_WOD_FLEX : DUCK_PROUD
+                case .theRescue:
+                    let girlX = m.duckX + 1
+                    let girlY = dy + 1
+                    canvas.drawSprite(ACTOR_MINI_GIRL_DUCK_A, x: girlX, y: girlY, map: ["m": Pal.magenta, "y": Pal.duckBody, "k": Pal.duckEye, "w": Pal.white, "o": Pal.amber, "d": Pal.duckShad], flip: false)
+                    duckDrawX = min(m.duckX + m.duckW - 13, dx + 3)
+                    duckRows = DUCK_PROUD
+                    duckFlip = true
+                default: break
+                }
+            } else {
+                switch storyId {
+                case .theFeast:
+                    // The Feast in Mini Stage
+                    if let feast = activeStory as? TheFeastStory {
+                        let stage = feast.fullnessStage
+                        let feeding = (Int(sceneTime * 2) % 4) < 2
+                        if feeding && stage < 5 {
+                            let crumbX = max(m.duckX + 1, min(m.duckX + m.duckW - 4, dx - 2))
+                            let crumbY = dy + 7
+                            canvas.fillRect(crumbX, crumbY, 2, 2, Pal.amber)
+                            canvas.set(crumbX + 1, crumbY + 1, Pal.white)
+                            duckRows = (Int(sceneTime * 4) % 2 == 0) ? DUCK_PECK_B : DUCK_SWALLOW
+                            duckFlip = true
+                        } else {
+                            switch stage {
+                            case 0: duckRows = running ? DUCK_RUN_A : DUCK_BASE
+                            case 1: duckRows = DUCK_CHONK_STAGE1
+                            case 2: duckRows = DUCK_CHONK_STAGE2
+                            case 3: duckRows = DUCK_CHONK_STAGE3
+                            case 4: duckRows = DUCK_CHONK_STAGE4
+                            case 5: duckRows = (Int(sceneTime * 3) % 2 == 0) ? DUCK_CHONK_STAGE5 : DUCK_BELLY_WOBBLE
+                            default: duckRows = DUCK_CHONK_STAGE5
+                            }
+                        }
+                    }
+
+                case .theExpedition:
+                    // The Expedition in Mini Stage
+                    switch sceneIdx {
+                    case 0: // Scene 1: Micro trail sign + map
+                        let signX = m.duckX + 1
+                        let signY = max(m.duckY + 1, dy + 2)
+                        canvas.drawSprite(PROP_MINI_TRAIL_SIGN, x: signX, y: signY, map: ["a": Pal.amber, "k": Pal.inkDim, "s": Pal.grid], flip: false)
+                        duckDrawX = min(m.duckX + m.duckW - 13, dx + 2)
+                        duckRows = (Int(sceneTime * 2) % 4 < 2) ? DUCK_INVESTIGATE_A : DUCK_MAP_CHECK_A
+                        duckFlip = true
+                    case 1: // Scene 2: Micro animated campfire
+                        let fireFrames = [PROP_MINI_CAMPFIRE_A, PROP_MINI_CAMPFIRE_B]
+                        let fireFrame = fireFrames[Int(sceneTime * 4) % 2]
+                        let fireX = m.duckX + 1
+                        let fireY = max(m.duckY + 2, dy + 4)
+                        canvas.drawSprite(fireFrame, x: fireX, y: fireY, map: ["r": Pal.red, "o": Pal.amber, "a": Pal.amber, "w": Pal.white], flip: false)
+                        duckDrawX = min(m.duckX + m.duckW - 13, dx + 2)
+                        duckRows = DUCK_WARM_WINGS
+                        duckFlip = true
+                    case 2: // Scene 3: Micro rock hop
+                        let rockX = m.duckX + 1
+                        let rockY = max(m.duckY + 2, dy + 5)
+                        canvas.drawSprite(PROP_MINI_ROCK, x: rockX, y: rockY, map: ["s": Pal.grid], flip: false)
+                        duckRows = (Int(sceneTime * 3) % 2 == 0) ? DUCK_EXPEDITION_WADDLE_A : DUCK_INVESTIGATE_B
+                    case 3: // Scene 4: Wind lean
+                        duckRows = (Int(sceneTime * 3) % 2 == 0) ? DUCK_WIND_LEAN_A : DUCK_WIND_LEAN_B
+                        duckFlip = true
+                    case 4: // Scene 5: Micro animated summit flag
+                        let flagFrames = [PROP_MINI_SUMMIT_FLAG_A, PROP_MINI_SUMMIT_FLAG_B]
+                        let flagFrame = flagFrames[Int(sceneTime * 3) % 2]
+                        let flagX = m.duckX + 1
+                        let flagY = max(m.duckY + 1, dy + 1)
+                        canvas.drawSprite(flagFrame, x: flagX, y: flagY, map: ["k": Pal.inkDim, "r": Pal.red, "s": Pal.grid], flip: false)
+                        duckDrawX = min(m.duckX + m.duckW - 13, dx + 2)
+                        duckRows = DUCK_SUMMIT_CHEER
+                    default: break
+                    }
+
+                case .nightShift:
+                    // Night Shift in Mini Stage
+                    switch sceneIdx {
+                    case 0: // Scene 1: Micro steaming coffee
+                        let coffeeFrames = [PROP_MINI_COFFEE_A, PROP_MINI_COFFEE_B]
+                        let coffeeFrame = coffeeFrames[Int(sceneTime * 3) % 2]
+                        let coffeeX = m.duckX + 1
+                        let coffeeY = max(m.duckY + 2, dy + 4)
+                        canvas.drawSprite(coffeeFrame, x: coffeeX, y: coffeeY, map: ["s": Pal.sweat, "w": Pal.white, "a": Pal.amber], flip: false)
+                        duckDrawX = min(m.duckX + m.duckW - 13, dx + 2)
+                        duckRows = DUCK_SWALLOW
+                        duckFlip = true
+                    case 1: // Scene 2: Big yawn
+                        duckRows = (Int(sceneTime * 2) % 4 < 2) ? DUCK_YAWN : DUCK_FEATHER_RUFFLE_A
+                    case 2: // Scene 3: Droop sleep & splash
+                        duckRows = (Int(sceneTime * 2) % 4 < 2) ? DUCK_NIGHT_DROOP : DUCK_NIGHT_FACE_SPLASH
+                    case 3: // Scene 4: Blanket micro-nap
+                        duckRows = (Int(sceneTime * 2) % 4 < 2) ? DUCK_NIGHT_DROOP : DUCK_NIGHT_BLANKET_THROW
+                    case 4: // Scene 5: Morning victory
+                        duckRows = DUCK_EXPEDITION_WADDLE_A
+                    default: break
+                    }
+
+                case .theWod:
+                    // The WOD in Mini Stage
+                    switch sceneIdx {
+                    case 0: // Scene 1: Warmup jacks
+                        duckRows = (Int(sceneTime * 4) % 2 == 0) ? DUCK_WOD_WARMUP_A : DUCK_WOD_WARMUP_B
+                    case 1: // Scene 2: Micro Elliptical (Physically mounted and pedaling!)
+                        let ellipFrames = [PROP_MINI_ELLIPTICAL_A, PROP_MINI_ELLIPTICAL_B]
+                        let ellipFrame = ellipFrames[Int(sceneTime * 4) % 2]
+                        let ellipX = m.duckX + 1
+                        let ellipY = max(m.duckY + 1, dy + 1)
+                        canvas.drawSprite(ellipFrame, x: ellipX, y: ellipY, map: ["s": Pal.cyan, "k": Pal.inkDim], flip: false)
+                        duckDrawX = min(m.duckX + m.duckW - 13, dx + 1)
+                        duckDrawY = dy - 1
+                        duckRows = (Int(sceneTime * 4) % 2 == 0) ? DUCK_ELLIPTICAL_A : DUCK_ELLIPTICAL_B
+                    case 2: // Scene 3: Micro Treadmill (Mounted on moving belt with sweat!)
+                        let treadFrames = [PROP_MINI_TREADMILL_A, PROP_MINI_TREADMILL_B]
+                        let treadFrame = treadFrames[Int(sceneTime * 5) % 2]
+                        let treadX = m.duckX + 1
+                        let treadY = max(m.duckY + 2, dy + 4)
+                        canvas.drawSprite(treadFrame, x: treadX, y: treadY, map: ["s": Pal.grid, "k": Pal.inkDim], flip: false)
+                        duckDrawX = min(m.duckX + m.duckW - 13, dx + 1)
+                        duckRows = (Int(sceneTime * 5) % 2 == 0) ? DUCK_TREADMILL_A : DUCK_TREADMILL_B
+                    case 3: // Scene 4: Micro Dumbbells
+                        let dbX = m.duckX + 1
+                        let dbY = max(m.duckY + 2, dy + 5)
+                        canvas.drawSprite(PROP_MINI_DUMBBELLS, x: dbX, y: dbY, map: ["k": Pal.inkDim, "s": Pal.grid], flip: false)
+                        duckDrawX = min(m.duckX + m.duckW - 13, dx + 2)
+                        duckRows = (Int(sceneTime * 3) % 2 == 0) ? DUCK_DUMBBELL_A : DUCK_DUMBBELL_B
+                    case 4: // Scene 5: Flex victory
+                        duckRows = DUCK_WOD_FLEX
+                    default: break
+                    }
+
+                case .theRescue:
+                    // The Rescue in Mini Stage
+                    switch sceneIdx {
+                    case 0: // Scene 1: Micro metal crate sneak
+                        let crateX = m.duckX + 1
+                        let crateY = max(m.duckY + 2, dy + 3)
+                        canvas.drawSprite(PROP_MINI_METAL_CRATE, x: crateX, y: crateY, map: ["s": Pal.grid, "a": Pal.amber], flip: false)
+                        duckDrawX = min(m.duckX + m.duckW - 13, dx + 2)
+                        duckRows = (Int(sceneTime * 3) % 2 == 0) ? DUCK_STEALTH_CROUCH : DUCK_STEALTH_TIPTOE_A
+                    case 1: // Scene 2: Micro camera sweep & box disguise
+                        let camFrames = [PROP_MINI_SECURITY_CAMERA_L, PROP_MINI_SECURITY_CAMERA_R]
+                        let camFrame = camFrames[Int(sceneTime * 2) % 2]
+                        let camX = min(m.duckX + m.duckW - 6, dx + 8)
+                        let camY = m.duckY + 1
+                        canvas.drawSprite(camFrame, x: camX, y: camY, map: ["s": Pal.grid, "r": Pal.red, "k": Pal.inkDim], flip: false)
+                        duckRows = (Int(sceneTime * 2) % 4 < 2) ? DUCK_STEALTH_BOX_DISGUISE : DUCK_STEALTH_CROUCH
+                    case 2: // Scene 3: Micro Guard Duck Patrol
+                        let guardFrames = [ACTOR_MINI_GUARD_DUCK_A, ACTOR_MINI_GUARD_DUCK_B]
+                        let guardFrame = guardFrames[Int(sceneTime * 3) % 2]
+                        let guardX = m.duckX + 1
+                        let guardY = dy + 1
+                        canvas.drawSprite(guardFrame, x: guardX, y: guardY, map: ["k": Pal.inkDim, "d": Pal.ink, "o": Pal.amber, "s": Pal.grid], flip: false)
+                        duckDrawX = min(m.duckX + m.duckW - 13, dx + 3)
+                        duckRows = DUCK_STEALTH_CROUCH
+                        duckFlip = true
+                    case 3: // Scene 4: Micro Girl Duck Actor
+                        let girlFrames = [ACTOR_MINI_GIRL_DUCK_A, ACTOR_MINI_GIRL_DUCK_B]
+                        let girlFrame = girlFrames[Int(sceneTime * 3) % 2]
+                        let girlX = m.duckX + 1
+                        let girlY = dy + 1
+                        canvas.drawSprite(girlFrame, x: girlX, y: girlY, map: ["m": Pal.magenta, "y": Pal.duckBody, "k": Pal.duckEye, "w": Pal.white, "o": Pal.amber, "d": Pal.duckShad], flip: false)
+                        duckDrawX = min(m.duckX + m.duckW - 13, dx + 3)
+                        duckRows = DUCK_YAY_A
+                        duckFlip = true
+                    case 4: // Scene 5: Escape
+                        duckRows = (Int(sceneTime * 4) % 2 == 0) ? DUCK_RUN_A : DUCK_RUN_B
+                    default: break
+                    }
+                case .auto, .off: break
+                }
+            }
+        }
+
+        let isSleeping = (now.timeIntervalSince(lastUserActivity) > 35 && !running && !(isFinished && !alarmDismissed)) || brain.currentPhase == .sleepy || (storyEngine.selectedStoryId == .nightShift && storyEngine.isFinaleActive)
+        if isSleeping {
+            spawnSnoreParticle(rows: duckRows, duckX: duckDrawX, duckY: duckDrawY, flip: duckFlip, isMini: true, now: now)
+        } else if !snoreParticles.isEmpty {
+            clearSleepFX()
+        }
+
+        // 3. Draw TimeDuck Sprite in Mini Stage
+        canvas.drawSprite(
+            duckRows,
+            x: duckDrawX,
+            y: duckDrawY,
+            map: TimeCompanionRegistry.shared.activeCompanion.resolveColorMap(rareEvent: brain.activeRareEvent),
+            flip: duckFlip
+        )
+
+        // 4. Draw Living Wardrobe Hat in Mini Stage (clamped to Mini Stage bounds)
+        drawDuckHat(
+            currentHat,
+            duckX: duckDrawX,
+            duckY: duckDrawY,
+            duckRows: duckRows,
+            t: t,
+            isRunning: running,
+            isCelebrating: isFinished && !alarmDismissed,
+            flip: duckFlip
+        )
+
+        // 5. Draw Micro Breadcrumbs in Mini Stage
+        for c in crumbs {
+            let bx = Int(c.x), by = Int(c.y)
+            if bx >= m.duckX && bx < m.duckX + m.duckW && by >= m.duckY && by < m.duckY + m.duckH {
+                canvas.fillRect(bx, by, 2, 2, Pal.amber)
+                canvas.set(bx + 1, by + 1, Pal.white)
+            }
+        }
+
+        // 6. Draw Word-by-Word Dialogue in Mini Stage (Strictly within Mini Stage)
+        if let text = speechText, !text.isEmpty && now < speechUntil && !speechWords.isEmpty {
+            let totalDur = max(0.1, speechUntil.timeIntervalSince(speechBorn))
+            let elapsed = max(0.0, now.timeIntervalSince(speechBorn))
+            let wordDur = min(0.38, max(0.20, (totalDur * 0.72) / Double(speechWords.count)))
+            let wordIdx = min(speechWords.count - 1, Int(elapsed / wordDur))
+            let rawWord = speechWords[wordIdx]
+            let maxWordW = max(8, m.duckW - 2)
+            let word = PixelCanvas.fitSmallText(rawWord, maxWidth: maxWordW)
+            if !word.isEmpty {
+                let textW = PixelCanvas.smallWidth(word)
+                let textX = m.duckX + max(1, (m.duckW - textW) / 2)
+                let textY = max(m.duckY + 1, min(gridH - 7, dy - 6))
+                canvas.fillRect(textX - 1, textY - 1, textW + 2, 7, Pal.bgDeep)
+                canvas.frameRect(textX - 1, textY - 1, textW + 2, 7, Pal.inkDim)
+                canvas.smallText(word, x: textX, y: textY, c: Pal.ink)
+            }
+        }
+
+        // 7. Draw Micro Particles & Snore FX (Clipped to Mini Stage)
+        for p in parts {
+            let px = Int(p.x), py = Int(p.y)
+            if px >= m.duckX && px < m.duckX + m.duckW && py >= m.duckY && py < m.duckY + m.duckH {
+                canvas.set(px, py, p.c)
+            }
+        }
+        drawSnoreParticles(m)
     }
 
     private func drawMiniProgressBar(_ t: Double, x: Int, y: Int, w: Int) {
@@ -781,21 +1652,26 @@ final class TimeDuckView: NSObject {
     }
 
     private func miniDuckRows(_ t: Double, running: Bool, now: Date) -> [String] {
-        if isFinished && !alarmDismissed {
-            return Int(t * 6) % 2 == 0 ? DUCK_YAY_A : DUCK_YAY_B
-        }
-        if now < hopUntil || now < quackUntil {
-            return DUCK_QUACK_ROWS
-        }
-        if now < petUntil {
-            return DUCK_PET_ROWS
-        }
-        if running {
-            let ph = (t * 6).truncatingRemainder(dividingBy: 3)
-            return ph < 1 ? DUCK_RUN_A : (ph < 2 ? DUCK_RUN_B : DUCK_RUN_C)
-        }
-        let breathe = Int(t * 1.5) % 3
-        return breathe == 0 ? DUCK_BASE : (breathe == 1 ? DUCK_IDLE_B : DUCK_IDLE_WAG)
+        let isFlapping = isFinished && !alarmDismissed
+        let isQuacking = now < hopUntil || now < quackUntil
+        let isPetting = now < petUntil
+        let isEating = crumbs.count > 0
+        let isBreakRunning = (currentMode == .pomodoro && pomo.phase != .work && pomo.isRunning)
+        let isSleeping = (now.timeIntervalSince(lastUserActivity) > 35 && !running && !(isFinished && !alarmDismissed)) || brain.currentPhase == .sleepy || (storyEngine.selectedStoryId == .nightShift && storyEngine.isFinaleActive)
+
+        return brain.getSpriteRows(
+            t: t,
+            now: now,
+            isFlapping: isFlapping,
+            isQuacking: isQuacking,
+            isPetting: isPetting,
+            isEating: isEating,
+            isBreakRunning: isBreakRunning,
+            isRunning: running,
+            isSleeping: isSleeping,
+            stridePhase: t * 6.0,
+            blinkUntil: blinkUntil
+        )
     }
 
     // MARK: - Full Chrome
@@ -817,7 +1693,7 @@ final class TimeDuckView: NSObject {
         while emberBudget >= 1 {
             emberBudget -= 1
             var rng = SystemRandomNumberGenerator()
-            parts.append(Particle(
+            appendParticle(Particle(
                 x: Double(Int.random(in: 2..<max(3, gridW - 2), using: &rng)),
                 y: Double(gridH - 2),
                 vx: Double.random(in: -3...3),
@@ -848,6 +1724,7 @@ final class TimeDuckView: NSObject {
         canvas.smallText("TIMEDUCK V\(AppVersion.version)", x: 4, y: 3, c: Pal.inkDim)
 
         // Titlebar toggles
+        drawTitleToggle("tgl-duckbook", x: gridW - 68, on: DuckbookEngine.shared.isOpen, glyph: .book)
         drawTitleToggle("tgl-mini", x: gridW - 57, on: false, glyph: .expand)
         drawTitleToggle("tgl-hat", x: gridW - 46, on: currentHat != .none, glyph: .hat)
         drawTitleToggle("tgl-theme", x: gridW - 35, on: true, glyph: .palette)
@@ -1043,7 +1920,7 @@ final class TimeDuckView: NSObject {
             } else if pomo.isRunning {
                 color = pomo.phase == .work ? Pal.green.withPulse(t, amp: 0.08) : Pal.cyan.withPulse(t, amp: 0.08)
             } else {
-                color = Pal.ink
+                color = Pal.white
             }
 
         case .timer:
@@ -1056,12 +1933,12 @@ final class TimeDuckView: NSObject {
             } else if tm.isRunning {
                 color = tm.remaining <= 5 ? Pal.red : (tm.remaining <= 10 ? Pal.amber : Pal.cyan.withPulse(t, amp: 0.08))
             } else {
-                color = Pal.ink
+                color = Pal.white
             }
 
         case .stopwatch:
             str = Fmt.sw(sw.elapsed)
-            color = sw.isRunning ? Pal.green.withPulse(t, amp: 0.08) : (sw.elapsed > 0 ? Pal.amber : Pal.ink)
+            color = sw.isRunning ? Pal.green.withPulse(t, amp: 0.08) : (sw.elapsed > 0 ? Pal.amber : Pal.white)
         }
 
         let mainScale = 2
@@ -1079,7 +1956,7 @@ final class TimeDuckView: NSObject {
         let fw = frac.isEmpty ? 0 : PixelCanvas.heroWidth(String(frac), scale: fracScale)
         let totalW = mw + (fw == 0 ? 0 : fw + 3)
         let x0 = max(8, (gridW - totalW) / 2)
-        let clockY = 22
+        let clockY = 21
 
         // CRT Phosphor Ghosting
         if str != ghostPrev {
@@ -1095,17 +1972,17 @@ final class TimeDuckView: NSObject {
             canvas.heroText(String(frac), x: x0 + mw + 3, y: clockY, c: color, scale: fracScale)
         }
 
-        // Mode badge under clock
+        // Subordinate status line under clock (Safe Band Y: 38..43)
         let status = statusLine(now)
         let fit = PixelCanvas.fitSmallText(status, maxWidth: gridW - 12)
-        canvas.smallText(fit, x: (gridW - PixelCanvas.smallWidth(fit)) / 2, y: 39, c: Pal.inkDim)
+        canvas.smallText(fit, x: (gridW - PixelCanvas.smallWidth(fit)) / 2, y: 38, c: Pal.inkDim)
 
-        // Progress meter bar
+        // Progress meter bar (Safe Band Y: 45..47)
         drawProgressBar(t)
     }
 
     private func drawProgressBar(_ t: Double) {
-        let x = 6, w = gridW - 12, y = 46
+        let x = 6, w = gridW - 12, y = 45
         let frac: Double
         switch currentMode {
         case .pomodoro:
@@ -1130,28 +2007,24 @@ final class TimeDuckView: NSObject {
         case .pomodoro:
             if pomo.finished && !alarmDismissed { return "CYCLE COMPLETE · SPACE TO ADVANCE" }
             if pomo.isRunning {
-                let eta = now.addingTimeInterval(pomo.remaining)
-                let comp = Calendar.current.dateComponents([.hour, .minute], from: eta)
-                return String(format: "\(pomo.phase.title) · DONE BY %02d:%02d", comp.hour ?? 0, comp.minute ?? 0)
+                let phaseTag = pomo.phase == .work ? "FOCUS" : (pomo.phase == .shortBreak ? "SHORT BREAK" : "LONG BREAK")
+                return "\(phaseTag) · CYCLE \(pomo.cyclesCompleted + 1)"
             }
-            return "POMODORO FOCUS · SPACE TO START"
+            if pomo.remainingAtStop < pomo.currentDuration { return "PAUSED · SPACE RESUMES" }
+            return "POMODORO · FOCUS 25M"
 
         case .timer:
             if tm.finished && !alarmDismissed { return "COMPLETE · SPACE CLEARS" }
-            if tm.isRunning {
-                let eta = now.addingTimeInterval(tm.remaining)
-                let comp = Calendar.current.dateComponents([.hour, .minute], from: eta)
-                return String(format: "RUNNING · DONE BY %02d:%02d", comp.hour ?? 0, comp.minute ?? 0)
-            }
+            if tm.isRunning { return "COUNTDOWN ACTIVE" }
             if tm.remainingAtStop < tm.duration { return "PAUSED · SPACE RESUMES" }
-            return "COUNTDOWN TIMER · SPACE TO START"
+            return "COUNTDOWN TIMER · READY"
 
         case .stopwatch:
             if sw.isRunning {
-                return sw.laps.isEmpty ? "RUNNING" : "LAP \(sw.laps.count + 1) IN PROGRESS"
+                return sw.laps.isEmpty ? "STOPWATCH RUNNING" : "LAP \(sw.laps.count + 1) IN PROGRESS"
             }
             if sw.elapsed > 0 { return "PAUSED · SPACE RESUMES" }
-            return "STOPWATCH · SPACE TO START"
+            return "STOPWATCH · READY"
         }
     }
 
@@ -1198,37 +2071,100 @@ final class TimeDuckView: NSObject {
             dy -= abs(sin(t * 7)) > 0.4 ? 2 : 0
         } else if isPetting {
             dy -= Int(abs(sin(t * 10)) * 2)
-        } else if isSleeping {
-            if Int(t * 2.5) % 4 == 0 && parts.count < 60 {
-                parts.append(Particle(
-                    x: Double(duckX + (flip ? 2 : 10)), y: Double(dy - 2),
-                    vx: flip ? Double.random(in: -7...(-3)) : Double.random(in: 3...7),
-                    vy: Double.random(in: -14...(-8)),
-                    life: 2.0, maxLife: 2.0, c: Pal.cyan, grav: -1
-                ))
-            }
         }
 
         if now < hopUntil && !running && !celebrate { dy -= 3 }
 
+        var resolvedRows = rows
+        var customDuckX = duckX
+        var customDuckY = dy
+        var customFlip = flip
+
+        if let perf = storyEngine.currentPerformanceOverride {
+            if let perfRows = perf.spriteRows {
+                resolvedRows = perfRows
+            }
+            if let px = perf.x {
+                customDuckX = Int(px)
+            }
+            if let py = perf.y {
+                customDuckY = Int(py)
+            }
+            if let pf = perf.flip {
+                customFlip = pf
+            }
+        } else if let feastRows = storyEngine.getFeastSpriteOverride() {
+            if !isEating && !isPetting && !running {
+                resolvedRows = feastRows
+            }
+        }
+
+        let isSleepingOrNightShiftSleep = isSleeping || (storyEngine.selectedStoryId == .nightShift && storyEngine.isFinaleActive)
+        if isSleepingOrNightShiftSleep {
+            spawnSnoreParticle(rows: resolvedRows, duckX: customDuckX, duckY: customDuckY, flip: customFlip, isMini: false, now: now)
+        } else {
+            if !snoreParticles.isEmpty {
+                clearSleepFX()
+            }
+        }
+
         // Draw Base Duck
-        canvas.drawSprite(rows, x: duckX, y: dy, map: getDuckColorMap(rareEvent: brain.activeRareEvent), flip: flip)
+        canvas.drawSprite(resolvedRows, x: customDuckX, y: customDuckY, map: TimeCompanionRegistry.shared.activeCompanion.resolveColorMap(rareEvent: brain.activeRareEvent), flip: customFlip)
 
         // Draw Hat Overlay via Living Wardrobe Attachment Engine
         drawDuckHat(
             currentHat,
-            duckX: duckX,
-            duckY: dy,
-            duckRows: rows,
+            duckX: customDuckX,
+            duckY: customDuckY,
+            duckRows: resolvedRows,
             t: t,
             isRunning: running,
             isCelebrating: celebrate,
-            flip: flip
+            flip: customFlip
         )
 
         // Draw Speech Bubble if active
         if let msg = speechText, now < speechUntil {
-            canvas.drawSpeechBubble(text: msg, targetX: duckX, targetY: dy, isFlipped: duckX > gridW - 45)
+            canvas.drawSpeechBubble(text: msg, targetX: customDuckX, targetY: customDuckY, isFlipped: customDuckX > gridW - 45)
+        }
+    }
+
+    // MARK: - Story Theatrical Renderers
+
+    private func drawStoryScenery(zIndex: Int) {
+        guard !mini else { return }
+        for prop in storyEngine.props where prop.zIndex == zIndex && prop.isVisible {
+            let map: [Character: Color]
+            switch prop.colorMapKey {
+            case "wood":
+                map = ["a": Pal.amber, "k": Pal.bgDeep, "s": Pal.grid, "w": Pal.white]
+            case "fire":
+                map = ["r": Pal.red, "o": Pal.duckBill, "a": Pal.amber, "w": Pal.white]
+            case "flag":
+                map = ["r": Pal.red, "k": Pal.bgDeep, "s": Pal.grid]
+            case "coffee":
+                map = ["w": Pal.white, "a": Pal.amber, "s": Pal.sweat]
+            case "metal":
+                map = ["s": Pal.grid, "k": Pal.bgDeep, "r": Pal.red, "a": Pal.amber]
+            case "gym":
+                map = ["a": Pal.amber, "k": Pal.bgDeep, "w": Pal.white, "s": Pal.grid]
+            default:
+                map = getDuckColorMap(rareEvent: brain.activeRareEvent)
+            }
+            canvas.drawSprite(prop.spriteRows, x: prop.x, y: prop.y, map: map, flip: prop.flip)
+        }
+    }
+
+    private func drawStoryActors() {
+        guard !mini else { return }
+        for actor in storyEngine.actors where actor.isVisible {
+            var map = actor.colorMapOverride ?? getDuckColorMap(rareEvent: brain.activeRareEvent)
+            map["m"] = Pal.magenta
+            map["p"] = Pal.cheek
+            map["k"] = Pal.bgDeep
+            map["s"] = Pal.grid
+            map["w"] = Pal.white
+            canvas.drawSprite(actor.spriteRows, x: Int(actor.x), y: Int(actor.y), map: map, flip: actor.flip)
         }
     }
 
@@ -1255,7 +2191,8 @@ final class TimeDuckView: NSObject {
         let finalFlip = flip ? !hatFlip : hatFlip
         let drawX = duckX + (flip ? -xOff : xOff)
         let drawY = duckY + yOff
-        canvas.drawSprite(hatRows, x: drawX, y: drawY, map: getDuckColorMap(rareEvent: brain.activeRareEvent), flip: finalFlip)
+        let hatColorMap = TimeCompanionRegistry.shared.activeCompanion.resolveColorMap(rareEvent: brain.activeRareEvent)
+        canvas.drawSprite(hatRows, x: drawX, y: drawY, map: hatColorMap, flip: finalFlip)
     }
 
     // MARK: - Titlebar Glyphs
@@ -1263,7 +2200,7 @@ final class TimeDuckView: NSObject {
     private var pinOn = false
     func setPin(_ on: Bool) { pinOn = on }
 
-    private enum Glyph { case pin, expand, speaker, hat, palette }
+    private enum Glyph { case pin, expand, speaker, hat, palette, book }
 
     private func drawTitleToggle(_ id: String, x: Int, on: Bool, glyph: Glyph) {
         let hovered = hoverId == id
@@ -1286,6 +2223,8 @@ final class TimeDuckView: NSObject {
             rows = ["..c..", ".ccc.", "ccccc", ".....", "....."]
         case .palette:
             rows = [".ccc.", "c.c.c", "ccccc", ".c.c.", "..c.."]
+        case .book:
+            rows = [".cccc", "c.c.c", "c.c.c", "c.c.c", ".cccc"]
         case .pin:
             rows = on ? ["..c..", ".ccc.", "..c..", "..c..", "..c.."]
                      : ["..c..", ".c.c.", "..c..", "..c..", "..c.."]
@@ -1324,10 +2263,68 @@ final class TimeDuckView: NSObject {
         if parts.count > 240 { parts.removeFirst(parts.count - 240) }
     }
 
+    private func appendParticle(_ particle: Particle) {
+        parts.append(particle)
+        if parts.count > 240 {
+            parts.removeFirst(parts.count - 240)
+        }
+    }
+
     private func drawParticles() {
         for p in parts {
             let k = min(1, p.life / min(0.4, p.maxLife))
             canvas.set(Int(p.x), Int(p.y), p.c, a: UInt8(255 * k))
+        }
+    }
+
+    private func stepSnoreParticles(_ dt: Double) {
+        for i in snoreParticles.indices.reversed() {
+            var s = snoreParticles[i]
+            s.life -= dt
+            if s.life <= 0 { snoreParticles.remove(at: i); continue }
+            s.x += s.vx * dt
+            s.y += s.vy * dt
+            snoreParticles[i] = s
+        }
+    }
+
+    private func drawSnoreParticles(_ m: CompactLayoutMetrics? = nil) {
+        for s in snoreParticles {
+            let progress = 1.0 - max(0.0, s.life / s.maxLife)
+            let glyph: [String]
+            if progress < 0.35 {
+                glyph = GLYPH_SNORE_Z_SMALL
+            } else if progress < 0.70 {
+                glyph = GLYPH_SNORE_Z_MED
+            } else {
+                glyph = GLYPH_SNORE_Z_LARGE
+            }
+
+            let alpha: UInt8 = UInt8(255.0 * min(1.0, max(0.0, s.life / 0.6)))
+            let snoreColor = Pal.cyan
+
+            let originX = Int(s.x)
+            let originY = Int(s.y)
+
+            for (rIdx, row) in glyph.enumerated() {
+                for (cIdx, char) in row.enumerated() {
+                    if char == "z" {
+                        let px = originX + cIdx
+                        let py = originY + rIdx
+
+                        if let miniMetrics = m {
+                            if s.isMini && px >= miniMetrics.duckX && px < miniMetrics.duckX + miniMetrics.duckW &&
+                               py >= miniMetrics.duckY && py < miniMetrics.duckY + miniMetrics.duckH {
+                                canvas.set(px, py, snoreColor, a: alpha)
+                            }
+                        } else if !s.isMini && !mini {
+                            if px >= 0 && px < gridW && py >= 0 && py < gridH {
+                                canvas.set(px, py, snoreColor, a: alpha)
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -1351,6 +2348,296 @@ final class TimeDuckView: NSObject {
         if isAnyRunning { return Pal.greenDim }
         return Pal.grid
     }
+
+// MARK: - Wave 8: Achievement Toast & Duckbook Journal Overlay
+
+    func drawAchievementToastOverlay(_ now: Date) {
+        AchievementEngine.shared.updateToasts(now: now)
+        guard let toast = AchievementEngine.shared.activeToast else { return }
+
+        let bannerW = min(gridW - 12, 150)
+        let bannerH = 18
+        let bannerX = (gridW - bannerW) / 2
+        let bannerY = mini ? 2 : 4
+
+        // Background fill & double border
+        canvas.fillRect(bannerX, bannerY, bannerW, bannerH, Pal.bgDeep, a: 245)
+        canvas.frameRect(bannerX, bannerY, bannerW, bannerH, Pal.cyan)
+        canvas.frameRect(bannerX + 1, bannerY + 1, bannerW - 2, bannerH - 2, Pal.panel)
+
+        // Glyph badge stamp (5x5)
+        let glyphMap: [Character: Color] = [
+            "w": Pal.white, "g": Pal.green, "r": Pal.red, "a": Pal.amber,
+            "b": Pal.cyan, "k": Pal.bgDeep, ".": Pal.clear
+        ]
+        canvas.drawSprite(toast.glyph, x: bannerX + 4, y: bannerY + 6, map: glyphMap, flip: false)
+
+        // Title: "★ <TITLE> ★"
+        let titleStr = "★ \(toast.title.uppercased()) ★"
+        canvas.smallText(titleStr, x: bannerX + 12, y: bannerY + 3, c: Pal.amber)
+
+        // Description or reward subtitle
+        let subStr: String
+        if let reward = toast.rewardDescription, !reward.isEmpty {
+            subStr = reward.uppercased()
+        } else {
+            subStr = toast.description.uppercased()
+        }
+        let truncatedSub = String(subStr.prefix(26))
+        canvas.smallText(truncatedSub, x: bannerX + 12, y: bannerY + 10, c: Pal.cyan)
+    }
+
+    func drawDuckbookOverlay(_ t: Double, _ now: Date) {
+        let modalX = 6
+        let modalY = 8
+        let modalW = gridW - 12
+        let modalH = gridH - 16
+
+        // Modal backdrop panel & high-contrast phosphor border
+        canvas.fillRect(modalX, modalY, modalW, modalH, Pal.bgDeep, a: 245)
+        canvas.frameRect(modalX, modalY, modalW, modalH, Pal.cyan)
+        canvas.frameRect(modalX + 1, modalY + 1, modalW - 2, modalH - 2, Pal.panel)
+
+        // Header
+        canvas.smallText("DUCKBOOK", x: modalX + 6, y: modalY + 3, c: Pal.amber)
+        let countStr = "\(AchievementEngine.shared.unlockedCount)/\(AchievementEngine.shared.totalCount) UNLOCKED"
+        canvas.smallText(countStr, x: modalX + 54, y: modalY + 3, c: Pal.inkDim)
+
+        // Close button [X]
+        let closeHovered = (hoverId == "db-close")
+        canvas.fillRect(modalX + modalW - 12, modalY + 2, 9, 8, closeHovered ? Pal.panelHi : Pal.panel)
+        canvas.frameRect(modalX + modalW - 12, modalY + 2, 9, 8, closeHovered ? Pal.white : Pal.inkDim)
+        canvas.smallText("X", x: modalX + modalW - 9, y: modalY + 3, c: closeHovered ? Pal.white : Pal.inkDim)
+
+        // Tab header bar (y: modalY + 11)
+        canvas.hline(modalX + 2, modalX + modalW - 3, modalY + 10, Pal.grid)
+        canvas.hline(modalX + 2, modalX + modalW - 3, modalY + 19, Pal.grid)
+
+        let tabs = DuckbookTab.allCases
+        let tabXOffsets = [6, 54, 110]
+        let tabWidths = [44, 52, 34]
+
+        for (idx, tab) in tabs.enumerated() {
+            let isSelected = (DuckbookEngine.shared.activeTab == tab)
+            let tx = modalX + tabXOffsets[idx]
+            let tw = tabWidths[idx]
+            let hovered = (hoverId == "db-tab-\(idx)")
+
+            if isSelected {
+                canvas.fillRect(tx, modalY + 11, tw, 8, Pal.panelHi)
+                canvas.frameRect(tx, modalY + 11, tw, 8, Pal.cyan)
+                canvas.smallText(tab.title, x: tx + 3, y: modalY + 12, c: Pal.white)
+            } else {
+                if hovered {
+                    canvas.fillRect(tx, modalY + 11, tw, 8, Pal.panel)
+                    canvas.frameRect(tx, modalY + 11, tw, 8, Pal.inkDim)
+                }
+                canvas.smallText(tab.title, x: tx + 3, y: modalY + 12, c: hovered ? Pal.white : Pal.inkDim)
+            }
+        }
+
+        // Content Area (y: modalY + 21 ... modalY + modalH - 12)
+        switch DuckbookEngine.shared.activeTab {
+        case .companions:
+            drawDuckbookCompanionsTab(modalX: modalX, modalY: modalY, modalW: modalW, modalH: modalH, t: t)
+        case .achievements:
+            drawDuckbookAchievementsTab(modalX: modalX, modalY: modalY, modalW: modalW, modalH: modalH)
+        case .secrets:
+            drawDuckbookSecretsTab(modalX: modalX, modalY: modalY, modalW: modalW, modalH: modalH)
+        }
+
+        // Footer Hint Bar
+        canvas.hline(modalX + 2, modalX + modalW - 3, modalY + modalH - 9, Pal.grid)
+        canvas.smallText("TAB:SWITCH  ARROWS:NAV  ENTER:SELECT  ESC:CLOSE", x: modalX + 4, y: modalY + modalH - 6, c: Pal.inkDim)
+    }
+
+    private func drawDuckbookCompanionsTab(modalX: Int, modalY: Int, modalW: Int, modalH: Int, t: Double) {
+        let companions = TimeCompanionRegistry.shared.allCompanions
+        let selectedIdx = DuckbookEngine.shared.selectedIndex
+        let activeId = TimeCompanionRegistry.shared.activeCompanionId
+
+        let startIdx = min(max(0, DuckbookEngine.shared.scrollOffset), max(0, companions.count - 3))
+        let endIdx = min(companions.count, startIdx + 3)
+
+        for (row, i) in (startIdx..<endIdx).enumerated() {
+            let comp = companions[i]
+            let isCurrentSelected = (i == selectedIdx)
+            let isCurrentlyActive = (comp.id == activeId)
+            let isUnlocked = TimeCompanionRegistry.shared.isUnlocked(comp.id)
+
+            let rowY = modalY + 21 + row * 16
+            let rowW = modalW - 8
+            let rowX = modalX + 4
+            let rowH = 15
+
+            if isCurrentSelected {
+                canvas.fillRect(rowX, rowY, rowW, rowH, Pal.panelHi)
+                canvas.frameRect(rowX, rowY, rowW, rowH, Pal.amber)
+                canvas.smallText(">", x: rowX + 1, y: rowY + 5, c: Pal.amber)
+            } else if isCurrentlyActive {
+                canvas.fillRect(rowX, rowY, rowW, rowH, Pal.panel)
+                canvas.frameRect(rowX, rowY, rowW, rowH, Pal.green)
+            } else {
+                canvas.fillRect(rowX, rowY, rowW, rowH, Pal.panel)
+            }
+
+            // Portrait Sprite (10x10 centered vertically inside 15px card)
+            let portrait = isUnlocked ? comp.portraitSprite : PORTRAIT_LOCKED_SECRET
+            let pColorMap = isUnlocked ? comp.resolveColorMap() : getDuckColorMap()
+            canvas.drawSprite(portrait, x: rowX + 4, y: rowY + 2, map: pColorMap, flip: false)
+
+            // Name & Status
+            if isUnlocked {
+                let nameColor = isCurrentlyActive ? Pal.green : (isCurrentSelected ? Pal.white : Pal.ink)
+                let nameStr = String(comp.displayName.uppercased().prefix(20))
+                canvas.smallText(nameStr, x: rowX + 17, y: rowY + 2, c: nameColor)
+                let subText = String(comp.subtitle.prefix(21))
+                canvas.smallText(subText, x: rowX + 17, y: rowY + 8, c: Pal.inkDim)
+
+                if isCurrentlyActive {
+                    canvas.smallText("[ACTIVE]", x: rowX + rowW - 36, y: rowY + 5, c: Pal.green)
+                } else {
+                    canvas.smallText("[SELECT]", x: rowX + rowW - 36, y: rowY + 5, c: isCurrentSelected ? Pal.cyan : Pal.inkDim)
+                }
+            } else {
+                canvas.smallText("??? [LOCKED]", x: rowX + 17, y: rowY + 2, c: Pal.inkDim)
+                let lockHint = comp.isSecret ? "SECRET POND DISCOVERY" : "UNLOCK VIA MILESTONE"
+                canvas.smallText(lockHint, x: rowX + 17, y: rowY + 8, c: Pal.inkDim)
+                canvas.smallText("[LOCKED]", x: rowX + rowW - 36, y: rowY + 5, c: Pal.inkDim)
+            }
+        }
+
+        // Scroll track indicator if list exceeds visible 3 items
+        if companions.count > 3 {
+            let trackY = modalY + 21
+            let trackH = 3 * 16 - 1
+            let thumbH = max(8, Int(Double(trackH) * 3.0 / Double(companions.count)))
+            let scrollY = trackY + Int(Double(startIdx) / Double(max(1, companions.count - 3)) * Double(trackH - thumbH))
+            canvas.fillRect(modalX + modalW - 3, scrollY, 2, thumbH, Pal.cyan)
+        }
+    }
+
+    private func drawDuckbookAchievementsTab(modalX: Int, modalY: Int, modalW: Int, modalH: Int) {
+        let items = AchievementEngine.shared.orderedCatalog
+        let selectedIdx = DuckbookEngine.shared.selectedIndex
+        let startIdx = min(max(0, DuckbookEngine.shared.scrollOffset), max(0, items.count - 3))
+        let endIdx = min(items.count, startIdx + 3)
+
+        for (row, i) in (startIdx..<endIdx).enumerated() {
+            let ach = items[i]
+            let isCurrentSelected = (i == selectedIdx)
+            let isUnlocked = AchievementEngine.shared.isUnlocked(ach.id)
+
+            let rowY = modalY + 21 + row * 16
+            let rowW = modalW - 8
+            let rowX = modalX + 4
+            let rowH = 15
+
+            if isCurrentSelected {
+                canvas.fillRect(rowX, rowY, rowW, rowH, Pal.panelHi)
+                canvas.frameRect(rowX, rowY, rowW, rowH, Pal.amber)
+                canvas.smallText(">", x: rowX + 1, y: rowY + 5, c: Pal.amber)
+            } else if isUnlocked {
+                canvas.fillRect(rowX, rowY, rowW, rowH, Pal.panel)
+            } else {
+                canvas.fillRect(rowX, rowY, rowW, rowH, Pal.bgDeep)
+                canvas.frameRect(rowX, rowY, rowW, rowH, Pal.grid)
+            }
+
+            // Glyph Badge Stamp (5x5 centered vertically)
+            let glyph = (ach.isHidden && !isUnlocked) ? BADGE_GLYPH_SECRET : (isUnlocked ? ach.glyph : BADGE_GLYPH_LOCKED)
+            let glyphMap: [Character: Color] = [
+                "w": isUnlocked ? Pal.white : Pal.inkDim,
+                "g": isUnlocked ? Pal.green : Pal.inkDim,
+                "r": isUnlocked ? Pal.red : Pal.inkDim,
+                "a": isUnlocked ? Pal.amber : Pal.inkDim,
+                "b": isUnlocked ? Pal.cyan : Pal.inkDim,
+                "k": Pal.bgDeep,
+                ".": Pal.clear
+            ]
+            canvas.drawSprite(glyph, x: rowX + 6, y: rowY + 5, map: glyphMap, flip: false)
+
+            // Title & Description
+            if isUnlocked {
+                let titleStr = String(ach.title.uppercased().prefix(20))
+                canvas.smallText(titleStr, x: rowX + 17, y: rowY + 2, c: isCurrentSelected ? Pal.white : Pal.cyan)
+                let descStr = String(ach.description.prefix(21))
+                canvas.smallText(descStr, x: rowX + 17, y: rowY + 8, c: Pal.inkDim)
+                canvas.smallText("★ DONE", x: rowX + rowW - 32, y: rowY + 5, c: Pal.amber)
+            } else {
+                let lockedTitle = ach.isHidden ? "??? [SECRET]" : String(ach.title.uppercased().prefix(20))
+                canvas.smallText(lockedTitle, x: rowX + 17, y: rowY + 2, c: Pal.inkDim)
+                let hintStr = ach.isHidden ? "DISCOVER BY EXPLORING" : String(ach.hint.prefix(21))
+                canvas.smallText(hintStr, x: rowX + 17, y: rowY + 8, c: Pal.inkDim)
+                canvas.smallText("[LOCK]", x: rowX + rowW - 30, y: rowY + 5, c: Pal.inkDim)
+            }
+        }
+
+        // Scroll track indicator if list exceeds visible 3 items
+        if items.count > 3 {
+            let trackY = modalY + 21
+            let trackH = 3 * 16 - 1
+            let thumbH = max(8, Int(Double(trackH) * 3.0 / Double(items.count)))
+            let scrollY = trackY + Int(Double(startIdx) / Double(max(1, items.count - 3)) * Double(trackH - thumbH))
+            canvas.fillRect(modalX + modalW - 3, scrollY, 2, thumbH, Pal.cyan)
+        }
+    }
+
+    private func drawDuckbookSecretsTab(modalX: Int, modalY: Int, modalW: Int, modalH: Int) {
+        let fedCount = AchievementEngine.shared.breadcrumbsFedTotal
+        let hatCount = AchievementEngine.shared.costumesTried.count
+        let streak = StatsTracker().streakDays
+        let cyberUnlocked = TimeCompanionRegistry.shared.isUnlocked(.cyberDuck)
+
+        struct SecretCardData {
+            let title: String
+            let titleColor: Color
+            let val: String
+            let valColor: Color
+            let sub: String
+        }
+
+        let cards: [SecretCardData] = [
+            SecretCardData(title: "BREADCRUMBS FED", titleColor: Pal.amber, val: "\(fedCount) CRUMBS", valColor: Pal.white, sub: "FEEDS PRODUCE CHONKY DUCK"),
+            SecretCardData(title: "COSTUMES EXPLORED", titleColor: Pal.cyan, val: "\(hatCount)/15 WARDROBE", valColor: Pal.white, sub: "TRY CAPS, HATS & BANDANAS"),
+            SecretCardData(title: "FOCUS FLOCK STREAK", titleColor: Pal.green, val: "\(streak) DAYS", valColor: Pal.white, sub: "DAILY FOCUS MISSION STREAK"),
+            SecretCardData(title: "QUANTUM ANOMALY", titleColor: Pal.violet, val: cyberUnlocked ? "CYBERDUCK" : "LOCKED", valColor: cyberUnlocked ? Pal.cyan : Pal.inkDim, sub: cyberUnlocked ? "0xFEED POND TELEMETRY OK" : "POND MAESTRO UNLOCKS GHOST")
+        ]
+
+        let selectedIdx = DuckbookEngine.shared.selectedIndex
+        let startIdx = min(max(0, DuckbookEngine.shared.scrollOffset), max(0, cards.count - 3))
+        let endIdx = min(cards.count, startIdx + 3)
+
+        for (row, i) in (startIdx..<endIdx).enumerated() {
+            let c = cards[i]
+            let isCurrentSelected = (i == selectedIdx)
+            let rowY = modalY + 21 + row * 16
+            let rowW = modalW - 8
+            let rowX = modalX + 4
+            let rowH = 15
+
+            if isCurrentSelected {
+                canvas.fillRect(rowX, rowY, rowW, rowH, Pal.panelHi)
+                canvas.frameRect(rowX, rowY, rowW, rowH, Pal.amber)
+                canvas.smallText(">", x: rowX + 1, y: rowY + 5, c: Pal.amber)
+            } else {
+                canvas.fillRect(rowX, rowY, rowW, rowH, Pal.panel)
+            }
+
+            canvas.smallText(c.title, x: rowX + 5, y: rowY + 2, c: c.titleColor)
+            canvas.smallText(c.val, x: rowX + rowW - 48, y: rowY + 2, c: c.valColor)
+            canvas.smallText(c.sub, x: rowX + 5, y: rowY + 8, c: Pal.inkDim)
+        }
+
+        if cards.count > 3 {
+            let trackY = modalY + 21
+            let trackH = 3 * 16 - 1
+            let thumbH = max(8, Int(Double(trackH) * 3.0 / Double(cards.count)))
+            let scrollY = trackY + Int(Double(startIdx) / Double(max(1, cards.count - 3)) * Double(trackH - thumbH))
+            canvas.fillRect(modalX + modalW - 3, scrollY, 2, thumbH, Pal.cyan)
+        }
+    }
+
 }
 
 // MARK: - Pulse Helper
@@ -1364,3 +2651,5 @@ extension Color {
         return rgb(Int(r), Int(g), Int(b))
     }
 }
+
+    

@@ -14,6 +14,67 @@ struct DuckHeadAnchor: Equatable {
     var isSleeping: Bool
 }
 
+// MARK: - Duck Bill Anchor
+
+struct DuckBillAnchor: Equatable {
+    var x: Int // Sprite-relative column of bill tip
+    var y: Int // Sprite-relative row of bill tip
+    var facingLeft: Bool
+}
+
+// MARK: - Duck Bill Anchor Resolver
+
+enum DuckBillAnchorResolver {
+    /// Resolves the physical beak/bill tip coordinates from an active duck frame matrix.
+    static func resolve(rows: [String], flip: Bool = false) -> DuckBillAnchor {
+        guard !rows.isEmpty else {
+            return DuckBillAnchor(x: flip ? 1 : 11, y: 4, facingLeft: flip)
+        }
+
+        let width = rows[0].count
+
+        // Check if the sprite itself naturally faces backward/left (e.g. DUCK_LOOK_BACK)
+        let isNaturallyFacingBack = rows.contains { row in
+            row.hasPrefix(".oo") || row.hasPrefix("ooo")
+        }
+        let effectiveFacingLeft = flip ? !isNaturallyFacingBack : isNaturallyFacingBack
+
+        // Scan for beak pixels ('o' for bill, 'r' for open beak)
+        var beakPoints: [(r: Int, c: Int)] = []
+        for (rIdx, row) in rows.enumerated() {
+            for (cIdx, char) in row.enumerated() {
+                if char == "o" || char == "r" {
+                    beakPoints.append((r: rIdx, c: cIdx))
+                }
+            }
+        }
+
+        guard !beakPoints.isEmpty else {
+            return DuckBillAnchor(x: effectiveFacingLeft ? 1 : width - 2, y: 4, facingLeft: effectiveFacingLeft)
+        }
+
+        if effectiveFacingLeft {
+            if flip {
+                let maxPoint = beakPoints.max(by: { $0.c < $1.c })!
+                let resolvedX = width - 1 - maxPoint.c
+                return DuckBillAnchor(x: max(0, resolvedX), y: maxPoint.r, facingLeft: true)
+            } else {
+                let minPoint = beakPoints.min(by: { $0.c < $1.c })!
+                return DuckBillAnchor(x: max(0, minPoint.c), y: minPoint.r, facingLeft: true)
+            }
+        } else {
+            if flip {
+                let minPoint = beakPoints.min(by: { $0.c < $1.c })!
+                let resolvedX = width - 1 - minPoint.c
+                return DuckBillAnchor(x: min(width - 1, resolvedX), y: minPoint.r, facingLeft: false)
+            } else {
+                let maxPoint = beakPoints.max(by: { $0.c < $1.c })!
+                return DuckBillAnchor(x: min(width - 1, maxPoint.c), y: maxPoint.r, facingLeft: false)
+            }
+        }
+    }
+}
+
 // MARK: - Duck Anchor Resolver
 
 enum DuckAnchorResolver {
@@ -47,21 +108,21 @@ enum DuckAnchorResolver {
             return DuckHeadAnchor(x: 0, y: 2, facingBack: false, isPecking: false, isSleeping: true)
         }
 
-        // 4. Scan for skull crown row (topmost row with duck head body pixels)
+        // 4. Scan for skull crown row (topmost row with duck head body pixels across all companions)
         var headY = 0
         var headX = 0
 
-        for (rowIndex, row) in rows.prefix(5).enumerated() {
-            let yCount = row.filter { $0 == "y" }.count
-            // Require at least 3 yellow pixels to skip wing tips (e.g. DUCK_YAY_A row 0 "....d..d.....")
-            if yCount >= 3 {
+        for (rowIndex, row) in rows.prefix(7).enumerated() {
+            let bodyCount = row.filter { $0 == "y" || $0 == "b" || $0 == "m" || $0 == "k" }.count
+            // Require at least 3 body/head pixels to skip stray wing tips
+            if bodyCount >= 3 {
                 headY = rowIndex
-                if let firstY = row.firstIndex(of: "y") {
-                    let col = row.distance(from: row.startIndex, to: firstY)
+                if let firstHead = row.firstIndex(where: { $0 == "y" || $0 == "b" || $0 == "m" || $0 == "k" }) {
+                    let col = row.distance(from: row.startIndex, to: firstHead)
                     if col <= 3 {
-                        headX = -1 // Tilted forward/up (DUCK_LOOK_UP)
+                        headX = -1 // Tilted forward/up (DUCK_LOOK_UP, DUCK_SWALLOW)
                     } else if col >= 5 {
-                        headX = 1  // Shifted forward/right (DUCK_PEEK_B)
+                        headX = 1  // Shifted forward/right (DUCK_PEEK_B, DUCK_CONFUSED_B)
                     }
                 }
                 break

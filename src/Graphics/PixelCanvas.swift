@@ -107,8 +107,20 @@ final class PixelCanvas {
                         }
                     }
                 }
-            } else {
-                frameRect(cx, y, gw * scale, gh * scale, Pal.magenta)
+            } else if ch == "\n" || ch == "\r" || ch == "\t" || ch == " " {
+                // Skip invisible whitespace
+            } else if let dotRows = font["."] {
+                // Safe fallback to period for unknown punctuation
+                for ry in 0..<gh {
+                    let bits = ry < dotRows.count ? dotRows[ry] : 0
+                    for rx in 0..<gw where (bits >> (gw - 1 - rx)) & 1 == 1 {
+                        for sy in 0..<scale {
+                            for sx in 0..<scale {
+                                set(cx + rx * scale + sx, y + ry * scale + sy, c, a: a)
+                            }
+                        }
+                    }
+                }
             }
             cx += adv
         }

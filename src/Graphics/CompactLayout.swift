@@ -143,6 +143,29 @@ public struct CompactLayoutMetrics: Equatable {
         self.progressBarRect = (x: 4, y: pY, w: pW, h: 2)
     }
 
+    // Protected Mini Stage Area
+    public var miniStageRect: (x: Int, y: Int, w: Int, h: Int) {
+        (x: duckX, y: duckY, w: duckW, h: duckH)
+    }
+
+    public func containsInTimeArea(x: Int, y: Int) -> Bool {
+        x >= timeAreaRect.x && x < timeAreaRect.x + timeAreaRect.w &&
+        y >= timeAreaRect.y && y < timeAreaRect.y + timeAreaRect.h
+    }
+
+    public func containsInMiniStage(x: Int, y: Int) -> Bool {
+        x >= duckX && x < duckX + duckW &&
+        y >= duckY && y < duckY + duckH
+    }
+
+    public func overlapsTimeArea(rect: (x: Int, y: Int, w: Int, h: Int)) -> Bool {
+        let r1x1 = timeAreaRect.x, r1x2 = timeAreaRect.x + timeAreaRect.w
+        let r1y1 = timeAreaRect.y, r1y2 = timeAreaRect.y + timeAreaRect.h
+        let r2x1 = rect.x, r2x2 = rect.x + rect.w
+        let r2y1 = rect.y, r2y2 = rect.y + rect.h
+        return !(r2x2 <= r1x1 || r2x1 >= r1x2 || r2y2 <= r1y1 || r2y1 >= r1y2)
+    }
+
     public static func resolveTimeRenderStyle(for timeString: String, maxWidth: Int) -> CompactTimeRenderStyle {
         let mainPart: String
         let fracPart: String
@@ -191,8 +214,9 @@ public struct CompactLayoutMetrics: Equatable {
         }
 
         // Candidate 6 (Extreme narrow fallback): Small Scale 1 main digits only
-        let s1MainW = PixelCanvas.smallWidth(mainPart, scale: 1)
-        return .smallScale1(fullText: mainPart, totalW: min(s1MainW, maxWidth))
+        let fittedMain = PixelCanvas.fitSmallText(mainPart, maxWidth: maxWidth, scale: 1)
+        let fittedWidth = PixelCanvas.smallWidth(fittedMain, scale: 1)
+        return .smallScale1(fullText: fittedMain, totalW: fittedWidth)
     }
 
     public static func == (lhs: CompactLayoutMetrics, rhs: CompactLayoutMetrics) -> Bool {

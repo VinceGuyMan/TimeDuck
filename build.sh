@@ -18,7 +18,7 @@ function usage() {
     echo "  --app      Build executable and package into macOS .app bundle (default)"
     echo "  --bin      Build binary only (build/TimeDuck)"
     echo "  --test     Build and run automated test suite"
-    echo "  --release  Build optimized release .app bundle"
+    echo "  --release  Build optimized release .app bundle (strictly no DEBUG flags)"
     echo "  --clean    Remove all build artifacts"
     echo "  --help     Show this help message"
     echo ""
@@ -32,13 +32,16 @@ function clean() {
 
 function compile_binary() {
     local opt_flag="${1:---O}"
-    echo "▸ Compiling TimeDuck sources ($opt_flag)…"
-    mkdir -p "$BUILD_DIR"
+    local debug_flag=""
+    if [ "$opt_flag" != "-Osize" ]; then
+        debug_flag="-D DEBUG"
+    fi
+    echo "▸ Compiling TimeDuck sources ($opt_flag $debug_flag)…"
+    mkdir -p "$BUILD_DIR/cache"
     
-    # Collect all Swift source files excluding App/main.swift for core if needed, or all sources
     SWIFT_SOURCES=$(find src -name "*.swift")
     
-    swiftc $opt_flag -target "$TARGET_TRIPLE" -o "$BINARY" $SWIFT_SOURCES
+    swiftc $opt_flag $debug_flag -module-cache-path "$BUILD_DIR/cache" -target "$TARGET_TRIPLE" -o "$BINARY" $SWIFT_SOURCES
     echo "✓ Binary generated at $BINARY"
 }
 
@@ -67,11 +70,11 @@ function assemble_app() {
 
 function run_tests() {
     echo "▸ Compiling TimeDuck test runner…"
-    mkdir -p "$BUILD_DIR"
+    mkdir -p "$BUILD_DIR/cache"
     
-    TEST_SOURCES="src/Engine/TimerEngine.swift src/Engine/StatsTracker.swift src/Engine/Formatting.swift src/Engine/DuckBrain.swift src/Engine/CostumeBehavior.swift src/Engine/SeasonalCalendar.swift src/Audio/SoundEngine.swift src/Graphics/Sprites.swift src/Graphics/AccessoryAttachment.swift src/Graphics/StatusDuck.swift src/Graphics/ViewportTransform.swift src/Graphics/CompactLayout.swift src/Graphics/PixelCanvas.swift src/Graphics/Theme.swift src/App/AppVersion.swift src/App/Persistence.swift Tests/TestHarness.swift Tests/TestRunner.swift $(find Tests/TimeDuckTests -name "*.swift")"
+    TEST_SOURCES="$(find src -name "*.swift" ! -name "main.swift") Tests/TestHarness.swift Tests/TestRunner.swift $(find Tests/TimeDuckTests -name "*.swift")"
     
-    swiftc -O -target "$TARGET_TRIPLE" -o "$TEST_RUNNER" $TEST_SOURCES
+    swiftc -O -D DEBUG -module-cache-path "$BUILD_DIR/cache" -target "$TARGET_TRIPLE" -o "$TEST_RUNNER" $TEST_SOURCES
     echo "✓ Test runner compiled at $TEST_RUNNER"
     echo ""
     "$TEST_RUNNER"

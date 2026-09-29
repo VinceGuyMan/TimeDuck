@@ -385,6 +385,7 @@ enum Pal {
     static var white: Color { ThemeRegistry.active().white }
     static var cheek: Color { ThemeRegistry.active().cheek }
     static var sweat: Color { ThemeRegistry.active().sweat }
+    static var clear: Color { 0x00000000 }
 }
 
 func rainbow(_ t: Double, vq: Double = 1.0) -> Color {

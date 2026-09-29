@@ -15,10 +15,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     var view: TimeDuckView!
     var host: PixelHostView!
     var window: NSWindow!
-    private var menuManager: MenuManager!
+    var menuManager: MenuManager?
 
     private var frameTimer: Timer?
     private var statusTimer: Timer?
+    private var controlServer: ControlServer?
+    var gpuMonitor: GPUMonitor?
     private var currentFrameInterval: TimeInterval = 1.0 / 60.0
 
     var currentMode: Mode = .pomodoro {
@@ -47,6 +49,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         view.crtEnabled = UserDefaults.standard.object(forKey: "td.crt") as? Bool ?? true
         view.buttons = view.layoutButtons()
         view.rebuildCanvas()
+        view.startStartupSplash()
 
         let frame = NSRect(
             x: 0, y: 0,
@@ -78,14 +81,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         window.center()
 
         menuManager = MenuManager(appDelegate: self)
-        menuManager.setup()
+        menuManager?.setup()
+
+        setupURLHandling()
+        startControlServer()
+        setupGPUMonitor()
 
         NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] e in
             self?.handleKeyEvent(e) ?? e
         }
         NSEvent.addLocalMonitorForEvents(matching: .scrollWheel) { [weak self] e in
             self?.handleScrollWheel(e)
-            return e
+            return nil
         }
 
         startDisplayPump()
@@ -97,6 +104,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         if snd.musicEnabled {
             snd.startMusic()
         }
+
+        // Check for first launch of new version to display What's New
+        if WhatsNewManager.shared.shouldPresentAutomatically() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
+                self?.showWhatsNew(nil)
+            }
+        }
     }
 
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
@@ -107,6 +121,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     func applicationWillTerminate(_ notification: Notification) {
         frameTimer?.invalidate()
         statusTimer?.invalidate()
+        controlServer?.stop()
+        gpuMonitor?.stopMonitoring()
         Store.cancelPending()
         persistImmediate()
     }
@@ -117,7 +133,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         // Window close does NOT quit the application; it keeps TimeDuck active in the menu bar.
         window.orderOut(nil)
         updateDisplayPumpRate()
-        menuManager.syncStatus()
+        menuManager?.syncStatus()
         persistDebounced()
         return false
     }
@@ -162,13 +178,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             view.speak(wake, duration: 2.2)
         }
         updateDisplayPumpRate()
-        menuManager.syncStatus()
+        menuManager?.syncStatus()
     }
 
     func hideWindow() {
         window.orderOut(nil)
         updateDisplayPumpRate()
-        menuManager.syncStatus()
+        menuManager?.syncStatus()
     }
 
     @objc func toggleWindowVisibility(_ sender: Any?) {
@@ -219,7 +235,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }
 
         if view.processTimeEvents() {
-            menuManager.statusDuckAnimator.onTimerVictory()
+            menuManager?.statusDuckAnimator.onTimerVictory()
             persistDebounced()
         }
         view.render()
@@ -248,10 +264,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             guard let self = self else { return }
             self.stats.checkDayRollover()
             if self.view.processTimeEvents() {
-                self.menuManager.statusDuckAnimator.onTimerVictory()
+                self.menuManager?.statusDuckAnimator.onTimerVictory()
                 self.persistDebounced()
             }
-            self.menuManager.syncStatus()
+            self.menuManager?.syncStatus()
         }
     }
 
@@ -299,13 +315,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         if let h = s.hat, let hatType = DuckHat(rawValue: h) {
             view.currentHat = hatType
         }
-        if let sec = s.todayFocusSecs { stats.todayFocusSeconds = sec }
-        if let p = s.todayPomos { stats.todayPomodoros = p }
-        if let st = s.streakDays { stats.streakDays = st }
-        if let l = s.lastActiveDate { stats.lastActiveDateStr = l }
-        stats.checkDayRollover()
+        stats.restoreState(
+            todayFocusSeconds: s.todayFocusSecs ?? 0,
+            todayPomodoros: s.todayPomos ?? 0,
+            streakDays: s.streakDays ?? 1,
+            lastActiveDate: s.lastActiveDate ?? ""
+        )
 
         UserDefaults.standard.set(s.crt, forKey: "td.crt")
+
+        TimeCompanionRegistry.shared.restoreState(
+            activeId: s.selectedCompanion,
+            unlockedIds: s.unlockedCompanions
+        )
+        AchievementEngine.shared.restoreState(
+            unlockedAchievements: s.unlockedAchievements,
+            breadcrumbsTotal: s.breadcrumbsFedTotal,
+            triedHats: s.costumesTried
+        )
     }
 
     func persistDebounced() {
@@ -324,6 +351,79 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         )
     }
 
+    
+    // MARK: - Wave 8 Domain Event Dispatcher & Companion Controls
+
+    func dispatchDomainEvent(_ event: TimeDuckEvent) {
+        let unlocked = AchievementEngine.shared.evaluateEvent(event, stats: stats)
+        if !unlocked.isEmpty {
+            if snd.enabled {
+                snd.happyChirp()
+            }
+            updateDisplayPumpRate()
+            menuManager?.buildMainMenu()
+            persistDebounced()
+        }
+    }
+
+    @objc func menuSelectCompanion(_ sender: NSMenuItem) {
+        guard let rawId = sender.representedObject as? String,
+              let compId = TimeCompanionId(rawValue: rawId) else { return }
+        selectCompanion(compId)
+    }
+
+    @objc func menuOpenDuckbook(_ sender: Any?) {
+        toggleDuckbook()
+    }
+
+    #if DEBUG
+    @objc func menuToggleDevUnlockAll(_ sender: Any?) {
+        DeveloperOverride.shared.toggleUnlockAll()
+        let active = DeveloperOverride.shared.isUnlockAllActive
+        view.toast(active ? "DEV: UNLOCKED ALL" : "DEV: GENUINE MODE")
+        if !active {
+            TimeCompanionRegistry.shared.sanitizeActiveCompanion()
+        }
+        menuManager?.buildMainMenu()
+        menuManager?.buildStatusItem()
+        view.buttons = view.layoutButtons()
+        updateDisplayPumpRate()
+    }
+
+    @objc func menuResetDevProgression(_ sender: Any?) {
+        DeveloperOverride.shared.resetToGenuine()
+        TimeCompanionRegistry.shared.sanitizeActiveCompanion()
+        view.toast("DEV: PROGRESSION RESET")
+        menuManager?.buildMainMenu()
+        menuManager?.buildStatusItem()
+        view.buttons = view.layoutButtons()
+        updateDisplayPumpRate()
+    }
+    #endif
+
+    func selectCompanion(_ id: TimeCompanionId) {
+        guard TimeCompanionRegistry.shared.select(id) else {
+            snd.blip()
+            view.toast("LOCKED COMPANION")
+            return
+        }
+        snd.happyChirp()
+        let active = TimeCompanionRegistry.shared.activeCompanion
+        view.toast("COMPANION: \(active.displayName.uppercased())")
+        let quip = active.customPhrases[.idle]?.randomElement() ?? DuckPhrase.get(for: .idle)
+        view.speak(quip, duration: 2.2)
+        menuManager?.buildMainMenu()
+        updateDisplayPumpRate()
+        persistDebounced()
+        dispatchDomainEvent(.companionSelected(id: id.rawValue))
+    }
+
+    func toggleDuckbook() {
+        DuckbookEngine.shared.toggle()
+        view.buttons = view.layoutButtons()
+        updateDisplayPumpRate()
+    }
+
     // MARK: - Input & Action Handlers
 
     private func currentViewportTransform() -> ViewportTransform {
@@ -331,6 +431,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 
     private func handleClick(_ p: NSPoint) {
+        if view.isShowingSplash {
+            view.skipSplash()
+            updateDisplayPumpRate()
+            return
+        }
+
         let transform = currentViewportTransform()
         guard let (gx, gy) = transform.hostPointToCanvasPoint(p) else {
             // Click outside the rendered canvas viewport (in letterbox/pillarbox padding)
@@ -419,8 +525,38 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
     func activate(_ id: String) {
         snd.click()
-        menuManager.statusDuckAnimator.onUserActivity()
+        menuManager?.statusDuckAnimator.onUserActivity()
         switch id {
+        case "tgl-duckbook":
+            toggleDuckbook()
+        case "db-close":
+            DuckbookEngine.shared.close()
+            view.buttons = view.layoutButtons()
+            updateDisplayPumpRate()
+        case "db-tab-0":
+            DuckbookEngine.shared.setTab(.companions)
+            view.buttons = view.layoutButtons()
+            updateDisplayPumpRate()
+        case "db-tab-1":
+            DuckbookEngine.shared.setTab(.achievements)
+            view.buttons = view.layoutButtons()
+            updateDisplayPumpRate()
+        case "db-tab-2":
+            DuckbookEngine.shared.setTab(.secrets)
+            view.buttons = view.layoutButtons()
+            updateDisplayPumpRate()
+        case _ where id.hasPrefix("db-comp-"):
+            if let idxStr = id.split(separator: "-").last, let idx = Int(idxStr) {
+                let comps = TimeCompanionRegistry.shared.allCompanions
+                if idx >= 0 && idx < comps.count {
+                    let target = comps[idx]
+                    if selectCompanion(target.id) != () {
+                        // success
+                    }
+                    view.buttons = view.layoutButtons()
+                    updateDisplayPumpRate()
+                }
+            }
         case "tab-pomo": switchMode(.pomodoro)
         case "tab-tm":   switchMode(.timer)
         case "tab-sw":   switchMode(.stopwatch)
@@ -445,32 +581,54 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             let quip = view.brain.onSoundToggle(snd.enabled)
             view.speak(quip, duration: 2.0)
             if snd.enabled { snd.quack() }
+            dispatchDomainEvent(.soundToggled(enabled: snd.enabled))
         case "feed-crumb":
             view.dropBreadcrumb()
-        case "preset-1M":  tm.setDuration(60); view.toast("1 MIN"); snd.blip()
-        case "preset-3M":  tm.setDuration(3 * 60); view.toast("3 MIN"); snd.blip()
-        case "preset-5M":  tm.setDuration(5 * 60); view.toast("5 MIN"); snd.blip()
-        case "preset-15M": tm.setDuration(15 * 60); view.toast("15 MIN"); snd.blip()
-        case "preset-25M": tm.setDuration(25 * 60); view.toast("25 MIN"); snd.blip()
-        case "preset-45M": tm.setDuration(45 * 60); view.toast("45 MIN"); snd.blip()
+        case "preset-1M":
+            view.resetStoryForClockReconfiguration()
+            tm.setDuration(60); view.toast("1 MIN"); snd.blip()
+        case "preset-3M":
+            view.resetStoryForClockReconfiguration()
+            tm.setDuration(3 * 60); view.toast("3 MIN"); snd.blip()
+        case "preset-5M":
+            view.resetStoryForClockReconfiguration()
+            tm.setDuration(5 * 60); view.toast("5 MIN"); snd.blip()
+        case "preset-15M":
+            view.resetStoryForClockReconfiguration()
+            tm.setDuration(15 * 60); view.toast("15 MIN"); snd.blip()
+        case "preset-25M":
+            view.resetStoryForClockReconfiguration()
+            tm.setDuration(25 * 60); view.toast("25 MIN"); snd.blip()
+        case "preset-45M":
+            view.resetStoryForClockReconfiguration()
+            tm.setDuration(45 * 60); view.toast("45 MIN"); snd.blip()
         case "tm-m1":      adjustTime(-60)
         case "tm-p1":      adjustTime(60)
         case "tm-p5":      adjustTime(300)
-        case "pomo-25":    pomo.setWorkDuration(25 * 60); view.toast("POMO 25M"); snd.blip()
-        case "pomo-50":    pomo.setWorkDuration(50 * 60); view.toast("DEEP 50M"); snd.blip()
+        case "pomo-25":
+            view.resetStoryForClockReconfiguration()
+            pomo.setWorkDuration(25 * 60); view.toast("POMO 25M"); snd.blip()
+        case "pomo-50":
+            view.resetStoryForClockReconfiguration()
+            pomo.setWorkDuration(50 * 60); view.toast("DEEP 50M"); snd.blip()
         case "pomo-p1":    adjustTime(60)
         case "pomo-p5":    adjustTime(300)
-        case "pomo-skip":  pomo.skipPhase(); view.toast("SKIPPED"); snd.blip()
+        case "pomo-skip":  skipPomodoroPhase()
         default: break
         }
         updateDisplayPumpRate()
-        menuManager.syncStatus()
+        menuManager?.syncStatus()
         persistDebounced()
     }
 
     func adjustTime(_ delta: TimeInterval) {
-        menuManager.statusDuckAnimator.onUserActivity()
+        menuManager?.statusDuckAnimator.onUserActivity()
         guard currentMode == .timer || currentMode == .pomodoro else { return }
+        let wasFinished = (currentMode == .timer && tm.finished) || (currentMode == .pomodoro && pomo.finished)
+        if wasFinished {
+            view.resetStoryForClockReconfiguration()
+            if !view.alarmDismissed { view.dismissAlarm() }
+        }
         if currentMode == .timer {
             tm.add(delta)
         } else {
@@ -482,32 +640,44 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         view.toast(label)
         snd.click()
         updateDisplayPumpRate()
-        menuManager.syncStatus()
+        menuManager?.syncStatus()
         persistDebounced()
     }
 
     func primaryAction() {
-        menuManager.statusDuckAnimator.onUserActivity()
+        endStoryPreviewIfNeeded()
+        menuManager?.statusDuckAnimator.onUserActivity()
         switch currentMode {
         case .pomodoro:
             if pomo.finished && !view.alarmDismissed {
                 view.dismissAlarm()
+                view.resetStoryForClockReconfiguration()
                 pomo.advancePhase(autoStart: true)
+                let ctx = view.getStoryContext()
+                view.storyEngine.startSession(context: ctx)
                 view.toast("NEXT PHASE")
                 let quip = view.brain.onTimerStart(mode: .pomodoro)
                 view.speak(quip, duration: 2.2)
-                menuManager.statusDuckAnimator.onTimerStart()
+                menuManager?.statusDuckAnimator.onTimerStart()
                 return
             }
             pomo.toggle()
             view.toast(pomo.isRunning ? "FOCUSING" : "PAUSED")
             let quip = pomo.isRunning ? view.brain.onTimerStart(mode: .pomodoro) : view.brain.onTimerPause(mode: .pomodoro)
             view.speak(quip, duration: 2.2)
-            if pomo.isRunning { menuManager.statusDuckAnimator.onTimerStart() }
+            if pomo.isRunning {
+                menuManager?.statusDuckAnimator.onTimerStart()
+                let ctx = view.getStoryContext()
+                view.storyEngine.startSession(context: ctx)
+            } else {
+                let ctx = view.getStoryContext()
+                view.storyEngine.pauseSession(context: ctx)
+            }
 
         case .timer:
             if tm.finished && !view.alarmDismissed {
                 view.dismissAlarm()
+                view.resetStoryForClockReconfiguration()
                 tm.restart()
                 view.toast("CLEARED")
                 return
@@ -516,37 +686,53 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             view.toast(tm.isRunning ? "COUNTING" : "HELD")
             let quip = tm.isRunning ? view.brain.onTimerStart(mode: .timer) : view.brain.onTimerPause(mode: .timer)
             view.speak(quip, duration: 2.2)
-            if tm.isRunning { menuManager.statusDuckAnimator.onTimerStart() }
+            let ctx = view.getStoryContext()
+            if tm.isRunning {
+                menuManager?.statusDuckAnimator.onTimerStart()
+                if view.storyEngine.resolveActiveStory(context: ctx) != nil {
+                    view.storyEngine.startSession(context: ctx)
+                }
+            } else {
+                view.storyEngine.pauseSession(context: ctx)
+            }
 
         case .stopwatch:
+            let ctx = view.getStoryContext()
             if sw.isRunning {
                 sw.stop()
                 view.toast("PAUSED")
                 let quip = view.brain.onTimerPause(mode: .stopwatch)
                 view.speak(quip, duration: 2.0)
+                view.storyEngine.pauseSession(context: ctx)
             } else {
                 let wasResumed = sw.banked > 0
                 sw.start()
                 view.toast(wasResumed ? "RESUMED" : "STARTED")
                 let quip = wasResumed ? view.brain.onTimerResume(mode: .stopwatch) : view.brain.onTimerStart(mode: .stopwatch)
                 view.speak(quip, duration: 2.0)
+                if view.storyEngine.resolveActiveStory(context: ctx) != nil {
+                    view.storyEngine.startSession(context: ctx)
+                }
             }
         }
         snd.blip()
         updateDisplayPumpRate()
-        menuManager.syncStatus()
+        menuManager?.syncStatus()
         persistDebounced()
     }
 
     func secondaryAction() {
-        menuManager.statusDuckAnimator.onUserActivity()
+        endStoryPreviewIfNeeded()
+        menuManager?.statusDuckAnimator.onUserActivity()
         switch currentMode {
         case .pomodoro:
-            pomo.skipPhase()
-            view.toast("PHASE SKIPPED")
-            snd.blip()
+            skipPomodoroPhase()
 
         case .timer:
+            if tm.finished {
+                view.resetStoryForClockReconfiguration()
+                if !view.alarmDismissed { view.dismissAlarm() }
+            }
             tm.add(60)
             view.toast("+1 MIN")
             snd.blip()
@@ -557,22 +743,33 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                     snd.blip()
                     view.duckHop()
                     view.toast(String(format: "LAP %02D %@", l.index, Fmt.lapSplit(l.split)))
-                    let quip = view.brain.onLap()
+                    let quip = view.brain.onLap(time: l.split)
                     view.speak(quip, duration: 2.0)
+                    dispatchDomainEvent(.stopwatchLap(split: l.split, total: l.total, lapIndex: l.index))
                 }
             } else if sw.elapsed > 0 {
-                resetAction()
-            } else {
-                view.toast("NOT RUNNING")
+                view.resetStoryForClockReconfiguration()
+                sw.reset()
+                view.toast("RESET")
+                snd.blip()
             }
         }
         updateDisplayPumpRate()
-        menuManager.syncStatus()
+        menuManager?.syncStatus()
         persistDebounced()
     }
 
+    private func skipPomodoroPhase() {
+        view.resetStoryForClockReconfiguration()
+        pomo.skipPhase()
+        view.toast("PHASE SKIPPED")
+        snd.blip()
+    }
+
     func resetAction() {
-        menuManager.statusDuckAnimator.onUserActivity()
+        endStoryPreviewIfNeeded()
+        menuManager?.statusDuckAnimator.onUserActivity()
+        view.resetStoryForClockReconfiguration()
         switch currentMode {
         case .pomodoro:
             if pomo.finished && !view.alarmDismissed { view.dismissAlarm() }
@@ -591,19 +788,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }
         snd.blip()
         updateDisplayPumpRate()
-        menuManager.syncStatus()
+        menuManager?.syncStatus()
         persistDebounced()
     }
 
     func switchMode(_ m: Mode) {
-        menuManager.statusDuckAnimator.onUserActivity()
+        endStoryPreviewIfNeeded()
+        view.clearTemporaryEffects()
+        menuManager?.statusDuckAnimator.onUserActivity()
         currentMode = m
         view.buttons = view.layoutButtons()
         let names = ["STOPWATCH", "TIMER", "POMODORO"]
         view.toast(names[m.rawValue])
+        let ctx = view.getStoryContext()
+        view.storyEngine.cancelSession(context: ctx)
         snd.blip()
         updateDisplayPumpRate()
-        menuManager.syncStatus()
+        menuManager?.syncStatus()
         persistDebounced()
     }
 
@@ -615,6 +816,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         view.duckHop()
         let quip = view.brain.onHatChange(view.currentHat)
         view.speak(quip, duration: 2.2)
+        dispatchDomainEvent(.costumeChanged(hat: view.currentHat))
         updateDisplayPumpRate()
         persistDebounced()
     }
@@ -663,19 +865,92 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 
     private func handleScrollWheel(_ e: NSEvent) {
-        guard currentMode == .timer || currentMode == .pomodoro else { return }
-        let delta = e.deltaY < 0 ? 10.0 : -10.0
-        if abs(delta) > 0 {
-            adjustTime(delta)
+        if DuckbookEngine.shared.isOpen {
+            let isPrecise = e.hasPreciseScrollingDeltas
+            let dy = isPrecise ? e.scrollingDeltaY : Double(e.deltaY)
+            let isBegan = (e.phase == .began)
+            let isEnded = (e.phase == .ended || e.phase == .cancelled || e.momentumPhase == .ended || e.momentumPhase == .cancelled)
+            let moved = DuckbookEngine.shared.handleScroll(deltaY: dy, isPrecise: isPrecise, isBegan: isBegan, isEnded: isEnded)
+            if moved != 0 {
+                view.buttons = view.layoutButtons()
+                updateDisplayPumpRate()
+            }
+            return
         }
+
+        // Centralized input routing policy:
+        // Passive scrolling anywhere over main timer, pomodoro, stopwatch, miniUI,
+        // empty background, or control buttons does NOT alter clock time or produce audio clicks.
     }
 
     func handleKeyEvent(_ e: NSEvent) -> NSEvent? {
+        if view.isShowingSplash {
+            view.skipSplash()
+            updateDisplayPumpRate()
+            return nil
+        }
+
+        if DuckbookEngine.shared.isOpen {
+            switch e.keyCode {
+            case 53: // Escape
+                DuckbookEngine.shared.close()
+                view.buttons = view.layoutButtons()
+                updateDisplayPumpRate()
+                return nil
+            case 123: // Left Arrow -> Prev Tab
+                DuckbookEngine.shared.prevTab()
+                view.buttons = view.layoutButtons()
+                updateDisplayPumpRate()
+                return nil
+            case 124: // Right Arrow -> Next Tab
+                DuckbookEngine.shared.nextTab()
+                view.buttons = view.layoutButtons()
+                updateDisplayPumpRate()
+                return nil
+            case 126: // Up Arrow -> Move selection up
+                DuckbookEngine.shared.moveSelection(delta: -1)
+                view.buttons = view.layoutButtons()
+                updateDisplayPumpRate()
+                return nil
+            case 125: // Down Arrow -> Move selection down
+                DuckbookEngine.shared.moveSelection(delta: 1)
+                view.buttons = view.layoutButtons()
+                updateDisplayPumpRate()
+                return nil
+            case 36, 76, 49: // Return or Space -> Confirm selection
+                if DuckbookEngine.shared.confirmSelection() {
+                    snd.happyChirp()
+                    view.toast("COMPANION: \(TimeCompanionRegistry.shared.activeCompanion.displayName.uppercased())")
+                    persistDebounced()
+                } else {
+                    snd.blip()
+                }
+                view.buttons = view.layoutButtons()
+                updateDisplayPumpRate()
+                return nil
+            case 48: // Tab -> Next Tab
+                DuckbookEngine.shared.nextTab()
+                view.buttons = view.layoutButtons()
+                updateDisplayPumpRate()
+                return nil
+            default:
+                if let ch = e.characters?.lowercased() {
+                    if ch == "d" || ch == "b" {
+                        DuckbookEngine.shared.close()
+                        view.buttons = view.layoutButtons()
+                        updateDisplayPumpRate()
+                        return nil
+                    }
+                }
+                return nil
+            }
+        }
+
         // Intercept all keyboard input during direct time entry
         if view.isEditingTime {
             if view.handleEditKey(e) {
                 updateDisplayPumpRate()
-                menuManager.syncStatus()
+                menuManager?.syncStatus()
                 persistDebounced()
                 return nil
             }
@@ -733,11 +1008,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                 case "h": cycleHat()
                 case "t": cycleTheme()
                 case "q": view.duckHop(); updateDisplayPumpRate()
+                case "d": toggleDuckbook()
                 case "b": view.dropBreadcrumb(); updateDisplayPumpRate()
                 case "p": togglePin()
                 case "m": toggleMini()
                 case "s": activate("toggle-sound")
                 case "c": copySummary()
+                case "a": toggleGPUAutoDetect()
                 case "x": quitApp(nil)
                 default: return e
                 }
@@ -756,7 +1033,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             lines.append("")
             lines.append("Laps:")
             for l in sw.laps {
-                lines.append(String(format: "  %02d  split %@  total %@", l.index, Fmt.lapSplit(l.split), Fmt.hm(l.total)))
+                let tag = l.label.map { " [\($0)]" } ?? ""
+                lines.append(String(format: "  %02d%@  split %@  total %@", l.index, tag, Fmt.lapSplit(l.split), Fmt.hm(l.total)))
             }
         }
         let newline = "\u{000A}"
@@ -769,6 +1047,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
     // MARK: - Menu Bar Action Bridges
 
+    @objc func showWhatsNew(_ sender: Any?) {
+        WhatsNewWindowController.shared.show(
+            announcement: WhatsNewCatalog.current,
+            snd: snd,
+            parentWindow: window,
+            acknowledgeOnDismiss: true
+        )
+    }
+
+    @objc func menuShowTimeDuck(_ sender: Any?) {
+        showWindow()
+    }
+
     @objc func showAbout(_ sender: Any?) {
         let alert = NSAlert()
         alert.messageText = AppVersion.fullDisplayString
@@ -777,7 +1068,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
         • Precision stopwatch, countdown timer & Pomodoro focus engine
         • Original TimeDuck Theme soundtrack & procedural 8-bit chiptunes
-        • 5 authentic retro CRT color palettes & customizable costumes
+        • 8 authentic retro CRT color palettes & customizable costumes
         • Playful duck companion with dynamic mood and reactions
         • Zero telemetry, fully offline, native macOS utility
 
@@ -800,6 +1091,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     @objc func menuResetTimer(_ sender: Any?)  { resetAction() }
     @objc func menuToggleMini(_ sender: Any?)  { toggleMini() }
     @objc func menuTogglePin(_ sender: Any?)   { togglePin() }
+    @objc func toggleStartupAnimation(_ sender: Any?) {
+        let current = UserDefaults.standard.object(forKey: "td.showStartupSplash") as? Bool ?? true
+        let newValue = !current
+        UserDefaults.standard.set(newValue, forKey: "td.showStartupSplash")
+        view.toast(newValue ? "SPLASH ON" : "SPLASH OFF")
+    }
     @objc func toggleSoundMute(_ sender: Any?) { activate("toggle-sound") }
 
     @objc func toggleMusic(_ sender: Any?) {
@@ -807,7 +1104,37 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         view.toast(snd.musicEnabled ? "MUSIC ON" : "MUSIC OFF")
         let quip = snd.musicEnabled ? "MUSIC ENGAGED." : "QUIET POND."
         view.speak(quip, duration: 2.0)
-        menuManager.syncStatus()
+        dispatchDomainEvent(.soundToggled(enabled: snd.musicEnabled))
+        menuManager?.buildMainMenu()
+        menuManager?.buildStatusItem()
+    }
+
+    @objc func menuToggleGPUAutoDetect(_ sender: Any?) {
+        toggleGPUAutoDetect()
+    }
+
+    func toggleGPUAutoDetect() {
+        guard let monitor = gpuMonitor else { return }
+        monitor.isEnabled.toggle()
+        let stateText = monitor.isEnabled ? "ENABLED" : "DISABLED"
+        view.toast("AI AUTO-DETECT: \(stateText)")
+        if monitor.isEnabled {
+            view.speak("MONITORING GPU!", duration: 2.0)
+            view.duckHop()
+        }
+        menuManager?.buildMainMenu()
+        menuManager?.buildStatusItem()
+    }
+
+    private func setupGPUMonitor() {
+        let monitor = GPUMonitor()
+        monitor.onInferenceStart = { [weak self] in
+            self?.handleRemoteCommand(action: "start", label: "LOCAL INFERENCE", mode: nil)
+        }
+        monitor.onInferenceStop = { [weak self] _ in
+            self?.handleRemoteCommand(action: "stop", label: "INFERENCE COMPLETE", mode: nil)
+        }
+        self.gpuMonitor = monitor
     }
 
     @objc func menuSelectHat(_ sender: NSMenuItem) {
@@ -816,6 +1143,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             view.toast(hat.displayName)
             let quip = view.brain.onHatChange(hat)
             view.speak(quip, duration: 2.2)
+            dispatchDomainEvent(.costumeChanged(hat: hat))
+            menuManager?.buildMainMenu()
+            menuManager?.buildStatusItem()
             updateDisplayPumpRate()
             persistDebounced()
         }
@@ -828,6 +1158,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             view.rebuildCanvas()
             let quip = view.brain.onThemeChange(theme)
             view.speak(quip, duration: 2.2)
+            menuManager?.buildMainMenu()
+            menuManager?.buildStatusItem()
             updateDisplayPumpRate()
             persistDebounced()
         }
@@ -835,46 +1167,308 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
     @objc func quickStart5Min(_ sender: Any?) {
         switchMode(.timer)
+        view.resetStoryForClockReconfiguration()
         tm.setDuration(5 * 60)
         tm.restart(autoStart: true)
         view.toast("5 MIN TIMER")
         snd.blip()
         updateDisplayPumpRate()
-        menuManager.syncStatus()
+        menuManager?.syncStatus()
         persistDebounced()
     }
 
     @objc func quickStart15Min(_ sender: Any?) {
         switchMode(.timer)
+        view.resetStoryForClockReconfiguration()
         tm.setDuration(15 * 60)
         tm.restart(autoStart: true)
         view.toast("15 MIN TIMER")
         snd.blip()
         updateDisplayPumpRate()
-        menuManager.syncStatus()
+        menuManager?.syncStatus()
         persistDebounced()
     }
 
     @objc func quickStart25Min(_ sender: Any?) {
         switchMode(.timer)
+        view.resetStoryForClockReconfiguration()
         tm.setDuration(25 * 60)
         tm.restart(autoStart: true)
         view.toast("25 MIN TIMER")
         snd.blip()
         updateDisplayPumpRate()
-        menuManager.syncStatus()
+        menuManager?.syncStatus()
         persistDebounced()
     }
 
     @objc func quickStartPomodoro(_ sender: Any?) {
         switchMode(.pomodoro)
+        view.resetStoryForClockReconfiguration()
         pomo.reset()
         pomo.setWorkDuration(25 * 60)
         pomo.toggle()
+        view.storyEngine.startSession(context: view.getStoryContext())
         view.toast("POMODORO FOCUS")
         snd.blip()
         updateDisplayPumpRate()
-        menuManager.syncStatus()
+        menuManager?.syncStatus()
         persistDebounced()
+    }
+
+    @objc func menuSelectStory(_ sender: NSMenuItem) {
+        if let raw = sender.representedObject as? String, let story = DuckStoryId(rawValue: raw) {
+            endStoryPreviewIfNeeded()
+            view.storyEngine.setSelection(story)
+            view.toast("STORY: \(story.displayName.uppercased())")
+            let ctx = view.getStoryContext()
+            view.storyEngine.prepareSession(context: ctx)
+            menuManager?.buildMainMenu()
+            menuManager?.buildStatusItem()
+            updateDisplayPumpRate()
+        }
+    }
+
+    @objc func menuPreviewStoryMilestone(_ sender: NSMenuItem) {
+        guard let dict = sender.representedObject as? [String: Any],
+              let rawStory = dict["story"] as? String,
+              let storyId = DuckStoryId(rawValue: rawStory),
+              let progress = dict["progress"] as? Double else { return }
+
+        view.isPreviewingStory = true
+        view.previewProgress = progress
+        view.storyEngine.beginPreview(storyId)
+        let ctx = view.getStoryContext()
+        view.storyEngine.prepareSession(context: ctx)
+        view.storyEngine.startSession(context: ctx)
+        if progress >= 1.0 {
+            view.storyEngine.enterFinale(context: ctx)
+        } else if progress > 0.0 {
+            view.storyEngine.updateProgress(context: ctx, now: Date())
+        }
+        view.toast("PREVIEW \(Int(progress * 100))%")
+        updateDisplayPumpRate()
+    }
+
+    @objc func menuPreviewStoryFinale(_ sender: NSMenuItem) {
+        guard let rawStory = sender.representedObject as? String,
+              let storyId = DuckStoryId(rawValue: rawStory) else { return }
+
+        view.isPreviewingStory = true
+        view.previewProgress = 1.0
+        view.storyEngine.beginPreview(storyId)
+        let ctx = view.getStoryContext()
+        view.storyEngine.prepareSession(context: ctx)
+        view.storyEngine.startSession(context: ctx)
+        view.storyEngine.enterFinale(context: ctx)
+        view.toast("FINALE: \(storyId.displayName.uppercased())")
+        updateDisplayPumpRate()
+    }
+
+    @objc func menuPreviewStoryTransition(_ sender: NSMenuItem) {
+        guard let dict = sender.representedObject as? [String: Any],
+              let rawStory = dict["story"] as? String,
+              let storyId = DuckStoryId(rawValue: rawStory),
+              let startP = dict["startProgress"] as? Double else { return }
+
+        view.isPreviewingStory = true
+        view.previewProgress = startP
+        view.storyEngine.beginPreview(storyId)
+        let ctx = view.getStoryContext()
+        view.storyEngine.prepareSession(context: ctx)
+        view.storyEngine.startSession(context: ctx)
+        view.storyEngine.updateProgress(context: ctx, now: Date())
+        view.toast("TRANSITION PREVIEW")
+        updateDisplayPumpRate()
+    }
+
+    @objc func menuSetStorySpeedMultiplier(_ sender: NSMenuItem) {
+        if let speed = sender.representedObject as? Double {
+            view.storySpeedMultiplier = speed
+            let speedText = speed < 1.0 ? String(format: "%.2fX", speed) : "\(Int(speed))X"
+            view.toast("STORY SPEED: \(speedText)")
+            menuManager?.buildMainMenu()
+            menuManager?.buildStatusItem()
+            updateDisplayPumpRate()
+        }
+    }
+
+    @objc func menuTogglePreviewViewport(_ sender: NSMenuItem) {
+        toggleMini()
+        menuManager?.buildMainMenu()
+        menuManager?.buildStatusItem()
+    }
+
+    @objc func menuClearStoryPreview(_ sender: NSMenuItem) {
+        endStoryPreviewIfNeeded()
+        view.toast("PREVIEW CLEARED")
+        menuManager?.buildMainMenu()
+        menuManager?.buildStatusItem()
+        updateDisplayPumpRate()
+    }
+
+    private func endStoryPreviewIfNeeded() {
+        guard view != nil else { return }
+        view.endStoryPreview()
+    }
+
+    // MARK: - LiveSplit & Remote IPC Protocol
+
+    private func setupURLHandling() {
+        NSAppleEventManager.shared().setEventHandler(
+            self,
+            andSelector: #selector(handleGetURLEvent(_:withReplyEvent:)),
+            forEventClass: AEEventClass(kInternetEventClass),
+            andEventID: AEEventID(kAEGetURL)
+        )
+    }
+
+    @objc func handleGetURLEvent(_ event: NSAppleEventDescriptor, withReplyEvent reply: NSAppleEventDescriptor) {
+        guard let urlString = event.paramDescriptor(forKeyword: AEKeyword(keyDirectObject))?.stringValue,
+              let url = URL(string: urlString) else { return }
+        handleIncomingURL(url)
+    }
+
+    func application(_ application: NSApplication, open urls: [URL]) {
+        for url in urls {
+            handleIncomingURL(url)
+        }
+    }
+
+    func handleIncomingURL(_ url: URL) {
+        guard url.scheme?.lowercased() == "timeduck" else { return }
+        let host = url.host?.lowercased() ?? ""
+        let rawPath = url.path.lowercased().trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+        let action: String
+        if host == "split" || host == "stopwatch" || host == "timer" || host == "api" {
+            action = rawPath.isEmpty ? "start" : rawPath
+        } else if !host.isEmpty {
+            action = host
+        } else {
+            action = rawPath.isEmpty ? "start" : rawPath
+        }
+
+        let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        let label = components?.queryItems?.first(where: {
+            $0.name.lowercased() == "label" || $0.name.lowercased() == "name"
+        })?.value
+        let mode = components?.queryItems?.first(where: {
+            $0.name.lowercased() == "mode"
+        })?.value
+
+        handleRemoteCommand(action: action, label: label, mode: mode)
+    }
+
+    private func startControlServer() {
+        controlServer = ControlServer(
+            port: ControlServer.defaultPort,
+            onCommand: { [weak self] action, label, mode in
+                DispatchQueue.main.async {
+                    self?.handleRemoteCommand(action: action, label: label, mode: mode)
+                }
+            },
+            onStatus: { [weak self] in
+                guard let self = self else { return [:] }
+                return self.statusDictionary()
+            }
+        )
+        controlServer?.start()
+    }
+
+    func statusDictionary() -> [String: Any] {
+        var lapsData: [[String: Any]] = []
+        for l in sw.laps {
+            var d: [String: Any] = [
+                "index": l.index,
+                "split": l.split,
+                "total": l.total
+            ]
+            if let label = l.label {
+                d["label"] = label
+            }
+            lapsData.append(d)
+        }
+        return [
+            "version": AppVersion.version,
+            "mode": currentMode.displayName.lowercased(),
+            "running": sw.isRunning,
+            "elapsed": sw.elapsed,
+            "laps": lapsData
+        ]
+    }
+
+    func handleRemoteCommand(action: String, label: String?, mode: String?) {
+        let cleanAction = action.lowercased()
+        switch cleanAction {
+        case "start":
+            if currentMode != .stopwatch {
+                currentMode = .stopwatch
+            }
+            if !sw.isRunning {
+                sw.reset()
+                sw.start()
+                view.toast(label ?? "PROMPT STARTED")
+                view.duckHop()
+                snd.blip()
+                let quip = label != nil ? "PROMPT: \(label!)" : "THINKING TIME!"
+                view.speak(quip, duration: 2.5)
+                updateDisplayPumpRate()
+                menuManager?.syncStatus()
+                persistDebounced()
+            }
+
+        case "split", "lap":
+            if currentMode != .stopwatch {
+                currentMode = .stopwatch
+            }
+            if sw.isRunning {
+                if let l = sw.lap(label: label) {
+                    snd.alertBlip()
+                    view.duckHop()
+                    let tag = label != nil ? "\(label!): " : ""
+                    view.toast("\(tag)\(Fmt.lapSplit(l.split))")
+                    if let label = label {
+                        view.speak(label, duration: 2.0)
+                    }
+                    updateDisplayPumpRate()
+                    menuManager?.syncStatus()
+                    persistDebounced()
+                }
+            }
+
+        case "stop":
+            if currentMode != .stopwatch {
+                currentMode = .stopwatch
+            }
+            if sw.isRunning {
+                if let label = label {
+                    _ = sw.lap(label: label)
+                }
+                sw.stop()
+                view.duckHop()
+                snd.victoryFanfare()
+                let elapsedStr = Fmt.lapSplit(sw.elapsed)
+                view.toast(label != nil ? "DONE: \(label!) (\(elapsedStr))" : "AI DONE (\(elapsedStr))")
+                view.speak("COMPLETE! \(elapsedStr)", duration: 3.0)
+                updateDisplayPumpRate()
+                menuManager?.syncStatus()
+                persistDebounced()
+            }
+
+        case "reset":
+            if currentMode != .stopwatch {
+                currentMode = .stopwatch
+            }
+            sw.reset()
+            view.toast("RESET")
+            snd.blip()
+            updateDisplayPumpRate()
+            menuManager?.syncStatus()
+            persistDebounced()
+
+        default:
+            #if DEBUG
+            print("Unknown remote command: \(cleanAction)")
+            #endif
+        }
     }
 }

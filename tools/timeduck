@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# TimeDuck CLI — LiveSplit-style AI Auto-Splitter & Timer Control
+# Compatible with local LLMs, terminal agents, shell hooks, and scripting.
+# ==============================================================================
+
+set -e
+
+PORT="${TIMEDUCK_PORT:-1834}"
+HOST="127.0.0.1"
+BASE_URL="http://${HOST}:${PORT}/api"
+
+function usage() {
+    cat <<EOF
+🦆 TimeDuck CLI (v1.8.1) — AI Auto-Splitter & Timer Control
+
+Usage:
+  timeduck <command> [options]
+
+Commands:
+  start [label]      Start stopwatch for prompt / task (e.g. timeduck start "DeepSeek-R1")
+  split [label]      Record split / lap (e.g. timeduck split "Thinking", timeduck split "Tool:Search")
+  lap   [label]      Alias for 'split'
+  stop  [label]      Stop timing and celebrate (e.g. timeduck stop "Response Complete")
+  reset              Reset stopwatch back to 00:00
+  status             Get current TimeDuck status as JSON
+
+Examples:
+  # Measure an AI prompt lifecycle:
+  timeduck start "Ollama Prompt"
+  # ...model thinking / reasoning...
+  timeduck split "TTFT"
+  # ...model generating tokens...
+  timeduck stop "Finished"
+
+Environment Variables:
+  TIMEDUCK_PORT      Loopback port (default: 1834)
+EOF
+    exit 0
+}
+
+CMD="${1:-help}"
+shift || true
+LABEL="$*"
+
+function send_command() {
+    local action="$1"
+    local label="$2"
+    
+    # URL encode label if present
+    local encoded_label=""
+    if [ -n "$label" ]; then
+        encoded_label="?label=$(python3 -c "import urllib.parse, sys; print(urllib.parse.quote(sys.argv[1]))" "$label" 2>/dev/null || echo "$label")"
+    fi
+
+    # Try HTTP loopback API first
+    if command -v curl >/dev/null 2>&1; then
+        local resp
+        resp=$(curl -s -m 1 -X POST "${BASE_URL}/${action}${encoded_label}" 2>/dev/null)
+        if [ $? -eq 0 ] && [ -n "$resp" ]; then
+            echo "🦆 TimeDuck: ${action} ${label:+[$label]}"
+            return 0
+        fi
+    fi
+
+    # Fallback to macOS URL Scheme (open timeduck://...)
+    if command -v open >/dev/null 2>&1; then
+        open "timeduck://split/${action}${encoded_label}" 2>/dev/null || true
+        echo "🦆 TimeDuck (URL scheme): ${action} ${label:+[$label]}"
+        return 0
+    fi
+
+    echo "❌ Failed to connect to TimeDuck. Is TimeDuck running?"
+    return 1
+}
+
+case "$CMD" in
+    start)
+        send_command "start" "$LABEL"
+        ;;
+    split|lap)
+        send_command "lap" "$LABEL"
+        ;;
+    stop)
+        send_command "stop" "$LABEL"
+        ;;
+    reset)
+        send_command "reset" ""
+        ;;
+    status)
+        if command -v curl >/dev/null 2>&1; then
+            curl -s -m 1 "${BASE_URL}/status" || echo "{\"error\":\"TimeDuck not reachable\"}"
+            echo ""
+        else
+            echo "curl is required for status."
+        fi
+        ;;
+    help|--help|-h)
+        usage
+        ;;
+    *)
+        echo "Unknown command: $CMD"
+        usage
+        ;;
+esac

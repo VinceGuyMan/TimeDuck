@@ -6,6 +6,7 @@
 
 import Foundation
 import AVFoundation
+import AudioToolbox
 
 final class SoundEngine {
     var enabled: Bool {
@@ -37,8 +38,8 @@ final class SoundEngine {
 
     private let sampleRate: Double = 44100.0
     private let audioFormat: AVAudioFormat
-    private let engine = AVAudioEngine()
-    private let playerNode = AVAudioPlayerNode()
+    private var _engine: AVAudioEngine?
+    private var _playerNode: AVAudioPlayerNode?
     private var isEngineSetup = false
     private let audioQueue = DispatchQueue(label: "com.oxalpha.timeduck.audio", qos: .userInitiated)
 
@@ -56,21 +57,13 @@ final class SoundEngine {
             fatalError("Failed to create standard AVAudioFormat")
         }
         self.audioFormat = format
-        setupEngine()
         precacheCommonBuffers()
-
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleEngineConfigurationChange),
-            name: .AVAudioEngineConfigurationChange,
-            object: engine
-        )
     }
 
     deinit {
         NotificationCenter.default.removeObserver(self)
         musicPlayer?.stop()
-        engine.stop()
+        _engine?.stop()
     }
 
     @objc private func handleEngineConfigurationChange(_ notification: Notification) {
@@ -80,8 +73,40 @@ final class SoundEngine {
         }
     }
 
+    private static var isAudioHardwareAvailable: Bool {
+        var desc = AudioComponentDescription(
+            componentType: kAudioUnitType_Generator,
+            componentSubType: kAudioUnitSubType_AudioFilePlayer,
+            componentManufacturer: kAudioUnitManufacturer_Apple,
+            componentFlags: 0,
+            componentFlagsMask: 0
+        )
+        return AudioComponentFindNext(nil, &desc) != nil
+    }
+
     private func setupEngine() {
+        guard SoundEngine.isAudioHardwareAvailable else {
+            isEngineSetup = false
+            return
+        }
         do {
+            if _engine == nil {
+                let eng = AVAudioEngine()
+                _engine = eng
+                NotificationCenter.default.addObserver(
+                    self,
+                    selector: #selector(handleEngineConfigurationChange),
+                    name: .AVAudioEngineConfigurationChange,
+                    object: eng
+                )
+            }
+            if _playerNode == nil {
+                _playerNode = AVAudioPlayerNode()
+            }
+            guard let engine = _engine, let playerNode = _playerNode else {
+                isEngineSetup = false
+                return
+            }
             if playerNode.engine == nil {
                 engine.attach(playerNode)
             }
@@ -97,6 +122,10 @@ final class SoundEngine {
     }
 
     private func ensureEngineRunning() {
+        if !isEngineSetup {
+            setupEngine()
+        }
+        guard let engine = _engine, let playerNode = _playerNode else { return }
         if !engine.isRunning {
             try? engine.start()
         }
@@ -192,7 +221,7 @@ final class SoundEngine {
         audioQueue.async { [weak self] in
             guard let self = self else { return }
             self.ensureEngineRunning()
-            self.playerNode.scheduleBuffer(buffer, at: nil, options: [], completionHandler: nil)
+            self._playerNode?.scheduleBuffer(buffer, at: nil, options: [], completionHandler: nil)
         }
     }
 
@@ -258,6 +287,120 @@ final class SoundEngine {
     func tinySigh() {
         guard enabled else { return }
         tone(freq: 330.0, dur: 0.18, vol: 0.06, type: .triangle)
+    }
+
+    // MARK: - Wave 5 Procedural Companion SFX
+
+    func annoyedQuack() {
+        guard enabled else { return }
+        quack(pitch: 0.78)
+    }
+
+    func tantrumQuacks() {
+        guard enabled else { return }
+        let pitches = [0.95, 0.75, 1.10]
+        var delay = 0.0
+        for p in pitches {
+            audioQueue.asyncAfter(deadline: .now() + delay) { [weak self] in
+                guard let self = self, self.enabled else { return }
+                self.quack(pitch: p)
+            }
+            delay += 0.14
+        }
+    }
+
+    func crumbCrunch() {
+        guard enabled else { return }
+        let notes: [(Double, Double)] = [
+            (1760.0, 0.02),
+            (2200.0, 0.025),
+            (1320.0, 0.03)
+        ]
+        var delay = 0.0
+        for (freq, len) in notes {
+            audioQueue.asyncAfter(deadline: .now() + delay) { [weak self] in
+                guard let self = self, self.enabled else { return }
+                self.tone(freq: freq, dur: len, vol: 0.09, type: .triangle)
+            }
+            delay += len * 0.7
+        }
+    }
+
+    func duckBurp() {
+        guard enabled else { return }
+        let notes: [(Double, Double)] = [
+            (240.0, 0.04),
+            (180.0, 0.06),
+            (130.0, 0.08)
+        ]
+        var delay = 0.0
+        for (freq, len) in notes {
+            audioQueue.asyncAfter(deadline: .now() + delay) { [weak self] in
+                guard let self = self, self.enabled else { return }
+                self.tone(freq: freq, dur: len, vol: 0.12, type: .sawtooth)
+            }
+            delay += len * 0.8
+        }
+    }
+
+    func splashBootChime() {
+        guard enabled else { return }
+        let notes: [(Double, Double)] = [
+            (523.25, 0.08), // C5
+            (783.99, 0.08), // G5
+            (1046.50, 0.18) // C6
+        ]
+        var delay = 0.0
+        for (freq, len) in notes {
+            audioQueue.asyncAfter(deadline: .now() + delay) { [weak self] in
+                guard let self = self, self.enabled else { return }
+                self.tone(freq: freq, dur: len, vol: 0.16, type: .sine)
+            }
+            delay += len * 0.75
+        }
+    }
+
+    func gymTick() {
+        guard enabled else { return }
+        tone(freq: 880.0, dur: 0.015, vol: 0.06, type: .square)
+    }
+
+    func cameraSweepTick() {
+        guard enabled else { return }
+        tone(freq: 1200.0, dur: 0.02, vol: 0.05, type: .sine)
+    }
+
+    func alertBlip() {
+        guard enabled else { return }
+        let notes: [(Double, Double)] = [
+            (987.77, 0.04), // B5
+            (1318.51, 0.08) // E6
+        ]
+        var delay = 0.0
+        for (freq, len) in notes {
+            audioQueue.asyncAfter(deadline: .now() + delay) { [weak self] in
+                guard let self = self, self.enabled else { return }
+                self.tone(freq: freq, dur: len, vol: 0.12, type: .square)
+            }
+            delay += len * 0.8
+        }
+    }
+
+    func flagPlantFanfare() {
+        guard enabled else { return }
+        let notes: [(Double, Double)] = [
+            (587.33, 0.08), // D5
+            (739.99, 0.08), // F#5
+            (880.00, 0.20)  // A5
+        ]
+        var delay = 0.0
+        for (freq, len) in notes {
+            audioQueue.asyncAfter(deadline: .now() + delay) { [weak self] in
+                guard let self = self, self.enabled else { return }
+                self.tone(freq: freq, dur: len, vol: 0.15, type: .triangle)
+            }
+            delay += len * 0.8
+        }
     }
 
     func victoryFanfare() {

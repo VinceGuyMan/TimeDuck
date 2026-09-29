@@ -1,0 +1,229 @@
+{
+  "canonical_character_palette": [
+    {
+      "token": "y",
+      "name": "Duck Body (Primary Gold)",
+      "hex": "#FFD84D",
+      "rgb": [
+        255,
+        216,
+        77
+      ],
+      "role": "Main head, skull, chest, torso, and wing plumage"
+    },
+    {
+      "token": "d",
+      "name": "Duck Shadow (Dark Gold)",
+      "hex": "#C9A62E",
+      "rgb": [
+        201,
+        166,
+        46
+      ],
+      "role": "Tail feathers, wing shadow crease, underbelly depth"
+    },
+    {
+      "token": "o",
+      "name": "Duck Bill / Feet (Orange)",
+      "hex": "#FF8A3C",
+      "rgb": [
+        255,
+        138,
+        60
+      ],
+      "role": "Beak bill (upper/lower) and webbed standing feet"
+    },
+    {
+      "token": "k",
+      "name": "Duck Eye (Dark Obsidian)",
+      "hex": "#141420",
+      "rgb": [
+        20,
+        20,
+        32
+      ],
+      "role": "Eye pupil and closed slumber eye slit"
+    },
+    {
+      "token": "w",
+      "name": "White Highlight",
+      "hex": "#FFFFFF",
+      "rgb": [
+        255,
+        255,
+        255
+      ],
+      "role": "Eye catchlight / sclera and coffee cup / chef white"
+    },
+    {
+      "token": "p",
+      "name": "Cheek Blush (Soft Rose)",
+      "hex": "#FF9FB2",
+      "rgb": [
+        255,
+        159,
+        178
+      ],
+      "role": "Cheek blush in petting, running, quacking states"
+    },
+    {
+      "token": "b",
+      "name": "Cyan Glow",
+      "hex": "#4DD9FF",
+      "rgb": [
+        77,
+        217,
+        255
+      ],
+      "role": "Cyber shades, cosmonaut visor reflection, chrono FX"
+    },
+    {
+      "token": "v",
+      "name": "Arcane Violet",
+      "hex": "#9D6BFF",
+      "rgb": [
+        157,
+        107,
+        255
+      ],
+      "role": "Wizard hat fabric, cyber oni mask, artist beret"
+    },
+    {
+      "token": "m",
+      "name": "Magenta Neon",
+      "hex": "#FF5FD0",
+      "rgb": [
+        255,
+        95,
+        208
+      ],
+      "role": "Cyberpunk accent, neon chromatic aberration"
+    },
+    {
+      "token": "g",
+      "name": "Terminal Green",
+      "hex": "#53FF7A",
+      "rgb": [
+        83,
+        255,
+        122
+      ],
+      "role": "Barista apron strap, pond flora, VT220 matrix"
+    },
+    {
+      "token": "r",
+      "name": "Ronin Red",
+      "hex": "#FF4D5E",
+      "rgb": [
+        255,
+        77,
+        94
+      ],
+      "role": "Crimson bandana, sleepcap stripes, crown rubies"
+    },
+    {
+      "token": "a",
+      "name": "Amber CRT",
+      "hex": "#FFC24D",
+      "rgb": [
+        255,
+        194,
+        77
+      ],
+      "role": "Detective cap, desert camo, crown gold, steampunk gear"
+    },
+    {
+      "token": "s",
+      "name": "Coffee Steam",
+      "hex": "#6EBEFF",
+      "rgb": [
+        110,
+        190,
+        255
+      ],
+      "role": "Rising coffee steam in break relaxation pose"
+    }
+  ],
+  "themes": {
+    "arcade": {
+      "name": "ARCADE NEON",
+      "bg": "#0A0A10",
+      "duckBody": "#FFD84D",
+      "duckShad": "#C9A62E",
+      "duckBill": "#FF8A3C",
+      "duckEye": "#141420"
+    },
+    "gameboy": {
+      "name": "GAME BOY DMG",
+      "bg": "#8BAC0F",
+      "duckBody": "#9BBC0F",
+      "duckShad": "#6E8E0A",
+      "duckBill": "#306230",
+      "duckEye": "#0F380F"
+    },
+    "amber": {
+      "name": "AMBER CRT",
+      "bg": "#120A00",
+      "duckBody": "#FFC32D",
+      "duckShad": "#BE780F",
+      "duckBill": "#FF870A",
+      "duckEye": "#1E1000"
+    },
+    "synthwave": {
+      "name": "SYNTHWAVE",
+      "bg": "#120724",
+      "duckBody": "#FFD741",
+      "duckShad": "#D78C28",
+      "duckBill": "#FF5A82",
+      "duckEye": "#19082D"
+    },
+    "pond": {
+      "name": "DUCK POND",
+      "bg": "#10202C",
+      "duckBody": "#FFDC50",
+      "duckShad": "#D2A528",
+      "duckBill": "#FF8232",
+      "duckEye": "#121923"
+    },
+    "terminal": {
+      "name": "TERMINAL GREEN",
+      "bg": "#041006",
+      "duckBody": "#4DFF4D",
+      "duckShad": "#1EA02D",
+      "duckBill": "#FFBE28",
+      "duckEye": "#041006"
+    },
+    "paperwhite": {
+      "name": "PAPERWHITE",
+      "bg": "#EEF2F6",
+      "duckBody": "#F5B419",
+      "duckShad": "#C3870F",
+      "duckBill": "#E15F19",
+      "duckEye": "#121C2A"
+    },
+    "electricPond": {
+      "name": "ELECTRIC POND",
+      "bg": "#080E1A",
+      "duckBody": "#FFE11E",
+      "duckShad": "#CDA00A",
+      "duckBill": "#FF7814",
+      "duckEye": "#080E1A"
+    },
+    "solarFlare": {
+      "name": "SOLAR FLARE 1984",
+      "bg": "#120804",
+      "duckBody": "#FFBE28",
+      "duckShad": "#C86E14",
+      "duckBill": "#FF4614",
+      "duckEye": "#140A05"
+    },
+    "kyotoMatcha": {
+      "name": "KYOTO MATCHA",
+      "bg": "#141A16",
+      "duckBody": "#F5D755",
+      "duckShad": "#B9962D",
+      "duckBill": "#EB782D",
+      "duckEye": "#121814"
+    }
+  }
+}

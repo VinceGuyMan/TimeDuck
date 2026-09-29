@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <rect width="800" height="600" fill="#0A0A10"/>
+  <text x="40" y="50" fill="#EAF6FF" font-family="monospace" font-size="18" font-weight="bold">TIMEDUCK CANONICAL COLOR PALETTE MATRIX</text>
+  <g transform="translate(30,90)">
+    <rect width="170" height="70" fill="#12121E" stroke="#3A3E56" rx="4"/>
+    <rect x="8" y="8" width="40" height="54" fill="#FFD84D" stroke="#FFFFFF" stroke-opacity="0.5"/>
+    <text x="56" y="24" fill="#EAF6FF" font-family="monospace" font-size="12" font-weight="bold">'y' #FFD84D</text>
+    <text x="56" y="42" fill="#6E7694" font-family="monospace" font-size="10">RGB(255,216,77)</text>
+    <text x="56" y="58" fill="#FFD84D" font-family="monospace" font-size="10">Duck Body</text>
+  </g>
+  <g transform="translate(215,90)">
+    <rect width="170" height="70" fill="#12121E" stroke="#3A3E56" rx="4"/>
+    <rect x="8" y="8" width="40" height="54" fill="#C9A62E" stroke="#FFFFFF" stroke-opacity="0.5"/>
+    <text x="56" y="24" fill="#EAF6FF" font-family="monospace" font-size="12" font-weight="bold">'d' #C9A62E</text>
+    <text x="56" y="42" fill="#6E7694" font-family="monospace" font-size="10">RGB(201,166,46)</text>
+    <text x="56" y="58" fill="#FFD84D" font-family="monospace" font-size="10">Duck Shadow</text>
+  </g>
+  <g transform="translate(400,90)">
+    <rect width="170" height="70" fill="#12121E" stroke="#3A3E56" rx="4"/>
+    <rect x="8" y="8" width="40" height="54" fill="#FF8A3C" stroke="#FFFFFF" stroke-opacity="0.5"/>
+    <text x="56" y="24" fill="#EAF6FF" font-family="monospace" font-size="12" font-weight="bold">'o' #FF8A3C</text>
+    <text x="56" y="42" fill="#6E7694" font-family="monospace" font-size="10">RGB(255,138,60)</text>
+    <text x="56" y="58" fill="#FFD84D" font-family="monospace" font-size="10">Duck Bill / Feet</text>
+  </g>
+  <g transform="translate(585,90)">
+    <rect width="170" height="70" fill="#12121E" stroke="#3A3E56" rx="4"/>
+    <rect x="8" y="8" width="40" height="54" fill="#141420" stroke="#FFFFFF" stroke-opacity="0.5"/>
+    <text x="56" y="24" fill="#EAF6FF" font-family="monospace" font-size="12" font-weight="bold">'k' #141420</text>
+    <text x="56" y="42" fill="#6E7694" font-family="monospace" font-size="10">RGB(20,20,32)</text>
+    <text x="56" y="58" fill="#FFD84D" font-family="monospace" font-size="10">Duck Eye</text>
+  </g>
+  <g transform="translate(30,175)">
+    <rect width="170" height="70" fill="#12121E" stroke="#3A3E56" rx="4"/>
+    <rect x="8" y="8" width="40" height="54" fill="#FFFFFF" stroke="#FFFFFF" stroke-opacity="0.5"/>
+    <text x="56" y="24" fill="#EAF6FF" font-family="monospace" font-size="12" font-weight="bold">'w' #FFFFFF</text>
+    <text x="56" y="42" fill="#6E7694" font-family="monospace" font-size="10">RGB(255,255,255)</text>
+    <text x="56" y="58" fill="#FFD84D" font-family="monospace" font-size="10">White Highlight</text>
+  </g>
+  <g transform="translate(215,175)">
+    <rect width="170" height="70" fill="#12121E" stroke="#3A3E56" rx="4"/>
+    <rect x="8" y="8" width="40" height="54" fill="#FF9FB2" stroke="#FFFFFF" stroke-opacity="0.5"/>
+    <text x="56" y="24" fill="#EAF6FF" font-family="monospace" font-size="12" font-weight="bold">'p' #FF9FB2</text>
+    <text x="56" y="42" fill="#6E7694" font-family="monospace" font-size="10">RGB(255,159,178)</text>
+    <text x="56" y="58" fill="#FFD84D" font-family="monospace" font-size="10">Cheek Blush</text>
+  </g>
+  <g transform="translate(400,175)">
+    <rect width="170" height="70" fill="#12121E" stroke="#3A3E56" rx="4"/>
+    <rect x="8" y="8" width="40" height="54" fill="#4DD9FF" stroke="#FFFFFF" stroke-opacity="0.5"/>
+    <text x="56" y="24" fill="#EAF6FF" font-family="monospace" font-size="12" font-weight="bold">'b' #4DD9FF</text>
+    <text x="56" y="42" fill="#6E7694" font-family="monospace" font-size="10">RGB(77,217,255)</text>
+    <text x="56" y="58" fill="#FFD84D" font-family="monospace" font-size="10">Cyan Glow</text>
+  </g>
+  <g transform="translate(585,175)">
+    <rect width="170" height="70" fill="#12121E" stroke="#3A3E56" rx="4"/>
+    <rect x="8" y="8" width="40" height="54" fill="#9D6BFF" stroke="#FFFFFF" stroke-opacity="0.5"/>
+    <text x="56" y="24" fill="#EAF6FF" font-family="monospace" font-size="12" font-weight="bold">'v' #9D6BFF</text>
+    <text x="56" y="42" fill="#6E7694" font-family="monospace" font-size="10">RGB(157,107,255)</text>
+    <text x="56" y="58" fill="#FFD84D" font-family="monospace" font-size="10">Arcane Violet</text>
+  </g>
+  <g transform="translate(30,260)">
+    <rect width="170" height="70" fill="#12121E" stroke="#3A3E56" rx="4"/>
+    <rect x="8" y="8" width="40" height="54" fill="#FF5FD0" stroke="#FFFFFF" stroke-opacity="0.5"/>
+    <text x="56" y="24" fill="#EAF6FF" font-family="monospace" font-size="12" font-weight="bold">'m' #FF5FD0</text>
+    <text x="56" y="42" fill="#6E7694" font-family="monospace" font-size="10">RGB(255,95,208)</text>
+    <text x="56" y="58" fill="#FFD84D" font-family="monospace" font-size="10">Magenta Neon</text>
+  </g>
+  <g transform="translate(215,260)">
+    <rect width="170" height="70" fill="#12121E" stroke="#3A3E56" rx="4"/>
+    <rect x="8" y="8" width="40" height="54" fill="#53FF7A" stroke="#FFFFFF" stroke-opacity="0.5"/>
+    <text x="56" y="24" fill="#EAF6FF" font-family="monospace" font-size="12" font-weight="bold">'g' #53FF7A</text>
+    <text x="56" y="42" fill="#6E7694" font-family="monospace" font-size="10">RGB(83,255,122)</text>
+    <text x="56" y="58" fill="#FFD84D" font-family="monospace" font-size="10">Terminal Green</text>
+  </g>
+  <g transform="translate(400,260)">
+    <rect width="170" height="70" fill="#12121E" stroke="#3A3E56" rx="4"/>
+    <rect x="8" y="8" width="40" height="54" fill="#FF4D5E" stroke="#FFFFFF" stroke-opacity="0.5"/>
+    <text x="56" y="24" fill="#EAF6FF" font-family="monospace" font-size="12" font-weight="bold">'r' #FF4D5E</text>
+    <text x="56" y="42" fill="#6E7694" font-family="monospace" font-size="10">RGB(255,77,94)</text>
+    <text x="56" y="58" fill="#FFD84D" font-family="monospace" font-size="10">Ronin Red</text>
+  </g>
+  <g transform="translate(585,260)">
+    <rect width="170" height="70" fill="#12121E" stroke="#3A3E56" rx="4"/>
+    <rect x="8" y="8" width="40" height="54" fill="#FFC24D" stroke="#FFFFFF" stroke-opacity="0.5"/>
+    <text x="56" y="24" fill="#EAF6FF" font-family="monospace" font-size="12" font-weight="bold">'a' #FFC24D</text>
+    <text x="56" y="42" fill="#6E7694" font-family="monospace" font-size="10">RGB(255,194,77)</text>
+    <text x="56" y="58" fill="#FFD84D" font-family="monospace" font-size="10">Amber CRT</text>
+  </g>
+  <g transform="translate(30,345)">
+    <rect width="170" height="70" fill="#12121E" stroke="#3A3E56" rx="4"/>
+    <rect x="8" y="8" width="40" height="54" fill="#6EBEFF" stroke="#FFFFFF" stroke-opacity="0.5"/>
+    <text x="56" y="24" fill="#EAF6FF" font-family="monospace" font-size="12" font-weight="bold">'s' #6EBEFF</text>
+    <text x="56" y="42" fill="#6E7694" font-family="monospace" font-size="10">RGB(110,190,255)</text>
+    <text x="56" y="58" fill="#FFD84D" font-family="monospace" font-size="10">Coffee Steam</text>
+  </g>
+</svg>

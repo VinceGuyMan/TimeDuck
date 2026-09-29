@@ -1,42 +1,37 @@
-# 🦆 TimeDuck Content Roadmap & Duck Drops
+# TimeDuck DuckDrops
 
-This directory tracks the development candidates and future content roadmap for TimeDuck.
+This directory holds the source-wave specifications and implementation notes that feed public releases.
 
-> **Status**: Development Candidate Staging (v1.0.0 is frozen and published).
-> **Release Target**: These waves are pre-built, tested, and staged for phased independent releases.
+> **Current public release:** v1.2.0 — The Living Companion Update
+> **Included:** Waves 2 through 8.2
+> **Held separately:** Wave 9 clock-replacement proposal
 
----
+## Wave status
 
-## 🌊 Wave Overview
+| Wave | Theme | Public treatment |
+| --- | --- | --- |
+| 1 | Tactical Duck & Expressive Companion | Published in v1.1.0 |
+| 2 | Secret Moments & Living Costumes | Included in v1.2.0 |
+| 3 | Seasonal Drops & Accessible Duck | Included in v1.2.0 |
+| 4 | Living Wardrobe & Physical Attachment | Included in v1.2.0 |
+| 5 | Living Duck | Included in v1.2.0 |
+| 6 / 6.1 | Duck Stories & Living Scenes | Included in v1.2.0 |
+| 7 / 7.1 / 7.2 | MiniHUD, motion polish & finales | Included in v1.2.0 |
+| 8 / 8.1 | TimeCompanions, achievements & Duckbook | Included in v1.2.0 |
+| 8.2 | AI LiveSplit Protocol | Included in v1.2.0 |
+| 9 | Native clock replacement proposal | Held for a separate release decision |
 
-| Wave | Code Name | Candidate Version | Core Theme | Status |
-| :--- | :--- | :--- | :--- | :--- |
-| **Wave 1** | Tactical Duck & Expressive Companion | `v1.1.0-dev` | Tactical Bandanas, New Idle Animations, 20+ Phrases, 3 CRT Palettes | **Verified & Ready** |
-| **Wave 2** | Secret Moments & Living Costumes | `v1.2.0-dev` | Costume Micro-Actions, Ultra-Rare Secret Events, Dual Soundtrack Slot | **Verified & Ready** |
-| **Wave 3** | Seasonal Drops & Community Refinement | `v1.3.0+-dev` | Seasonal Costumes, Offline Date Engine, VoiceOver A11y, Backlog Manifest | **Verified & Ready** |
-| **Wave 4** | Living Wardrobe & Physical Attachment | `v1.4.0-dev` | Dynamic Head Anchors, Bandana Redesign, Secondary Motion | **Verified & Ready** |
-
----
-
-## 🧭 Product Philosophy
-
-1. **Time Engine = Stable, Duck = Chaos**:
-   - The countdown timer, stopwatch, and pomodoro clock must remain mathematically correct, low-latency, and rock-solid.
-   - Duck companion antics, animations, hats, and phrases run strictly in presentation layers and never block timer state transitions.
-2. **No Productivity Bloat**:
-   - TimeDuck is a companion and precision timer, not a task manager or enterprise dashboard.
-   - Zero cloud dependencies, zero telemetry, zero accounts.
-3. **Local & Offline Always**:
-   - All holiday dates, seasonal events, and rare rolls evaluate locally with zero network calls.
-
----
-
-## 🧪 Verification Commands
+## Verification
 
 ```bash
-# Run all automated tests (75 test cases covering baseline + Waves 1, 2, 3, and 4)
-./build.sh --clean && ./build.sh --test
-
-# Build verified development app bundle
-./build.sh
+./build.sh --test
+./build.sh --release
 ```
+
+The current v1.2.0 release gate records 262 passing tests and a successful release bundle build.
+
+## Product rules
+
+1. Timer engines remain authoritative; companion behavior observes time without owning it.
+2. The application remains offline-first with no accounts, telemetry, or cloud dependency.
+3. Full Window and MiniHUD preserve the primary clock safe zone.

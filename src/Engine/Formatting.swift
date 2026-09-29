@@ -6,8 +6,9 @@ import Foundation
 enum Fmt {
     /// Formats stopwatch intervals: "MM:SS.cc" under an hour, "H:MM:SS.cc" for one hour and above.
     static func sw(_ t: TimeInterval) -> String {
+        guard t.isFinite else { return "00:00.00" }
         let isNeg = t < 0
-        var x = abs(t)
+        var x = min(abs(t), 999_999 * 3600 + 3599.99)
         let cs = Int((x * 100).rounded(.down)) % 100
         x -= Double(cs) / 100.0
         let totalSeconds = Int(x)
@@ -22,7 +23,8 @@ enum Fmt {
 
     /// Formats timer countdown intervals: "MM:SS", "H:MM:SS". Shows tenths/hundredths under 10 seconds or in drama mode.
     static func tm(_ t: TimeInterval, drama: Bool = false) -> String {
-        let x = max(0, t)
+        guard t.isFinite else { return "00:00" }
+        let x = min(max(0, t), 999_999 * 3600 + 3599.99)
         if drama || x < 10.0 {
             let s = floor(x)
             let frac = Int(((x - s) * (x < 1.0 ? 100 : 10)).rounded(.down))
@@ -53,13 +55,15 @@ enum Fmt {
 
     /// Formats minutes and seconds: "M:SS".
     static func hm(_ t: TimeInterval) -> String {
-        let s = max(0, Int(t.rounded()))
+        guard t.isFinite else { return "00:00" }
+        let s = max(0, Int(min(t, 999_999 * 3600 + 3599).rounded()))
         return String(format: "%d:%02d", s / 60, s % 60)
     }
 
     /// Human-friendly duration: "Xh Ym", "Xh", "Ym".
     static func durationWords(_ t: TimeInterval) -> String {
-        let totalMins = max(0, Int(t / 60))
+        guard t.isFinite else { return "0m" }
+        let totalMins = max(0, Int(min(t, 999_999 * 3600 + 3599) / 60))
         let hrs = totalMins / 60
         let mins = totalMins % 60
         if hrs > 0 {

@@ -1,0 +1,6103 @@
+{
+  "version": "1.0.0",
+  "app_version": "1.2.0",
+  "source_commit": "0aca94357cd0f2a6475175a346087f5a5d72a0c5",
+  "total_assets": 629,
+  "assets": [
+    {
+      "relative_path": ".DS_Store",
+      "type": "",
+      "size_bytes": 10244,
+      "dimensions": null,
+      "sha256": "a92285020b23fe5f84effab234ac9ed837ad8505515192f66cab57f5124280f0"
+    },
+    {
+      "relative_path": "IMMUTABILITY.md",
+      "type": "md",
+      "size_bytes": 805,
+      "dimensions": null,
+      "sha256": "67b5107086c60359b9ab1bb2b5fb23d6e9a301a1fbc472159725fc4d1c83e3db"
+    },
+    {
+      "relative_path": "README.md",
+      "type": "md",
+      "size_bytes": 5596,
+      "dimensions": null,
+      "sha256": "e94d1876ac359210c2905bf7d8e695842fd8148ff9be38d9cd44207c6818346c"
+    },
+    {
+      "relative_path": "SOURCE-PROVENANCE.md",
+      "type": "md",
+      "size_bytes": 2287,
+      "dimensions": null,
+      "sha256": "5724480b19866c432faf551c348deebc7847c887aade446375b20834c7f0a70a"
+    },
+    {
+      "relative_path": "TIMEDUCK-CANONICAL-ART-BIBLE.md",
+      "type": "md",
+      "size_bytes": 2941,
+      "dimensions": null,
+      "sha256": "f137ed18c695c7b57f4305e4e8a7d6f49027789f4d25c6242a5514ea7f645f7d"
+    },
+    {
+      "relative_path": "animations/frames/blink/frame_01_DUCK_BASE.png",
+      "type": "png",
+      "size_bytes": 175,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "95bca8ca5cfae2fe749198071f1fd47789abe60cc5d74aedb9e775e61dcd02bc"
+    },
+    {
+      "relative_path": "animations/frames/blink/frame_02_DUCK_BLINK_ROWS.png",
+      "type": "png",
+      "size_bytes": 165,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "1fa13049111e7db2713965d016a988bfee195ba063e662f9530f285d0881b745"
+    },
+    {
+      "relative_path": "animations/frames/blink/frame_03_DUCK_BASE.png",
+      "type": "png",
+      "size_bytes": 175,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "95bca8ca5cfae2fe749198071f1fd47789abe60cc5d74aedb9e775e61dcd02bc"
+    },
+    {
+      "relative_path": "animations/frames/celebration/frame_01_DUCK_YAY_A.png",
+      "type": "png",
+      "size_bytes": 178,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "511b1bc7321b432d210bdcc13054c791daa849aa3cd2b62778f4f3ba3f445b13"
+    },
+    {
+      "relative_path": "animations/frames/celebration/frame_02_DUCK_YAY_B.png",
+      "type": "png",
+      "size_bytes": 179,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "5a37334bbca44d65e6ca252fd1a16233c586cd9fa90946052faec1bebef99152"
+    },
+    {
+      "relative_path": "animations/frames/curious-peek/frame_01_DUCK_PEEK_A.png",
+      "type": "png",
+      "size_bytes": 173,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "04da265cdf874d7a0b5f3af366b9b8aca26acbfb092653afb1c8763021e0c53a"
+    },
+    {
+      "relative_path": "animations/frames/curious-peek/frame_02_DUCK_PEEK_B.png",
+      "type": "png",
+      "size_bytes": 167,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "72fa3be4e9016add4ad38cb19995902957461e6f2cf3fc8273ecaed80b655a32"
+    },
+    {
+      "relative_path": "animations/frames/feather-ruffle/frame_01_DUCK_RUFFLE_A.png",
+      "type": "png",
+      "size_bytes": 171,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "094bab3e817628d7a1b468528d230d0212313a10c3483fa5d9ceb9a8ffe9e294"
+    },
+    {
+      "relative_path": "animations/frames/feather-ruffle/frame_02_DUCK_RUFFLE_B.png",
+      "type": "png",
+      "size_bytes": 168,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "9898fd3c00a67be582459dd3e73748dce4b7bd0edf8c8b4c93e8fc8cc624f2c4"
+    },
+    {
+      "relative_path": "animations/frames/foot-shuffle/frame_01_DUCK_SHUFFLE_A.png",
+      "type": "png",
+      "size_bytes": 175,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "0ea133a1810993b0f03d6e275a53a25e47cd2395561ed0ff2e9baf4402a645b8"
+    },
+    {
+      "relative_path": "animations/frames/foot-shuffle/frame_02_DUCK_SHUFFLE_B.png",
+      "type": "png",
+      "size_bytes": 174,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "06128c150184c71d40800edbb40f618ecd1358df8b963bfd90f0ddd1e54c044e"
+    },
+    {
+      "relative_path": "animations/frames/grooving-bob/frame_01_DUCK_BOB.png",
+      "type": "png",
+      "size_bytes": 170,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "71a84084ceb6247067ae54aa2a6e5d53eec4be9d90bdf3892a783f42035b38b0"
+    },
+    {
+      "relative_path": "animations/frames/grooving-bob/frame_02_DUCK_BASE.png",
+      "type": "png",
+      "size_bytes": 175,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "95bca8ca5cfae2fe749198071f1fd47789abe60cc5d74aedb9e775e61dcd02bc"
+    },
+    {
+      "relative_path": "animations/frames/idle-breathe/frame_01_DUCK_BASE.png",
+      "type": "png",
+      "size_bytes": 175,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "95bca8ca5cfae2fe749198071f1fd47789abe60cc5d74aedb9e775e61dcd02bc"
+    },
+    {
+      "relative_path": "animations/frames/idle-breathe/frame_02_DUCK_IDLE_B.png",
+      "type": "png",
+      "size_bytes": 171,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "37f9f3ce20c2ea03cf1ce0870b98f38205725301ad65d04c7fad7bfe4484d031"
+    },
+    {
+      "relative_path": "animations/frames/idle-wag/frame_01_DUCK_BASE.png",
+      "type": "png",
+      "size_bytes": 175,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "95bca8ca5cfae2fe749198071f1fd47789abe60cc5d74aedb9e775e61dcd02bc"
+    },
+    {
+      "relative_path": "animations/frames/idle-wag/frame_02_DUCK_IDLE_B.png",
+      "type": "png",
+      "size_bytes": 171,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "37f9f3ce20c2ea03cf1ce0870b98f38205725301ad65d04c7fad7bfe4484d031"
+    },
+    {
+      "relative_path": "animations/frames/idle-wag/frame_03_DUCK_IDLE_WAG.png",
+      "type": "png",
+      "size_bytes": 175,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "ee07479fc4e229afd9d26457923af79374336a44ff6c8bd8034527821acd02d2"
+    },
+    {
+      "relative_path": "animations/frames/idle-wag/frame_04_DUCK_IDLE_B.png",
+      "type": "png",
+      "size_bytes": 171,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "37f9f3ce20c2ea03cf1ce0870b98f38205725301ad65d04c7fad7bfe4484d031"
+    },
+    {
+      "relative_path": "animations/frames/pecking/frame_01_DUCK_PECK_A.png",
+      "type": "png",
+      "size_bytes": 170,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "1b76241144d9b2386bcce44bdd4ee5d6c9aa0b5300954b0f910ab12665bae75a"
+    },
+    {
+      "relative_path": "animations/frames/pecking/frame_02_DUCK_PECK_B.png",
+      "type": "png",
+      "size_bytes": 158,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "ee5d3c20db1f0cbcc93d21616d9f2de97ecdaac1c7d4f06df732e0f10a04ccbd"
+    },
+    {
+      "relative_path": "animations/frames/preening/frame_01_DUCK_PREEN_A.png",
+      "type": "png",
+      "size_bytes": 176,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "b64feb944adb1aa62a1f39c385a7714b714e34d5a07c95907e12c088cf279c1f"
+    },
+    {
+      "relative_path": "animations/frames/preening/frame_02_DUCK_PREEN_B.png",
+      "type": "png",
+      "size_bytes": 179,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "5aeffa9460dad847292a2ace97324f4815e78adb8ac146c340c2579fa4ef26de"
+    },
+    {
+      "relative_path": "animations/frames/waddle/frame_01_DUCK_RUN_A.png",
+      "type": "png",
+      "size_bytes": 190,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "d4b39b9eb2800f0ff8b603d29f408603f9f8205424473e576581c36dc06fc84c"
+    },
+    {
+      "relative_path": "animations/frames/waddle/frame_02_DUCK_RUN_B.png",
+      "type": "png",
+      "size_bytes": 180,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "59ba0311f293084ff0e04d82528c6cafcb3f79adfa7c7f510a2d69007f314a24"
+    },
+    {
+      "relative_path": "animations/frames/waddle/frame_03_DUCK_RUN_C.png",
+      "type": "png",
+      "size_bytes": 175,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "beb4e2c58eea1cb506fa3d37ee035b66d18060321e1badf5410791d125356385"
+    },
+    {
+      "relative_path": "animations/frames/zero-g-float/frame_01_DUCK_ZERO_G_A.png",
+      "type": "png",
+      "size_bytes": 176,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "3d2231363ec666bb601e714ca0042eca9df302271d339d0aa4c0a7301bc285d1"
+    },
+    {
+      "relative_path": "animations/frames/zero-g-float/frame_02_DUCK_ZERO_G_B.png",
+      "type": "png",
+      "size_bytes": 174,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "714cbe2755d8bf37a7afcd77ce25c0091ba916c8cbafbbea60b24de36b7b993b"
+    },
+    {
+      "relative_path": "animations/gif/blink-4x.gif",
+      "type": "gif",
+      "size_bytes": 835,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "c18a2e9acf86a3c78654972550e041c0b4a84ffaa64136ae74165177aae60f18"
+    },
+    {
+      "relative_path": "animations/gif/blink-8x.gif",
+      "type": "gif",
+      "size_bytes": 1586,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "5f47684b7eb2ee09e11cff74a09fa5c0ddcd0b73c5a86d26295e9ca0dd84ebd2"
+    },
+    {
+      "relative_path": "animations/gif/blink.gif",
+      "type": "gif",
+      "size_bytes": 316,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "4f518c9e3323167a2d6d171aca964bfff935bcd15761d68cbf503af8a2cd429e"
+    },
+    {
+      "relative_path": "animations/gif/celebration-4x.gif",
+      "type": "gif",
+      "size_bytes": 612,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "d8fd60ec75f3c8e56f91eb77d280d5ecdd7b58c0706454a924cfb3e1c960b224"
+    },
+    {
+      "relative_path": "animations/gif/celebration-8x.gif",
+      "type": "gif",
+      "size_bytes": 1164,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "21626b1846504dc2ec4e9423a1b030a2bac564c42311d0978fea891320658f0f"
+    },
+    {
+      "relative_path": "animations/gif/celebration.gif",
+      "type": "gif",
+      "size_bytes": 234,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "9898bbce0906fcb1e1f9afc63dce96ef2e3250b2c4e875c5ae2829a3b19befcd"
+    },
+    {
+      "relative_path": "animations/gif/curious-peek-4x.gif",
+      "type": "gif",
+      "size_bytes": 584,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "9840fa43abb734776d93e806368440cefe81460efd4caa42b4894a9d5a8d38ce"
+    },
+    {
+      "relative_path": "animations/gif/curious-peek-8x.gif",
+      "type": "gif",
+      "size_bytes": 1107,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "7f51dd337607383d43d3ad9ea0bf8db81f6bbdc17fcc589013b5d2157014ccf6"
+    },
+    {
+      "relative_path": "animations/gif/curious-peek.gif",
+      "type": "gif",
+      "size_bytes": 230,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "57ef529c90289592ce4239dfa13796e99414f4a1cead4f8db6a1664413a5290c"
+    },
+    {
+      "relative_path": "animations/gif/feather-ruffle-4x.gif",
+      "type": "gif",
+      "size_bytes": 592,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "10447b374f9d65067f3b14cf0cde0657407e419ac652fa3264f22dfdb0bf41e9"
+    },
+    {
+      "relative_path": "animations/gif/feather-ruffle-8x.gif",
+      "type": "gif",
+      "size_bytes": 1112,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "38e2a95bbfe0cee4969d2bb6e221a86250d8eedafc88394d93852a4036fa7a9f"
+    },
+    {
+      "relative_path": "animations/gif/feather-ruffle.gif",
+      "type": "gif",
+      "size_bytes": 237,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "f6746e389fd1711da6c7888dbc7ea72a3129e4c56f07f2dbb5a2017e27fb829b"
+    },
+    {
+      "relative_path": "animations/gif/foot-shuffle-4x.gif",
+      "type": "gif",
+      "size_bytes": 589,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "ba3e8abbd8a452e9adb3e76318ffdd35f3f3fa7cefe7fb8ecf867b04b8a5943e"
+    },
+    {
+      "relative_path": "animations/gif/foot-shuffle-8x.gif",
+      "type": "gif",
+      "size_bytes": 1104,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "522ce2de38a6a13c6ce8447286d7829c8b262d9858a15d5fe837a9dc9118fc7b"
+    },
+    {
+      "relative_path": "animations/gif/foot-shuffle.gif",
+      "type": "gif",
+      "size_bytes": 230,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "63e32847915ac04d0553d920b3d28713cee6c43d37f3988c5073083748f9ce2c"
+    },
+    {
+      "relative_path": "animations/gif/grooving-bob-4x.gif",
+      "type": "gif",
+      "size_bytes": 578,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "cd760799bbe08a3efc759e1916b3884dfef0bc5459542bbcfaf65f7214a7c489"
+    },
+    {
+      "relative_path": "animations/gif/grooving-bob-8x.gif",
+      "type": "gif",
+      "size_bytes": 1083,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "17e70250a12576b6b4977e5b8f2ea06411e21f032c765bccd83a0aab5642c6e3"
+    },
+    {
+      "relative_path": "animations/gif/grooving-bob.gif",
+      "type": "gif",
+      "size_bytes": 230,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "df79d7eca3446667ebe9ee0e30f2657aff114f4968257d47e72c7998b4c60aa9"
+    },
+    {
+      "relative_path": "animations/gif/idle-breathe-4x.gif",
+      "type": "gif",
+      "size_bytes": 579,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "1985ba2a8e02d82b0fe8534e4b0cc61f71dc22a78cdc9181c2cdc18d46e144c4"
+    },
+    {
+      "relative_path": "animations/gif/idle-breathe-8x.gif",
+      "type": "gif",
+      "size_bytes": 1079,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "6179cd0afa10ad0a9cde20089e64decd13bce17e3e4cbe09ff1de4b32e3809de"
+    },
+    {
+      "relative_path": "animations/gif/idle-breathe.gif",
+      "type": "gif",
+      "size_bytes": 230,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "3835705d4112a8317278cb30eccdcc300ad6cb657c77d59272d80e10752b895b"
+    },
+    {
+      "relative_path": "animations/gif/idle-wag-4x.gif",
+      "type": "gif",
+      "size_bytes": 1126,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "4eab5ab5fb29cbdc50e829150fe5dd3987c4768523f45157286d4c5bca2f2d4e"
+    },
+    {
+      "relative_path": "animations/gif/idle-wag-8x.gif",
+      "type": "gif",
+      "size_bytes": 2127,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "4fe38529c6b933aef9ccd03ef2893b1b2dea116c39fd73b63f97a20b472a888e"
+    },
+    {
+      "relative_path": "animations/gif/idle-wag.gif",
+      "type": "gif",
+      "size_bytes": 430,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "78afd85bab0be5dd50bf86e2c9b333a702b618b225a1b3d4ea60de04078213f3"
+    },
+    {
+      "relative_path": "animations/gif/pecking-4x.gif",
+      "type": "gif",
+      "size_bytes": 582,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "2f51c66ddd2c1039b50aca7c9cc6492930da24b43641a85d73b76b297a3df901"
+    },
+    {
+      "relative_path": "animations/gif/pecking-8x.gif",
+      "type": "gif",
+      "size_bytes": 1097,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "788305b8f8d09c3267a82d13fb11508ba00b734e62151b4508cb02072908f315"
+    },
+    {
+      "relative_path": "animations/gif/pecking.gif",
+      "type": "gif",
+      "size_bytes": 228,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "8aaa4c37d90f676e864c48d9ce411107a17e41e066da65aec82da9b181a9e18b"
+    },
+    {
+      "relative_path": "animations/gif/preening-4x.gif",
+      "type": "gif",
+      "size_bytes": 603,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "a5567484e420091751469ae339e6349cae664490583f94c8fbd21984bf6c6a0d"
+    },
+    {
+      "relative_path": "animations/gif/preening-8x.gif",
+      "type": "gif",
+      "size_bytes": 1141,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "abf06601cdeca7db06125e15aedab43c7708a25d8de5fbf42c650fab8d254a78"
+    },
+    {
+      "relative_path": "animations/gif/preening.gif",
+      "type": "gif",
+      "size_bytes": 236,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "4af0bd878156665daa5eed179f1c0fac835d32fbbbfc53c24ba1cd60894820fc"
+    },
+    {
+      "relative_path": "animations/gif/waddle-4x.gif",
+      "type": "gif",
+      "size_bytes": 874,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "be329a620c460d460467a4433edf71ea0bc1e9789fc450e99f839340d8c9b185"
+    },
+    {
+      "relative_path": "animations/gif/waddle-8x.gif",
+      "type": "gif",
+      "size_bytes": 1658,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "4ba1eaed0bde1cf686e325b641d66f019f03c19f0d9d53a8df0fd15a045f9319"
+    },
+    {
+      "relative_path": "animations/gif/waddle.gif",
+      "type": "gif",
+      "size_bytes": 330,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "b4fa80d361a5855531f1b584a72dd8c71be902f7fe9bfa8821060438a9586266"
+    },
+    {
+      "relative_path": "animations/gif/zero-g-float-4x.gif",
+      "type": "gif",
+      "size_bytes": 587,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "c2a31ae0800c37d87d54d490155705163293ba8749b91b7f9115679e9ed4ac2a"
+    },
+    {
+      "relative_path": "animations/gif/zero-g-float-8x.gif",
+      "type": "gif",
+      "size_bytes": 1103,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "7d797648b301cb3ba351ceedf1e10955f36b96b6c6f728fddda37acdf8eaa1e2"
+    },
+    {
+      "relative_path": "animations/gif/zero-g-float.gif",
+      "type": "gif",
+      "size_bytes": 230,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "f2b28df5e5be94813f2f6500eceabee3ba44d69c2bb5db78c6050c5ef6d259cb"
+    },
+    {
+      "relative_path": "animations/webp/blink-8x.webp",
+      "type": "webp",
+      "size_bytes": 332,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "ead0013c82ef2efcc8d43bcaa52245996e77d6b52694ca70e84e5f3e62826343"
+    },
+    {
+      "relative_path": "animations/webp/blink.webp",
+      "type": "webp",
+      "size_bytes": 278,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "25b6d117dec8b3d7062ecc0de8d9f3d6ce34562a73a237bc5f8232f323be545f"
+    },
+    {
+      "relative_path": "animations/webp/celebration-8x.webp",
+      "type": "webp",
+      "size_bytes": 412,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "e60644a272ac4116cfa315f395d4559b896712e713c929d7124571f9a349464f"
+    },
+    {
+      "relative_path": "animations/webp/celebration.webp",
+      "type": "webp",
+      "size_bytes": 302,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "a6460e2e6a743bdb4228fccda87091d9a1e1ce1510e5963bdd40366f3a1eb6ca"
+    },
+    {
+      "relative_path": "animations/webp/curious-peek-8x.webp",
+      "type": "webp",
+      "size_bytes": 388,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "8e0e403dc80de4836a2d928b134d14cef9dece8435640b19513c4454d2f6a5d5"
+    },
+    {
+      "relative_path": "animations/webp/curious-peek.webp",
+      "type": "webp",
+      "size_bytes": 296,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "ebc9308de017a2bdf23ddde96e577c420f9e2631bd0f29fa185be0f80e0fd3dd"
+    },
+    {
+      "relative_path": "animations/webp/feather-ruffle-8x.webp",
+      "type": "webp",
+      "size_bytes": 334,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "91329b6e005102587d21a20bba781fd2435e8c68c163e51802bd924ed32645ef"
+    },
+    {
+      "relative_path": "animations/webp/feather-ruffle.webp",
+      "type": "webp",
+      "size_bytes": 262,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "a46d5b48d18415e1c83dcca6c6c3b8d48e344b556dd67668c92447472bc2c4db"
+    },
+    {
+      "relative_path": "animations/webp/foot-shuffle-8x.webp",
+      "type": "webp",
+      "size_bytes": 280,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "1d46c3e12709785d7c48db3bc5c0e7629ab7f02d5664269549771f48cfebad6b"
+    },
+    {
+      "relative_path": "animations/webp/foot-shuffle.webp",
+      "type": "webp",
+      "size_bytes": 252,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "5203292225be7cc949cd7f1ec6dcb302885092bbda2561c7161d555c2a6fa1b7"
+    },
+    {
+      "relative_path": "animations/webp/grooving-bob-8x.webp",
+      "type": "webp",
+      "size_bytes": 374,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "0a311f9e6592fb6728cf514b8cd23b92796c9c20cfa2367248e51d198d3dab41"
+    },
+    {
+      "relative_path": "animations/webp/grooving-bob.webp",
+      "type": "webp",
+      "size_bytes": 290,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "e982fc639fa51c770803acfc45b8ea27ebd3dd144a848b615a5761574e5cca24"
+    },
+    {
+      "relative_path": "animations/webp/idle-breathe-8x.webp",
+      "type": "webp",
+      "size_bytes": 430,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "ef955d42f747ebefabe7273c84123951e73f37b515eb80bca82018e2d6cb24e4"
+    },
+    {
+      "relative_path": "animations/webp/idle-breathe.webp",
+      "type": "webp",
+      "size_bytes": 302,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "088339b58a616ddecdb340f4b160d5069d4ecf50f6f49748c08ff15f23508b48"
+    },
+    {
+      "relative_path": "animations/webp/idle-wag-8x.webp",
+      "type": "webp",
+      "size_bytes": 768,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "67a742e3c8f188926d27fa45bced59a863e7a333ddef2d7f4e2e1ae6ac30bec4"
+    },
+    {
+      "relative_path": "animations/webp/idle-wag.webp",
+      "type": "webp",
+      "size_bytes": 556,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "5a408ea6e6eb74ae98e2e393b66ab1455c88d97026334c3668b9f46089f4b6f1"
+    },
+    {
+      "relative_path": "animations/webp/pecking-8x.webp",
+      "type": "webp",
+      "size_bytes": 394,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "412fb92dc00d7cd530dfdaf3f186bcf9732c1b796f7afa1870ca8c68370ff6d7"
+    },
+    {
+      "relative_path": "animations/webp/pecking.webp",
+      "type": "webp",
+      "size_bytes": 302,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "07039208a45a9844e75af7fe04c7fd2f8bd26e107f1829458df9d5ac0fbd011e"
+    },
+    {
+      "relative_path": "animations/webp/preening-8x.webp",
+      "type": "webp",
+      "size_bytes": 336,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "023ada1e22aadcee90e71bbf282a839e0c6b4ff50aa3bdd9eea5562e74a3cff8"
+    },
+    {
+      "relative_path": "animations/webp/preening.webp",
+      "type": "webp",
+      "size_bytes": 264,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "5c2f14b600e3b0da2861f7700bb3d75b94aad669b46177cf8a4c907c2825f35e"
+    },
+    {
+      "relative_path": "animations/webp/waddle-8x.webp",
+      "type": "webp",
+      "size_bytes": 588,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "7433b13f4e3fb005cf90965d0cb2ee4951013f4a3d2bea3b02404914be726e6e"
+    },
+    {
+      "relative_path": "animations/webp/waddle.webp",
+      "type": "webp",
+      "size_bytes": 434,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "478a149410f42bbde6fdc9a2f5191e5ef83ae01e4eb8329b0c12857e9c352294"
+    },
+    {
+      "relative_path": "animations/webp/zero-g-float-8x.webp",
+      "type": "webp",
+      "size_bytes": 282,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "11c9df61765593dcf93246f8d923452f1aa1a55892594177a2504f392829ab3c"
+    },
+    {
+      "relative_path": "animations/webp/zero-g-float.webp",
+      "type": "webp",
+      "size_bytes": 256,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "e166cd82caac44cfb469614ec61c1819c32ec9b8f99ad99780be1e1da52771fe"
+    },
+    {
+      "relative_path": "construction/COMPONENTS.json",
+      "type": "json",
+      "size_bytes": 15940,
+      "dimensions": null,
+      "sha256": "85b668a29aa50b7cf866e0b43bc163bf3c04ce1d55de80467fe9d3cc47b608c9"
+    },
+    {
+      "relative_path": "construction/TIMEDUCK-CONSTRUCTION.md",
+      "type": "md",
+      "size_bytes": 3518,
+      "dimensions": null,
+      "sha256": "3b00fbae6dee6d9ed6109bb21d2a7984e78923ffe7efd7abc0ae7595e491c8a2"
+    },
+    {
+      "relative_path": "construction/components/beak/comp_beak_lower.png",
+      "type": "png",
+      "size_bytes": 81,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "d077952bd79f57b8b4c74e64d24aa25e677ee13ecd113561240bfd764fce9544"
+    },
+    {
+      "relative_path": "construction/components/beak/comp_beak_lower_4x.png",
+      "type": "png",
+      "size_bytes": 118,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "a35f948b65aa1578b493a89b1efb656dc714ddcb4c7a0962b63b7123cbf4dae6"
+    },
+    {
+      "relative_path": "construction/components/beak/comp_beak_lower_cropped.png",
+      "type": "png",
+      "size_bytes": 74,
+      "dimensions": {
+        "width": 2,
+        "height": 1
+      },
+      "sha256": "9126319150e7316aad913d3b395fc7deb0dc42f4859693cad019a8f272e85253"
+    },
+    {
+      "relative_path": "construction/components/beak/comp_beak_neutral.png",
+      "type": "png",
+      "size_bytes": 93,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "110d50af6802fb12eb688076bae13acd224c28f5768340f73bb2e7e8b66611f4"
+    },
+    {
+      "relative_path": "construction/components/beak/comp_beak_neutral_4x.png",
+      "type": "png",
+      "size_bytes": 131,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "9c4cbcd4b3110d3ef735eda4eebf5b6ffbb459359f97de3ad1e297b8658bcde8"
+    },
+    {
+      "relative_path": "construction/components/beak/comp_beak_neutral_cropped.png",
+      "type": "png",
+      "size_bytes": 79,
+      "dimensions": {
+        "width": 3,
+        "height": 2
+      },
+      "sha256": "f1c459cb92a737d4b7c27bb1691a164a1f6c005d5ee69859a2efe0e99a41fbee"
+    },
+    {
+      "relative_path": "construction/components/beak/comp_beak_quack.png",
+      "type": "png",
+      "size_bytes": 91,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "ba4747d98363300d02f211aa16f750d7650f57f46820c64433000c0e45a58b3c"
+    },
+    {
+      "relative_path": "construction/components/beak/comp_beak_quack_4x.png",
+      "type": "png",
+      "size_bytes": 132,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "8fc3e9e1c74aa83612456e06f4248eafc5b6407496726ad830feaf0ac3d27207"
+    },
+    {
+      "relative_path": "construction/components/beak/comp_beak_quack_cropped.png",
+      "type": "png",
+      "size_bytes": 77,
+      "dimensions": {
+        "width": 4,
+        "height": 2
+      },
+      "sha256": "c1f3ed188bf00d2c8d064dbc946d8d4391054ce42a1c6e08a59d1db370cb4a76"
+    },
+    {
+      "relative_path": "construction/components/beak/comp_beak_upper.png",
+      "type": "png",
+      "size_bytes": 87,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "b13743bb62fc1fc9465f4815d2586bc23d9a293beb9a04738735b9abfa7b9827"
+    },
+    {
+      "relative_path": "construction/components/beak/comp_beak_upper_4x.png",
+      "type": "png",
+      "size_bytes": 120,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "6ebdf6ea51bcc153112297c42109e0dbef19977114fa78fa942b056e0ec417f9"
+    },
+    {
+      "relative_path": "construction/components/beak/comp_beak_upper_cropped.png",
+      "type": "png",
+      "size_bytes": 72,
+      "dimensions": {
+        "width": 3,
+        "height": 1
+      },
+      "sha256": "24712b0b61b4cca70b9eb7c430fe50b6d823d9d39a1724429b60ae07e5f669d7"
+    },
+    {
+      "relative_path": "construction/components/body/comp_body_core.png",
+      "type": "png",
+      "size_bytes": 108,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "17d5e774a82a850d04633c029d397fe1db85a58fab6b86b02043a65a04ef0200"
+    },
+    {
+      "relative_path": "construction/components/body/comp_body_core_4x.png",
+      "type": "png",
+      "size_bytes": 169,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "c39bcc38feac9b3cefb6ff7f6b4ee672c933d9a3cb981d327bbdab86d5f5fd3a"
+    },
+    {
+      "relative_path": "construction/components/body/comp_body_core_cropped.png",
+      "type": "png",
+      "size_bytes": 99,
+      "dimensions": {
+        "width": 9,
+        "height": 5
+      },
+      "sha256": "6cde0260b78edad7b92453310b303f64405b82de32cf219495c9c83dc3ef9d59"
+    },
+    {
+      "relative_path": "construction/components/eyes/comp_eye_blink.png",
+      "type": "png",
+      "size_bytes": 82,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "1b2096a031fbab39a0f08eae027c5bfda1e4795e92a704df2f5d0193c1707aea"
+    },
+    {
+      "relative_path": "construction/components/eyes/comp_eye_blink_4x.png",
+      "type": "png",
+      "size_bytes": 119,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "7e72e7a82755ac418dbe62713347320a198ff5f2fb976b87bd96a7be9da432d3"
+    },
+    {
+      "relative_path": "construction/components/eyes/comp_eye_blink_cropped.png",
+      "type": "png",
+      "size_bytes": 74,
+      "dimensions": {
+        "width": 2,
+        "height": 1
+      },
+      "sha256": "bb53f7de4122340af0ea03e3a37abb5238e07f31c4596e468c8b649baad9b120"
+    },
+    {
+      "relative_path": "construction/components/eyes/comp_eye_neutral_open.png",
+      "type": "png",
+      "size_bytes": 81,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "454a162ba7ede671e79179f214544f02b0ae75927ea987a8e04dadd1069f9e92"
+    },
+    {
+      "relative_path": "construction/components/eyes/comp_eye_neutral_open_4x.png",
+      "type": "png",
+      "size_bytes": 125,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "6d5c2b4882fa0e3487915981f90db02166af672aed037493ea8cbd5072aad95b"
+    },
+    {
+      "relative_path": "construction/components/eyes/comp_eye_neutral_open_cropped.png",
+      "type": "png",
+      "size_bytes": 71,
+      "dimensions": {
+        "width": 2,
+        "height": 1
+      },
+      "sha256": "a15fb1c7ca902d2746e5818a0fdf5c34e81743f125a0bc476ca9c8102358a706"
+    },
+    {
+      "relative_path": "construction/components/eyes/comp_eye_pet_heart.png",
+      "type": "png",
+      "size_bytes": 81,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "33bf883442a14057518ef53e03e33bcc3f974144bc44ba7df3ffb78e6b442072"
+    },
+    {
+      "relative_path": "construction/components/eyes/comp_eye_pet_heart_4x.png",
+      "type": "png",
+      "size_bytes": 122,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "d05220156d451d0e6719c63366d8016bd42ba38dbaff2ad6563d6786f68b3e99"
+    },
+    {
+      "relative_path": "construction/components/eyes/comp_eye_pet_heart_cropped.png",
+      "type": "png",
+      "size_bytes": 74,
+      "dimensions": {
+        "width": 2,
+        "height": 1
+      },
+      "sha256": "dc4bae9a5f5b18c3395c9d3d8375bedb0528c00866bfadf6647de161dbbfa71d"
+    },
+    {
+      "relative_path": "construction/components/eyes/comp_eye_pupil.png",
+      "type": "png",
+      "size_bytes": 80,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "b76b8c1cce5cf467f901b2d911e63116f4168d0d6bf294171ffdd44eebc7284f"
+    },
+    {
+      "relative_path": "construction/components/eyes/comp_eye_pupil_4x.png",
+      "type": "png",
+      "size_bytes": 119,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "74c63e9760897bb5a8e49dda7be1ea6820b57dbd4b2929195ce541165aa12fb3"
+    },
+    {
+      "relative_path": "construction/components/eyes/comp_eye_pupil_cropped.png",
+      "type": "png",
+      "size_bytes": 70,
+      "dimensions": {
+        "width": 1,
+        "height": 1
+      },
+      "sha256": "e94070901954ec51a4f0025a9f66877ef48485d2e64dd7d3c6adf5e37ed310e2"
+    },
+    {
+      "relative_path": "construction/components/eyes/comp_eye_sclera.png",
+      "type": "png",
+      "size_bytes": 80,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "7c0f69eb8acde87bed8ff5df9cf4ef28cb4f0f15e8032c2191bd71a189856e3e"
+    },
+    {
+      "relative_path": "construction/components/eyes/comp_eye_sclera_4x.png",
+      "type": "png",
+      "size_bytes": 111,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "8782b23f52c3a48713720b0882a62dec2aed5ff37d35e9c1ac09233ef7c4c7b6"
+    },
+    {
+      "relative_path": "construction/components/eyes/comp_eye_sclera_cropped.png",
+      "type": "png",
+      "size_bytes": 70,
+      "dimensions": {
+        "width": 1,
+        "height": 1
+      },
+      "sha256": "d5a51b6aed15684ec8c123e30fe5703155359d6543b6d7b47cb5766ef44939de"
+    },
+    {
+      "relative_path": "construction/components/eyes/comp_eye_side_eye.png",
+      "type": "png",
+      "size_bytes": 84,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "18e71e903467ffc8c880e542c7ab637ce21e0e3ab5bbc5844995b284027148b6"
+    },
+    {
+      "relative_path": "construction/components/eyes/comp_eye_side_eye_4x.png",
+      "type": "png",
+      "size_bytes": 125,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "2286a1310a1c8a07395c97a4f37ebb9855ca89e0822bf008a515c2c2bb460c55"
+    },
+    {
+      "relative_path": "construction/components/eyes/comp_eye_side_eye_cropped.png",
+      "type": "png",
+      "size_bytes": 74,
+      "dimensions": {
+        "width": 2,
+        "height": 1
+      },
+      "sha256": "a19bf068efe6397c350da9e556929e92f2742a2579db008ab9091cdc2d3b6b94"
+    },
+    {
+      "relative_path": "construction/components/eyes/comp_eye_sleep.png",
+      "type": "png",
+      "size_bytes": 87,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "4b5cd59c43d7eee4f38f23bf2edbcc69fa2baf2005b5640ae71a97588ce99af1"
+    },
+    {
+      "relative_path": "construction/components/eyes/comp_eye_sleep_4x.png",
+      "type": "png",
+      "size_bytes": 122,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "29b7081f76e968a66a8a1ddcdd28265de7623c7a19de8d9f0346599dd5e7ef65"
+    },
+    {
+      "relative_path": "construction/components/eyes/comp_eye_sleep_cropped.png",
+      "type": "png",
+      "size_bytes": 72,
+      "dimensions": {
+        "width": 3,
+        "height": 1
+      },
+      "sha256": "b1cc3347958ba8487d8eafb83fd6858cc92c7c6ce26906183d33019d53aad753"
+    },
+    {
+      "relative_path": "construction/components/feet/comp_feet_left.png",
+      "type": "png",
+      "size_bytes": 79,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "1bfc44da87673f73476f26e12d42ec8e3c3e070667a0c49281026e614a4e1bf4"
+    },
+    {
+      "relative_path": "construction/components/feet/comp_feet_left_4x.png",
+      "type": "png",
+      "size_bytes": 120,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "83a7527c23b1456d3932e7b79f0a9d49d493b427cd811dc361b915acfe56de55"
+    },
+    {
+      "relative_path": "construction/components/feet/comp_feet_left_cropped.png",
+      "type": "png",
+      "size_bytes": 74,
+      "dimensions": {
+        "width": 2,
+        "height": 1
+      },
+      "sha256": "9126319150e7316aad913d3b395fc7deb0dc42f4859693cad019a8f272e85253"
+    },
+    {
+      "relative_path": "construction/components/feet/comp_feet_right.png",
+      "type": "png",
+      "size_bytes": 78,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "854e349f6ba31d0c635fa4ec264829110725465cb3250cd68cd824350c9c8ffa"
+    },
+    {
+      "relative_path": "construction/components/feet/comp_feet_right_4x.png",
+      "type": "png",
+      "size_bytes": 120,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "98faa79581f27459edb4570ab100e216ea3889fcc90801584e60e2fbf8f0d7c2"
+    },
+    {
+      "relative_path": "construction/components/feet/comp_feet_right_cropped.png",
+      "type": "png",
+      "size_bytes": 74,
+      "dimensions": {
+        "width": 2,
+        "height": 1
+      },
+      "sha256": "9126319150e7316aad913d3b395fc7deb0dc42f4859693cad019a8f272e85253"
+    },
+    {
+      "relative_path": "construction/components/feet/comp_feet_sit_tucked.png",
+      "type": "png",
+      "size_bytes": 85,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "f0eb6bbac0bf075db60efbb6533cb7051a704084f622e7049e99232c2b8e77a8"
+    },
+    {
+      "relative_path": "construction/components/feet/comp_feet_sit_tucked_4x.png",
+      "type": "png",
+      "size_bytes": 123,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "93c49c0fedb1d7b4d4c5fc2b04a23eb3ed32f833cd0074b1cfc696a0bcb6bb82"
+    },
+    {
+      "relative_path": "construction/components/feet/comp_feet_sit_tucked_cropped.png",
+      "type": "png",
+      "size_bytes": 73,
+      "dimensions": {
+        "width": 8,
+        "height": 1
+      },
+      "sha256": "21b1eec4947c2d1cef8b49e0366e6c8ffc414b2cb58907b2a6c3fcde8d62f5f0"
+    },
+    {
+      "relative_path": "construction/components/feet/comp_feet_sleep_spread.png",
+      "type": "png",
+      "size_bytes": 84,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "97b44968f3efc4469985fb5c7ca3493b705af5d5945fabb75d2413fa4fc12f82"
+    },
+    {
+      "relative_path": "construction/components/feet/comp_feet_sleep_spread_4x.png",
+      "type": "png",
+      "size_bytes": 121,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "d0b7bfaefdd15e69b29d36eac031cbad77b5a5b6a4a84109a29394bf334ce8e0"
+    },
+    {
+      "relative_path": "construction/components/feet/comp_feet_sleep_spread_cropped.png",
+      "type": "png",
+      "size_bytes": 73,
+      "dimensions": {
+        "width": 8,
+        "height": 1
+      },
+      "sha256": "f9ced06b9499d8e056732d5e0fbae8902aebbe5d7e3a70aaa654c324cebe09b2"
+    },
+    {
+      "relative_path": "construction/components/feet/comp_feet_standing.png",
+      "type": "png",
+      "size_bytes": 80,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "417d9f5077225a4b44a58a1e34c54a590bafd3be05eb3a2fd6921ee7f38ced03"
+    },
+    {
+      "relative_path": "construction/components/feet/comp_feet_standing_4x.png",
+      "type": "png",
+      "size_bytes": 121,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "f724ef2f4dffb90174960d604f1f41395f87a40789fefbd3622c75ee26297560"
+    },
+    {
+      "relative_path": "construction/components/feet/comp_feet_standing_cropped.png",
+      "type": "png",
+      "size_bytes": 81,
+      "dimensions": {
+        "width": 6,
+        "height": 1
+      },
+      "sha256": "a6f3777e6c44b85dd524929431470a9d87dcdc8306f8b0e5697f2c51f7c75ebb"
+    },
+    {
+      "relative_path": "construction/components/feet/comp_feet_waddle_a.png",
+      "type": "png",
+      "size_bytes": 78,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "3533bc4fb29cab017aac754d8f6ccfa4055087d53010910916bcbb3041921b98"
+    },
+    {
+      "relative_path": "construction/components/feet/comp_feet_waddle_a_4x.png",
+      "type": "png",
+      "size_bytes": 120,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "4e6fcc2163755606795ce4994acd23b7ed2b3583c9901d1a689e8f5d864b1fc7"
+    },
+    {
+      "relative_path": "construction/components/feet/comp_feet_waddle_a_cropped.png",
+      "type": "png",
+      "size_bytes": 83,
+      "dimensions": {
+        "width": 7,
+        "height": 1
+      },
+      "sha256": "e0d99de38634db84f4d030a25d7d53a9c66eb9052c5c6c7010e876d72c6d21c6"
+    },
+    {
+      "relative_path": "construction/components/feet/comp_feet_waddle_b.png",
+      "type": "png",
+      "size_bytes": 79,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "704ebb734a1a388cb5a7efa153f13d2486e0cf6370363cbefd1fca932a1e57d4"
+    },
+    {
+      "relative_path": "construction/components/feet/comp_feet_waddle_b_4x.png",
+      "type": "png",
+      "size_bytes": 122,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "10cf17a6d1c3a9e94a38e7234f6e8a90850763de109600d0b997e8cf97d2fa77"
+    },
+    {
+      "relative_path": "construction/components/feet/comp_feet_waddle_b_cropped.png",
+      "type": "png",
+      "size_bytes": 83,
+      "dimensions": {
+        "width": 8,
+        "height": 1
+      },
+      "sha256": "87bd2f39283b4745a4a2e8b831d079670b2a47a747ff3a718bf7c746af933d50"
+    },
+    {
+      "relative_path": "construction/components/head/comp_cheek_blush.png",
+      "type": "png",
+      "size_bytes": 79,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "f2518c9d7ecdd7ba46315584586a1c2b79b3329a2bc12768455f9cfa82f2320f"
+    },
+    {
+      "relative_path": "construction/components/head/comp_cheek_blush_4x.png",
+      "type": "png",
+      "size_bytes": 119,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "802f3be3e588c3c8b83424246f418205f41f051b9397a0faab154fb261c3e1b5"
+    },
+    {
+      "relative_path": "construction/components/head/comp_cheek_blush_cropped.png",
+      "type": "png",
+      "size_bytes": 70,
+      "dimensions": {
+        "width": 1,
+        "height": 1
+      },
+      "sha256": "f78fe9e6cccc960b7651e96be1ef0351daf5fb8bd9293406eadfab79cae928d3"
+    },
+    {
+      "relative_path": "construction/components/head/comp_head_crown_skull.png",
+      "type": "png",
+      "size_bytes": 105,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "2cf3390f98af4c3e4a251c3a9302f7443514f1ebeae13c012e5a12799b2f9fce"
+    },
+    {
+      "relative_path": "construction/components/head/comp_head_crown_skull_4x.png",
+      "type": "png",
+      "size_bytes": 155,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "4b5dc1d6eaac8b0732bf1cbf38d24f2a990abdf8ad586bb3776f4646f399b1cb"
+    },
+    {
+      "relative_path": "construction/components/head/comp_head_crown_skull_cropped.png",
+      "type": "png",
+      "size_bytes": 99,
+      "dimensions": {
+        "width": 7,
+        "height": 4
+      },
+      "sha256": "ee400e6eb97eb68a349e9dc5d522fc0e4a4fb8768deaabd21c49405acee3431f"
+    },
+    {
+      "relative_path": "construction/components/shading/comp_shading_underbelly.png",
+      "type": "png",
+      "size_bytes": 92,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "f4824b713e4b778fb40bb13d058677e2c6e9a3c0a6d22f4d75cb91699ed8a3f4"
+    },
+    {
+      "relative_path": "construction/components/shading/comp_shading_underbelly_4x.png",
+      "type": "png",
+      "size_bytes": 142,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "6b8d95d3824c52c54cb63e4d7c20c99d03ec051091323a0bf3557c905f1cdb21"
+    },
+    {
+      "relative_path": "construction/components/shading/comp_shading_underbelly_cropped.png",
+      "type": "png",
+      "size_bytes": 76,
+      "dimensions": {
+        "width": 4,
+        "height": 2
+      },
+      "sha256": "5de75a0ac7bb9ce79e66b412cc43137ba8d0b8c75766decbf616f450195d5c85"
+    },
+    {
+      "relative_path": "construction/components/tail/comp_tail_neutral.png",
+      "type": "png",
+      "size_bytes": 85,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "d1b676484a116ed6504f86515bf3608cb492580a83de60d569d9ea5abf0ecff2"
+    },
+    {
+      "relative_path": "construction/components/tail/comp_tail_neutral_4x.png",
+      "type": "png",
+      "size_bytes": 148,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "7dcd6406ec5c07e4fed89b38ca1bdcf6e9be442c6a7ccb79fb67b0f88e1a890f"
+    },
+    {
+      "relative_path": "construction/components/tail/comp_tail_neutral_cropped.png",
+      "type": "png",
+      "size_bytes": 85,
+      "dimensions": {
+        "width": 3,
+        "height": 3
+      },
+      "sha256": "4f4f87a5354281e9fb754d98b348cba4a2dc42c59dcec901b3d6641c34d7c47d"
+    },
+    {
+      "relative_path": "construction/components/tail/comp_tail_wag_lift.png",
+      "type": "png",
+      "size_bytes": 83,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "ac53e72937ba893c3a7e34bcf0612b46187b10b5cfea41b5ef71343ffb23900d"
+    },
+    {
+      "relative_path": "construction/components/tail/comp_tail_wag_lift_4x.png",
+      "type": "png",
+      "size_bytes": 143,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "f939c9e42fed2327dfed7c8b0338bd1ecab4f4047c4d1e70473f9354f2c66543"
+    },
+    {
+      "relative_path": "construction/components/tail/comp_tail_wag_lift_cropped.png",
+      "type": "png",
+      "size_bytes": 84,
+      "dimensions": {
+        "width": 3,
+        "height": 3
+      },
+      "sha256": "2ff06b70529fc2609a27c49d0c52511df673355f2c7db2ec39a7c73347502952"
+    },
+    {
+      "relative_path": "construction/reconstructed/TimeDuck-Reconstructed-16x.png",
+      "type": "png",
+      "size_bytes": 664,
+      "dimensions": {
+        "width": 208,
+        "height": 160
+      },
+      "sha256": "5fdd36ca2b4eef7fcfaa46bcd81e111a519606058410f049c95a1a3951f622c0"
+    },
+    {
+      "relative_path": "construction/reconstructed/TimeDuck-Reconstructed.png",
+      "type": "png",
+      "size_bytes": 175,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "95bca8ca5cfae2fe749198071f1fd47789abe60cc5d74aedb9e775e61dcd02bc"
+    },
+    {
+      "relative_path": "construction/svg/TimeDuck-Canonical-Layered.svg",
+      "type": "svg",
+      "size_bytes": 1990,
+      "dimensions": null,
+      "sha256": "cd14dfbc5e3d7abf88dde41409c6047d5c7cbf29ffd5ff51e135d306963ff7b6"
+    },
+    {
+      "relative_path": "construction/validation/RECONSTRUCTION-REPORT.md",
+      "type": "md",
+      "size_bytes": 1145,
+      "dimensions": null,
+      "sha256": "3859665808a0c965a6a96ab23d5d3e7ad6906a960eab9bed28768b028ea22743"
+    },
+    {
+      "relative_path": "construction/validation/reconstruct_test.py",
+      "type": "py",
+      "size_bytes": 2420,
+      "dimensions": null,
+      "sha256": "0a89818e6f152515c702b613114aa6b6cd2c8d1e1f27187c04158e52f35d8e07"
+    },
+    {
+      "relative_path": "construction/validation/reconstruction-diff-16x.png",
+      "type": "png",
+      "size_bytes": 577,
+      "dimensions": {
+        "width": 208,
+        "height": 160
+      },
+      "sha256": "4205aca0a80995b9b833d7b7959a30739566d50e6f49d14e2d3a909d558beac9"
+    },
+    {
+      "relative_path": "construction/validation/reconstruction-diff.png",
+      "type": "png",
+      "size_bytes": 129,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "48ca418b0d3a1619d7b0942c1ffb400475e871b43b99b0c73c9dc1bb792ce7c8"
+    },
+    {
+      "relative_path": "fonts/.DS_Store",
+      "type": "",
+      "size_bytes": 8196,
+      "dimensions": null,
+      "sha256": "5862186d864c1910957cdb7a15fb457c0ca8771ee822289eb5978018b5759124"
+    },
+    {
+      "relative_path": "fonts/PIXEL-TIMES-FONT-SPEC.md",
+      "type": "md",
+      "size_bytes": 985,
+      "dimensions": null,
+      "sha256": "66f0606403efbaaa1fb07e620774892289a8f4da65e94023a35f25e7ac83a547"
+    },
+    {
+      "relative_path": "fonts/Pixel-Times-Bold.ttf",
+      "type": "ttf",
+      "size_bytes": 43656,
+      "dimensions": null,
+      "sha256": "085b55cbfc19f62f0c5d3fde11267538368d1496da27cf41748f2872d75a6642"
+    },
+    {
+      "relative_path": "fonts/Pixel-Times-Specimen.png",
+      "type": "png",
+      "size_bytes": 86476,
+      "dimensions": {
+        "width": 1600,
+        "height": 1600
+      },
+      "sha256": "dd049b5de72d228bf87847926177a11a71c69b775a8dda4167796b91542e618e"
+    },
+    {
+      "relative_path": "fonts/Pixel-Times-Specimen.webp",
+      "type": "webp",
+      "size_bytes": 31196,
+      "dimensions": {
+        "width": 1600,
+        "height": 1600
+      },
+      "sha256": "fe1d4837f664de943352d152a01010ec7bbf701c94db43232dafd59e941b6c4d"
+    },
+    {
+      "relative_path": "fonts/Pixel-Times.ttf",
+      "type": "ttf",
+      "size_bytes": 44472,
+      "dimensions": null,
+      "sha256": "72747bba944aac2ad81a67a3d6e308e8e3bccdccd33a0829fbfecddd4678afaf"
+    },
+    {
+      "relative_path": "fonts/TIMEDUCK-FONT-SPEC.md",
+      "type": "md",
+      "size_bytes": 1312,
+      "dimensions": null,
+      "sha256": "da9a5e6eb032af375b14d338419c6f054329f2e7659f0933ed273ef3b5a3cf61"
+    },
+    {
+      "relative_path": "fonts/TimeDuck-Specimen.png",
+      "type": "png",
+      "size_bytes": 163243,
+      "dimensions": {
+        "width": 1600,
+        "height": 1550
+      },
+      "sha256": "fc87e21a2057a586f00b73473242d32549c1ea17152f7533d7a832bacf15c61e"
+    },
+    {
+      "relative_path": "fonts/TimeDuck-Specimen.webp",
+      "type": "webp",
+      "size_bytes": 71102,
+      "dimensions": {
+        "width": 1600,
+        "height": 1550
+      },
+      "sha256": "7634ea1e6e2501fc30ccefb9b943bf822eeba324b51863620b64624f371073cf"
+    },
+    {
+      "relative_path": "fonts/sources/pixel-times/Pixel Times Bold.ttf",
+      "type": "ttf",
+      "size_bytes": 43656,
+      "dimensions": null,
+      "sha256": "085b55cbfc19f62f0c5d3fde11267538368d1496da27cf41748f2872d75a6642"
+    },
+    {
+      "relative_path": "fonts/sources/pixel-times/Pixel Times.ttf",
+      "type": "ttf",
+      "size_bytes": 44472,
+      "dimensions": null,
+      "sha256": "72747bba944aac2ad81a67a3d6e308e8e3bccdccd33a0829fbfecddd4678afaf"
+    },
+    {
+      "relative_path": "hi-res/16x/TimeDuck-Blink-16x.png",
+      "type": "png",
+      "size_bytes": 641,
+      "dimensions": {
+        "width": 208,
+        "height": 160
+      },
+      "sha256": "34840bb332db5386fed392398a9bd8f2dca2b32a3e74df461451040372e9eacc"
+    },
+    {
+      "relative_path": "hi-res/16x/TimeDuck-Celebration-16x.png",
+      "type": "png",
+      "size_bytes": 679,
+      "dimensions": {
+        "width": 208,
+        "height": 160
+      },
+      "sha256": "25ed564fddb91941137d9f29b24f82fcbc52614459a69b642adecd313ebb1cb5"
+    },
+    {
+      "relative_path": "hi-res/16x/TimeDuck-IdleWag-16x.png",
+      "type": "png",
+      "size_bytes": 660,
+      "dimensions": {
+        "width": 208,
+        "height": 160
+      },
+      "sha256": "62ba4c5f0475593acc495d33133edf2360d4a298628124a4d5e076852831d3d2"
+    },
+    {
+      "relative_path": "hi-res/16x/TimeDuck-Neutral-16x.png",
+      "type": "png",
+      "size_bytes": 664,
+      "dimensions": {
+        "width": 208,
+        "height": 160
+      },
+      "sha256": "5fdd36ca2b4eef7fcfaa46bcd81e111a519606058410f049c95a1a3951f622c0"
+    },
+    {
+      "relative_path": "hi-res/16x/TimeDuck-PetHappy-16x.png",
+      "type": "png",
+      "size_bytes": 662,
+      "dimensions": {
+        "width": 208,
+        "height": 160
+      },
+      "sha256": "07e8e8b82317ccefe71daf62dca9e36f8eb318076f86a61197032e32eb92f714"
+    },
+    {
+      "relative_path": "hi-res/16x/TimeDuck-Quack-16x.png",
+      "type": "png",
+      "size_bytes": 667,
+      "dimensions": {
+        "width": 208,
+        "height": 160
+      },
+      "sha256": "f060c5475209b304fe1124a01c567552a700352166df43c46fde61d504a230bf"
+    },
+    {
+      "relative_path": "hi-res/16x/TimeDuck-Sleeping-16x.png",
+      "type": "png",
+      "size_bytes": 581,
+      "dimensions": {
+        "width": 208,
+        "height": 160
+      },
+      "sha256": "3d3d9cebfb50f442dffa1eb52c144c60d7e8222d1f5dc8685b8ec2e049b35bcb"
+    },
+    {
+      "relative_path": "hi-res/16x/TimeDuck-Tactical-16x.png",
+      "type": "png",
+      "size_bytes": 596,
+      "dimensions": {
+        "width": 208,
+        "height": 160
+      },
+      "sha256": "e1e4bbb2b4d19fd64ebff020a96fb3aa1c3760810fa3fb502466c8f2165d67cc"
+    },
+    {
+      "relative_path": "hi-res/16x/TimeDuck-Waddle-16x.png",
+      "type": "png",
+      "size_bytes": 681,
+      "dimensions": {
+        "width": 208,
+        "height": 160
+      },
+      "sha256": "ff796aa352b4b37e5f994abb4d3fe86aef04eb867315e738e3f2f19d08205e69"
+    },
+    {
+      "relative_path": "hi-res/16x/TimeDuck-ZeroG-16x.png",
+      "type": "png",
+      "size_bytes": 663,
+      "dimensions": {
+        "width": 208,
+        "height": 160
+      },
+      "sha256": "4ca5c1bb30ce9c873e30f324b4ca3defcd0f8599ff914233c93cdc49fe76da35"
+    },
+    {
+      "relative_path": "hi-res/2x/TimeDuck-Blink-2x.png",
+      "type": "png",
+      "size_bytes": 195,
+      "dimensions": {
+        "width": 26,
+        "height": 20
+      },
+      "sha256": "27096f2faa5511d248551573d86c9a6c23fd322b500a9b099e55c55be057d54a"
+    },
+    {
+      "relative_path": "hi-res/2x/TimeDuck-Celebration-2x.png",
+      "type": "png",
+      "size_bytes": 212,
+      "dimensions": {
+        "width": 26,
+        "height": 20
+      },
+      "sha256": "477007438646432d87f6a306ce1acaea568813d3383d48bd93345eaa0eae204c"
+    },
+    {
+      "relative_path": "hi-res/2x/TimeDuck-IdleWag-2x.png",
+      "type": "png",
+      "size_bytes": 205,
+      "dimensions": {
+        "width": 26,
+        "height": 20
+      },
+      "sha256": "08f6445402427eb18b100861c2abdd5d12f8d0ad6d09906176f80f341757dc4c"
+    },
+    {
+      "relative_path": "hi-res/2x/TimeDuck-Neutral-2x.png",
+      "type": "png",
+      "size_bytes": 209,
+      "dimensions": {
+        "width": 26,
+        "height": 20
+      },
+      "sha256": "9c798def7696ccc495b669375032048c525265672d2425e27e6c6cc749b3bf9c"
+    },
+    {
+      "relative_path": "hi-res/2x/TimeDuck-PetHappy-2x.png",
+      "type": "png",
+      "size_bytes": 210,
+      "dimensions": {
+        "width": 26,
+        "height": 20
+      },
+      "sha256": "cab49a2f16d406230c717bbfdd67c19c382ac3f0fff18c53324cb9975ebfdbae"
+    },
+    {
+      "relative_path": "hi-res/2x/TimeDuck-Quack-2x.png",
+      "type": "png",
+      "size_bytes": 207,
+      "dimensions": {
+        "width": 26,
+        "height": 20
+      },
+      "sha256": "00dd15d124530d46ab7231318667372f218cedacbe11c0186bb5cf1b16fb4a4e"
+    },
+    {
+      "relative_path": "hi-res/2x/TimeDuck-Sleeping-2x.png",
+      "type": "png",
+      "size_bytes": 184,
+      "dimensions": {
+        "width": 26,
+        "height": 20
+      },
+      "sha256": "b2197a2ac3bfbfebc298c1263e05d985635a44e40689ca83450ac04f1559811e"
+    },
+    {
+      "relative_path": "hi-res/2x/TimeDuck-Tactical-2x.png",
+      "type": "png",
+      "size_bytes": 196,
+      "dimensions": {
+        "width": 26,
+        "height": 20
+      },
+      "sha256": "daeb39ed93a55c381d5a375cbe7a76f0e8cf15ffbd6996ef082b318c623359b6"
+    },
+    {
+      "relative_path": "hi-res/2x/TimeDuck-Waddle-2x.png",
+      "type": "png",
+      "size_bytes": 218,
+      "dimensions": {
+        "width": 26,
+        "height": 20
+      },
+      "sha256": "f37176338e9785a2c0c7f1cb7203cda7bc0d8ec0e474eddb5061db38e3b03f8c"
+    },
+    {
+      "relative_path": "hi-res/2x/TimeDuck-ZeroG-2x.png",
+      "type": "png",
+      "size_bytes": 209,
+      "dimensions": {
+        "width": 26,
+        "height": 20
+      },
+      "sha256": "80788c6e7c1bd446164285e1a508327aeead539177521d3a117cb52107f1e32a"
+    },
+    {
+      "relative_path": "hi-res/32x/TimeDuck-Blink-32x.png",
+      "type": "png",
+      "size_bytes": 1404,
+      "dimensions": {
+        "width": 416,
+        "height": 320
+      },
+      "sha256": "e2d2603b8c31b1912cce402ffff0f32ed9673d72ef7e427418a4ce47dde99ebe"
+    },
+    {
+      "relative_path": "hi-res/32x/TimeDuck-Celebration-32x.png",
+      "type": "png",
+      "size_bytes": 1440,
+      "dimensions": {
+        "width": 416,
+        "height": 320
+      },
+      "sha256": "edeb5630e84e891302cc38e5896b1fb5b5d08a4bce7e9d91ed5f512a5dde5b82"
+    },
+    {
+      "relative_path": "hi-res/32x/TimeDuck-IdleWag-32x.png",
+      "type": "png",
+      "size_bytes": 1427,
+      "dimensions": {
+        "width": 416,
+        "height": 320
+      },
+      "sha256": "98530e24e7a829889080d63831db61c9a7059b0a6ff70243a75421c5d6ece63a"
+    },
+    {
+      "relative_path": "hi-res/32x/TimeDuck-Neutral-32x.png",
+      "type": "png",
+      "size_bytes": 1429,
+      "dimensions": {
+        "width": 416,
+        "height": 320
+      },
+      "sha256": "9c267b43ebaa54fc0db6eef4fc08f814a7fd1168c0231476dce526929971411c"
+    },
+    {
+      "relative_path": "hi-res/32x/TimeDuck-PetHappy-32x.png",
+      "type": "png",
+      "size_bytes": 1433,
+      "dimensions": {
+        "width": 416,
+        "height": 320
+      },
+      "sha256": "d68f40d9d90aa7083753a6e217227ec71615d81672a4db4e4919126251cee306"
+    },
+    {
+      "relative_path": "hi-res/32x/TimeDuck-Quack-32x.png",
+      "type": "png",
+      "size_bytes": 1438,
+      "dimensions": {
+        "width": 416,
+        "height": 320
+      },
+      "sha256": "e1f8a1aed440ad04d6d50c94643cfaacbb7fef34d879bd6b4d0ce31e5c07ddc2"
+    },
+    {
+      "relative_path": "hi-res/32x/TimeDuck-Sleeping-32x.png",
+      "type": "png",
+      "size_bytes": 1258,
+      "dimensions": {
+        "width": 416,
+        "height": 320
+      },
+      "sha256": "2dd99319320ff87ef6197e830c1cef50cf4b75e16b9781ca370869acc084c128"
+    },
+    {
+      "relative_path": "hi-res/32x/TimeDuck-Tactical-32x.png",
+      "type": "png",
+      "size_bytes": 1282,
+      "dimensions": {
+        "width": 416,
+        "height": 320
+      },
+      "sha256": "e3094cb80f64040f652470ab28509d0e770c0a4ba21c22fb9fff3401d87b3123"
+    },
+    {
+      "relative_path": "hi-res/32x/TimeDuck-Waddle-32x.png",
+      "type": "png",
+      "size_bytes": 1448,
+      "dimensions": {
+        "width": 416,
+        "height": 320
+      },
+      "sha256": "7d2a98c0c036034d61d8818a4653b65f062b1cfcf94dc8a86d8c2f6da41817e7"
+    },
+    {
+      "relative_path": "hi-res/32x/TimeDuck-ZeroG-32x.png",
+      "type": "png",
+      "size_bytes": 1430,
+      "dimensions": {
+        "width": 416,
+        "height": 320
+      },
+      "sha256": "361c96c0e7844f1c06a3b08175cf561c3b774d8edc05896e74f22d8848a99441"
+    },
+    {
+      "relative_path": "hi-res/4x/TimeDuck-Blink-4x.png",
+      "type": "png",
+      "size_bytes": 254,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "1ac72ddc1ce36221236cf0ced1228daaab7cba8691d2a7ff9bac67d43b337a8f"
+    },
+    {
+      "relative_path": "hi-res/4x/TimeDuck-Celebration-4x.png",
+      "type": "png",
+      "size_bytes": 289,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "0016b6021dc0a93c71c408b5ee29c2e17da477fc66c30c25cf995422b8fccf29"
+    },
+    {
+      "relative_path": "hi-res/4x/TimeDuck-IdleWag-4x.png",
+      "type": "png",
+      "size_bytes": 275,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "578e9917f185be0eaef08fa691ef55a2b780c1cf2c8662c150ed68eba6ea461b"
+    },
+    {
+      "relative_path": "hi-res/4x/TimeDuck-Neutral-4x.png",
+      "type": "png",
+      "size_bytes": 274,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "9aa56c1d3254a2c0d78fee82bc5317d167dca96a10beefd7dbbbba3db9a5c973"
+    },
+    {
+      "relative_path": "hi-res/4x/TimeDuck-PetHappy-4x.png",
+      "type": "png",
+      "size_bytes": 276,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "1ab2e05fc286dbbcc56712191a394cce1c3d852f8a313caec41562bba873b14f"
+    },
+    {
+      "relative_path": "hi-res/4x/TimeDuck-Quack-4x.png",
+      "type": "png",
+      "size_bytes": 276,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "351997abaded03aa602286ff150d0ac3959c9faf2ed4f6e768cb8702717b09e0"
+    },
+    {
+      "relative_path": "hi-res/4x/TimeDuck-Sleeping-4x.png",
+      "type": "png",
+      "size_bytes": 243,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "7c95aed0edf4b4ceac6da55f2e11055692780c4a799898a33eb1f8850fb0bf93"
+    },
+    {
+      "relative_path": "hi-res/4x/TimeDuck-Tactical-4x.png",
+      "type": "png",
+      "size_bytes": 260,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "b9e039ea5f2d209250385a8c99e01aaac49b7a5e959d79577a5adc0809c366f9"
+    },
+    {
+      "relative_path": "hi-res/4x/TimeDuck-Waddle-4x.png",
+      "type": "png",
+      "size_bytes": 292,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "4a825f9c006951f15bc7dd8a0b8a6914a4733e6a73a5efedebe0dee32bc19821"
+    },
+    {
+      "relative_path": "hi-res/4x/TimeDuck-ZeroG-4x.png",
+      "type": "png",
+      "size_bytes": 276,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "642b92750b8d6bf6c4d3770a696aca79cdde59998ca09ca8c8a7814716106eef"
+    },
+    {
+      "relative_path": "hi-res/64x/TimeDuck-Blink-64x.png",
+      "type": "png",
+      "size_bytes": 3690,
+      "dimensions": {
+        "width": 832,
+        "height": 640
+      },
+      "sha256": "bf3371781bcfa9e50939a0b045b7ef917865e731b8d101b9eb653b061d25ea8c"
+    },
+    {
+      "relative_path": "hi-res/64x/TimeDuck-Celebration-64x.png",
+      "type": "png",
+      "size_bytes": 3723,
+      "dimensions": {
+        "width": 832,
+        "height": 640
+      },
+      "sha256": "7c302a777a34af6c01df1fce9a7dfd9f3f402d717f6f928bc3a36988345a86d0"
+    },
+    {
+      "relative_path": "hi-res/64x/TimeDuck-IdleWag-64x.png",
+      "type": "png",
+      "size_bytes": 3711,
+      "dimensions": {
+        "width": 832,
+        "height": 640
+      },
+      "sha256": "5197169ec2843c8b0df79e468a3a45947b3d18a6c6ae228716a485d8fd60815f"
+    },
+    {
+      "relative_path": "hi-res/64x/TimeDuck-Neutral-64x.png",
+      "type": "png",
+      "size_bytes": 3713,
+      "dimensions": {
+        "width": 832,
+        "height": 640
+      },
+      "sha256": "eae05f595b150b2161b3008d6a1625b940522fbdd48ee8deb2d7a6cabec46daf"
+    },
+    {
+      "relative_path": "hi-res/64x/TimeDuck-PetHappy-64x.png",
+      "type": "png",
+      "size_bytes": 3717,
+      "dimensions": {
+        "width": 832,
+        "height": 640
+      },
+      "sha256": "ed3470dccc553c27c08cf8e7f161fe9408e7fda87968a004b453624873286bed"
+    },
+    {
+      "relative_path": "hi-res/64x/TimeDuck-Quack-64x.png",
+      "type": "png",
+      "size_bytes": 3721,
+      "dimensions": {
+        "width": 832,
+        "height": 640
+      },
+      "sha256": "53b55b8067064950be419738ead86fe68baf5ab9475f3bdd7b89f54d92e605e5"
+    },
+    {
+      "relative_path": "hi-res/64x/TimeDuck-Sleeping-64x.png",
+      "type": "png",
+      "size_bytes": 3395,
+      "dimensions": {
+        "width": 832,
+        "height": 640
+      },
+      "sha256": "6cdb5ae9f63cb9973123974d28ffa814e80e54d98a80bd8ad8cbf647558776da"
+    },
+    {
+      "relative_path": "hi-res/64x/TimeDuck-Tactical-64x.png",
+      "type": "png",
+      "size_bytes": 3420,
+      "dimensions": {
+        "width": 832,
+        "height": 640
+      },
+      "sha256": "f9f8fdcd391777e02fdc88c814f451e08cdd89dfdb98607fa30096bc91f146a4"
+    },
+    {
+      "relative_path": "hi-res/64x/TimeDuck-Waddle-64x.png",
+      "type": "png",
+      "size_bytes": 3734,
+      "dimensions": {
+        "width": 832,
+        "height": 640
+      },
+      "sha256": "c2aa3eb049109d3d5ef4c2a304dd710f84e56d87ed0bd872118570895b0cc39f"
+    },
+    {
+      "relative_path": "hi-res/64x/TimeDuck-ZeroG-64x.png",
+      "type": "png",
+      "size_bytes": 3713,
+      "dimensions": {
+        "width": 832,
+        "height": 640
+      },
+      "sha256": "fe0e2b71e7bdad3d27308c49ae1a6e476ed21786b9d4ed549f93e6c6f420624b"
+    },
+    {
+      "relative_path": "hi-res/8x/TimeDuck-Blink-8x.png",
+      "type": "png",
+      "size_bytes": 389,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "8ffcc804e02600737cbbf691c5ed24a34ed2d5d0d931c930af6cb920da832e5d"
+    },
+    {
+      "relative_path": "hi-res/8x/TimeDuck-Celebration-8x.png",
+      "type": "png",
+      "size_bytes": 418,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "e3743377495450cded00db9f19b87f078ec39db5ddc24ddf57e01026f8de6569"
+    },
+    {
+      "relative_path": "hi-res/8x/TimeDuck-IdleWag-8x.png",
+      "type": "png",
+      "size_bytes": 404,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "1e9ac25519c7a09e1e2c2ca7783c07a2569cd5dc5c6c2956d1b3d6ec281d5db1"
+    },
+    {
+      "relative_path": "hi-res/8x/TimeDuck-Neutral-8x.png",
+      "type": "png",
+      "size_bytes": 405,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "b7609ab4a52d25a7049f8043b36f1fe2308ad1142521e130fe40ebd292d538f9"
+    },
+    {
+      "relative_path": "hi-res/8x/TimeDuck-PetHappy-8x.png",
+      "type": "png",
+      "size_bytes": 405,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "9a10ca072304b9ae2bbcbeba04d2aee4d2dc833bd4d6cda92c1bc0a0625cc36e"
+    },
+    {
+      "relative_path": "hi-res/8x/TimeDuck-Quack-8x.png",
+      "type": "png",
+      "size_bytes": 405,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "c83c7211335fb2500b32813dd73d59b89cdd0febedf9b061dfc48ab9ad1ca430"
+    },
+    {
+      "relative_path": "hi-res/8x/TimeDuck-Sleeping-8x.png",
+      "type": "png",
+      "size_bytes": 360,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "8db332c4f49fed5b5f82cee3b6de97f369e06abf02be185de81d7e68b2f04329"
+    },
+    {
+      "relative_path": "hi-res/8x/TimeDuck-Tactical-8x.png",
+      "type": "png",
+      "size_bytes": 373,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "5807318f8ffc234e837e9dd6bde2e0b068d8a741668cfe5adae8f61234e6ce1a"
+    },
+    {
+      "relative_path": "hi-res/8x/TimeDuck-Waddle-8x.png",
+      "type": "png",
+      "size_bytes": 423,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "8cb3566b1ea0fbc494edbfffb0cc59d7a0ff04a380023825bcd0ccf9dab1c710"
+    },
+    {
+      "relative_path": "hi-res/8x/TimeDuck-ZeroG-8x.png",
+      "type": "png",
+      "size_bytes": 409,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "9f06027b5eec3f33eb22608c85118e909a27287bd2fc01aa761732e74beebfb2"
+    },
+    {
+      "relative_path": "icons/AppIcon.icns",
+      "type": "icns",
+      "size_bytes": 226941,
+      "dimensions": null,
+      "sha256": "16a0ec404ea62614c90110abbe96300aa3e8981baacb5f398bcd0a28ddc3fe0f"
+    },
+    {
+      "relative_path": "icons/ICON-CONCEPTS.md",
+      "type": "md",
+      "size_bytes": 4581,
+      "dimensions": null,
+      "sha256": "6384b8fd496739d4357cdb5b2c293e5568ed3f01d5a8d11d21adead5af40ee11"
+    },
+    {
+      "relative_path": "icons/TimeDuck-AppIcon-1024.png",
+      "type": "png",
+      "size_bytes": 26558,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "sha256": "d68b2c9f46bcd676e9dd7129d7c88189fb9ef38e72ac71e7e45b4f8ac6b5a91f"
+    },
+    {
+      "relative_path": "icons/TimeDuck-AppIcon-1024.webp",
+      "type": "webp",
+      "size_bytes": 9310,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "sha256": "085fe9e16e6e8e55e19e1ae85f63336200c6959e386237d127e0a54ee416775b"
+    },
+    {
+      "relative_path": "icons/TimeDuck-AppIcon-512.png",
+      "type": "png",
+      "size_bytes": 35996,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "7f2f5e630e97eecc36feea1dc9827c22c74e43224641536d41c3c592af323115"
+    },
+    {
+      "relative_path": "icons/TimeDuck-AppIcon-Dark-1024.png",
+      "type": "png",
+      "size_bytes": 26436,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "sha256": "8a79045563f12071ff73361b4d9de9ef4cf6aaa36afe2fff7318ef933c3832ad"
+    },
+    {
+      "relative_path": "icons/TimeDuck-AppIcon-Duo-Sheet.png",
+      "type": "png",
+      "size_bytes": 127563,
+      "dimensions": {
+        "width": 1800,
+        "height": 1100
+      },
+      "sha256": "33a932f7ebbcb509657a3065d9bef5635f65de4bc5afe4ba64e676ad9c1d6b48"
+    },
+    {
+      "relative_path": "icons/TimeDuck-AppIcon-Duo-Sheet.webp",
+      "type": "webp",
+      "size_bytes": 74650,
+      "dimensions": {
+        "width": 1800,
+        "height": 1100
+      },
+      "sha256": "3cd1a6f49d45de910235904cf13cdaf6512993f02560dddd58a6960640d2ed95"
+    },
+    {
+      "relative_path": "icons/TimeDuck-AppIcon-Light-1024.png",
+      "type": "png",
+      "size_bytes": 26558,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "sha256": "d68b2c9f46bcd676e9dd7129d7c88189fb9ef38e72ac71e7e45b4f8ac6b5a91f"
+    },
+    {
+      "relative_path": "icons/TimeDuck-Icon-Concept-Sheet.png",
+      "type": "png",
+      "size_bytes": 459247,
+      "dimensions": {
+        "width": 1800,
+        "height": 2450
+      },
+      "sha256": "f27b35750e4015b1a98a3b87456aad81e69822866782effe4ff82dc936734944"
+    },
+    {
+      "relative_path": "icons/TimeDuck-Icon-Concept-Sheet.webp",
+      "type": "webp",
+      "size_bytes": 277616,
+      "dimensions": {
+        "width": 1800,
+        "height": 2450
+      },
+      "sha256": "4b3e38a6d0713f3d298160dc228fca9bd5457f272f55ca785e1409b24c3a519f"
+    },
+    {
+      "relative_path": "icons/TimeDuck.iconset/icon_128x128.png",
+      "type": "png",
+      "size_bytes": 9656,
+      "dimensions": {
+        "width": 128,
+        "height": 128
+      },
+      "sha256": "919fef3396199457ab01718ba810cdf03b0472d69190f6efdbc3d9663bc3d62a"
+    },
+    {
+      "relative_path": "icons/TimeDuck.iconset/icon_128x128@2x.png",
+      "type": "png",
+      "size_bytes": 18967,
+      "dimensions": {
+        "width": 256,
+        "height": 256
+      },
+      "sha256": "eb71ba77b579b8f75d751f91c2ec8980c8eb47184629d6ca0a2484ef19f94817"
+    },
+    {
+      "relative_path": "icons/TimeDuck.iconset/icon_16x16.png",
+      "type": "png",
+      "size_bytes": 848,
+      "dimensions": {
+        "width": 16,
+        "height": 16
+      },
+      "sha256": "3893f9654bc9af321ab6ce254c2c85db1f34ebc34f9dc70890bef689ad8db1f8"
+    },
+    {
+      "relative_path": "icons/TimeDuck.iconset/icon_16x16@2x.png",
+      "type": "png",
+      "size_bytes": 2153,
+      "dimensions": {
+        "width": 32,
+        "height": 32
+      },
+      "sha256": "8ea1f2e1bb1cd95563d46c8b6068df38245c0970d338fcdd685e6a02f55aaff9"
+    },
+    {
+      "relative_path": "icons/TimeDuck.iconset/icon_256x256.png",
+      "type": "png",
+      "size_bytes": 18967,
+      "dimensions": {
+        "width": 256,
+        "height": 256
+      },
+      "sha256": "eb71ba77b579b8f75d751f91c2ec8980c8eb47184629d6ca0a2484ef19f94817"
+    },
+    {
+      "relative_path": "icons/TimeDuck.iconset/icon_256x256@2x.png",
+      "type": "png",
+      "size_bytes": 38550,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "a26619cabb5f0267a34aa077db156fb75b4262f63d3bf8bcca9cfd3188020c69"
+    },
+    {
+      "relative_path": "icons/TimeDuck.iconset/icon_32x32.png",
+      "type": "png",
+      "size_bytes": 2153,
+      "dimensions": {
+        "width": 32,
+        "height": 32
+      },
+      "sha256": "8ea1f2e1bb1cd95563d46c8b6068df38245c0970d338fcdd685e6a02f55aaff9"
+    },
+    {
+      "relative_path": "icons/TimeDuck.iconset/icon_32x32@2x.png",
+      "type": "png",
+      "size_bytes": 5052,
+      "dimensions": {
+        "width": 64,
+        "height": 64
+      },
+      "sha256": "40e49ab657b79543c44414fb4cc725eec9f062fddce36b9d0b725f945edf6e10"
+    },
+    {
+      "relative_path": "icons/TimeDuck.iconset/icon_512x512.png",
+      "type": "png",
+      "size_bytes": 38550,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "a26619cabb5f0267a34aa077db156fb75b4262f63d3bf8bcca9cfd3188020c69"
+    },
+    {
+      "relative_path": "icons/TimeDuck.iconset/icon_512x512@2x.png",
+      "type": "png",
+      "size_bytes": 25900,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "sha256": "bddedaf1e1daec005a32c4db1e20f5581492b37098e6569daaccc403eaed4c41"
+    },
+    {
+      "relative_path": "icons/concepts/Concept-01-Arcade-Phosphor.png",
+      "type": "png",
+      "size_bytes": 13991,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "85580e85b4560d57c45f82ff5e92bf15b6e76105d211308a78120b7f38d6af74"
+    },
+    {
+      "relative_path": "icons/concepts/Concept-02-Tactical-Operative.png",
+      "type": "png",
+      "size_bytes": 13318,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "819fde2862130a04edcec2f53cf9254063746561d46c8ae333b52ecd96911378"
+    },
+    {
+      "relative_path": "icons/concepts/Concept-03-Pond-Horizon.png",
+      "type": "png",
+      "size_bytes": 9671,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "079d65adf38347701dc748077579bde8d632fa2eb6aeaf011d29537537e29b48"
+    },
+    {
+      "relative_path": "icons/concepts/Concept-04-Cyber-Neon-Visor.png",
+      "type": "png",
+      "size_bytes": 13077,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "533720041bd8da8ee67c20a29a70e5db9d648a93acd7fd31ec8186fadb02a989"
+    },
+    {
+      "relative_path": "icons/concepts/Concept-05-Detective-Study.png",
+      "type": "png",
+      "size_bytes": 10422,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "a059d9967b9637320e48567e470686948366211a4a920c50cdbf31432e55c5e0"
+    },
+    {
+      "relative_path": "icons/concepts/Concept-06-Golden-Victory.png",
+      "type": "png",
+      "size_bytes": 15234,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "565c554ff63cdf6b1ccf1ebed457766eef096ee3c4a8157cb41b0a622898819a"
+    },
+    {
+      "relative_path": "icons/concepts/Concept-07-Cozy-Campfire.png",
+      "type": "png",
+      "size_bytes": 8757,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "9ea6c2e49df38826bdcc5586148a1e40be0bf773732df5b0edc2442d70341267"
+    },
+    {
+      "relative_path": "icons/concepts/Concept-08-Paperwhite-Studio.png",
+      "type": "png",
+      "size_bytes": 10730,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "d7dadb8b985ecc7a23221834c568e4821849c3ccfd75c84ff06db24f321f6e52"
+    },
+    {
+      "relative_path": "icons/concepts/Concept-09-Pocket-MiniHUD.png",
+      "type": "png",
+      "size_bytes": 14493,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "62b50bc2661d5839605ceabc81a8d7ab4581a3758a89de3e53ca4e12ee4b493d"
+    },
+    {
+      "relative_path": "icons/concepts/Concept-10-Cosmic-Zero-G.png",
+      "type": "png",
+      "size_bytes": 12254,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "fb9ce6258aa22abdaba67b24be5acb017347db0b1020b0d7e6b7a96691c36b0c"
+    },
+    {
+      "relative_path": "icons/custom-layout/TimeDuck-Icon-A1-Stacked-Bold-Modern.png",
+      "type": "png",
+      "size_bytes": 18926,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "638dabd73e239201a1c28222294ba5270a6588b1352d04376f3444a235eff49a"
+    },
+    {
+      "relative_path": "icons/custom-layout/TimeDuck-Icon-A2-Retro-Monospace-Instrument.png",
+      "type": "png",
+      "size_bytes": 18391,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "ea054a32d3b67ec762f1b8ad613e268ca2ef017f587bc2261933c90801acb6ae"
+    },
+    {
+      "relative_path": "icons/custom-layout/TimeDuck-Icon-A3-High-Contrast-Emerald-Bar.png",
+      "type": "png",
+      "size_bytes": 19527,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "0f073a055bb7e055eab7407cde90c6db67e59b46be9bb1abe2ebd7ded3246ee7"
+    },
+    {
+      "relative_path": "icons/custom-layout/TimeDuck-Icon-A4-Split-Card-Studio-Plinth.png",
+      "type": "png",
+      "size_bytes": 18470,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "353ca7eea7e443645b916c2c4dfe81482eb416340e11f83cfc51f537a4380848"
+    },
+    {
+      "relative_path": "icons/custom-layout/TimeDuck-Icon-Custom-Layout-Sheet.png",
+      "type": "png",
+      "size_bytes": 230967,
+      "dimensions": {
+        "width": 1600,
+        "height": 1750
+      },
+      "sha256": "ef233ae639c92004c9fde153046e88286d356efe721c95761b038fd0a5fa8982"
+    },
+    {
+      "relative_path": "icons/custom-layout/TimeDuck-Icon-Custom-Layout-Sheet.webp",
+      "type": "webp",
+      "size_bytes": 139652,
+      "dimensions": {
+        "width": 1600,
+        "height": 1750
+      },
+      "sha256": "16d7abc9040bd02fb576f806ed87fb4670491233faa8c3ca9a0a5b249fc3fdfa"
+    },
+    {
+      "relative_path": "icons/dark/AppIcon-Dark.icns",
+      "type": "icns",
+      "size_bytes": 223877,
+      "dimensions": null,
+      "sha256": "1968a799e964e3631543b757e8ca144d5293fb7e569836c5c5802f6e4d1b007d"
+    },
+    {
+      "relative_path": "icons/dark/TimeDuck-AppIcon-Dark-1024.png",
+      "type": "png",
+      "size_bytes": 26436,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "sha256": "8a79045563f12071ff73361b4d9de9ef4cf6aaa36afe2fff7318ef933c3832ad"
+    },
+    {
+      "relative_path": "icons/dark/TimeDuck-AppIcon-Dark-1024.webp",
+      "type": "webp",
+      "size_bytes": 11472,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "sha256": "61e16ab66d0a67db85209813cf936045db841927bf42b7de25063b6159abfb15"
+    },
+    {
+      "relative_path": "icons/dark/TimeDuck-AppIcon-Dark-512.png",
+      "type": "png",
+      "size_bytes": 34820,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "bc044f54848db0a0bb6d62c306673ae7b6ee5734c149a4a2e4923b98747d0d0e"
+    },
+    {
+      "relative_path": "icons/dark/TimeDuck-Dark.iconset/icon_128x128.png",
+      "type": "png",
+      "size_bytes": 9198,
+      "dimensions": {
+        "width": 128,
+        "height": 128
+      },
+      "sha256": "35b02a5eb30f67626e7a4f346f15528e79c34634a1c77e8e43c4032c4721261a"
+    },
+    {
+      "relative_path": "icons/dark/TimeDuck-Dark.iconset/icon_128x128@2x.png",
+      "type": "png",
+      "size_bytes": 17481,
+      "dimensions": {
+        "width": 256,
+        "height": 256
+      },
+      "sha256": "72f7c0d1c3b1c6b4321f80c2774e7e1876ac80a514242a605c0690bbfa3a9248"
+    },
+    {
+      "relative_path": "icons/dark/TimeDuck-Dark.iconset/icon_16x16.png",
+      "type": "png",
+      "size_bytes": 848,
+      "dimensions": {
+        "width": 16,
+        "height": 16
+      },
+      "sha256": "9009153382c4fd228e17344d0c62ebdda4f19ebb50fb57146878aa4bba88d2c4"
+    },
+    {
+      "relative_path": "icons/dark/TimeDuck-Dark.iconset/icon_16x16@2x.png",
+      "type": "png",
+      "size_bytes": 2114,
+      "dimensions": {
+        "width": 32,
+        "height": 32
+      },
+      "sha256": "e6e6d4c75b5cc705d9bce9d9beb2f59e11312853717fbfc6e20a68d5e75422dd"
+    },
+    {
+      "relative_path": "icons/dark/TimeDuck-Dark.iconset/icon_256x256.png",
+      "type": "png",
+      "size_bytes": 17481,
+      "dimensions": {
+        "width": 256,
+        "height": 256
+      },
+      "sha256": "72f7c0d1c3b1c6b4321f80c2774e7e1876ac80a514242a605c0690bbfa3a9248"
+    },
+    {
+      "relative_path": "icons/dark/TimeDuck-Dark.iconset/icon_256x256@2x.png",
+      "type": "png",
+      "size_bytes": 34820,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "bc044f54848db0a0bb6d62c306673ae7b6ee5734c149a4a2e4923b98747d0d0e"
+    },
+    {
+      "relative_path": "icons/dark/TimeDuck-Dark.iconset/icon_32x32.png",
+      "type": "png",
+      "size_bytes": 2114,
+      "dimensions": {
+        "width": 32,
+        "height": 32
+      },
+      "sha256": "e6e6d4c75b5cc705d9bce9d9beb2f59e11312853717fbfc6e20a68d5e75422dd"
+    },
+    {
+      "relative_path": "icons/dark/TimeDuck-Dark.iconset/icon_32x32@2x.png",
+      "type": "png",
+      "size_bytes": 4966,
+      "dimensions": {
+        "width": 64,
+        "height": 64
+      },
+      "sha256": "c82d7eefad27cf27218aeb8f297921c69d48fd2dc49f7b70a05b3eef5e8fc092"
+    },
+    {
+      "relative_path": "icons/dark/TimeDuck-Dark.iconset/icon_512x512.png",
+      "type": "png",
+      "size_bytes": 34820,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "bc044f54848db0a0bb6d62c306673ae7b6ee5734c149a4a2e4923b98747d0d0e"
+    },
+    {
+      "relative_path": "icons/dark/TimeDuck-Dark.iconset/icon_512x512@2x.png",
+      "type": "png",
+      "size_bytes": 26436,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "sha256": "8a79045563f12071ff73361b4d9de9ef4cf6aaa36afe2fff7318ef933c3832ad"
+    },
+    {
+      "relative_path": "icons/fusion-8-9/Fusion-8-9-A-Paperwhite-E-Ink-MiniHUD.png",
+      "type": "png",
+      "size_bytes": 15022,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "cd47a5cfefedca0aa90454bdf4dcae81794e09eea5e0633af9b4fffefcc34224"
+    },
+    {
+      "relative_path": "icons/fusion-8-9/Fusion-8-9-B-Matte-Aluminum-Studio.png",
+      "type": "png",
+      "size_bytes": 11554,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "986cafb67c20e82a7e2324dbf990d32c2c9c641fca38f42d66ceb65fe5fc3c48"
+    },
+    {
+      "relative_path": "icons/fusion-8-9/Fusion-8-9-C-Paperwhite-+-Emerald-Phosphor.png",
+      "type": "png",
+      "size_bytes": 14531,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "4538c30c97cea7d81261c3d1de7156e635e8765e52b63a3e8ed2af4980498aa5"
+    },
+    {
+      "relative_path": "icons/fusion-8-9/Fusion-8-9-D-Precision-Countdown-Pill.png",
+      "type": "png",
+      "size_bytes": 12101,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "dc6133218d156fa20131cd3f6a11b8071cb4e4cc48ef3e5d68381058470e9df8"
+    },
+    {
+      "relative_path": "icons/fusion-8-9/TimeDuck-Icon-Fusion-8-9-Sheet.png",
+      "type": "png",
+      "size_bytes": 214971,
+      "dimensions": {
+        "width": 1600,
+        "height": 1750
+      },
+      "sha256": "7ef8aeb6afce7a6e4f0d6be648cb74d2358b703038f93c0cc657734fd258ccfc"
+    },
+    {
+      "relative_path": "icons/fusion-8-9/TimeDuck-Icon-Fusion-8-9-Sheet.webp",
+      "type": "webp",
+      "size_bytes": 127276,
+      "dimensions": {
+        "width": 1600,
+        "height": 1750
+      },
+      "sha256": "d4cadbf88f0e9261c8d77eecf24e931efd947786dedfc332b90f2363e952b5fa"
+    },
+    {
+      "relative_path": "icons/light/AppIcon-Light.icns",
+      "type": "icns",
+      "size_bytes": 226941,
+      "dimensions": null,
+      "sha256": "16a0ec404ea62614c90110abbe96300aa3e8981baacb5f398bcd0a28ddc3fe0f"
+    },
+    {
+      "relative_path": "icons/light/TimeDuck-AppIcon-Light-1024.png",
+      "type": "png",
+      "size_bytes": 26558,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "sha256": "d68b2c9f46bcd676e9dd7129d7c88189fb9ef38e72ac71e7e45b4f8ac6b5a91f"
+    },
+    {
+      "relative_path": "icons/light/TimeDuck-AppIcon-Light-1024.webp",
+      "type": "webp",
+      "size_bytes": 11192,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "sha256": "b9bfb02d5b466ef0e0fb0dda6860dbd84c80d4f3732afea19af9dc275282cd2d"
+    },
+    {
+      "relative_path": "icons/light/TimeDuck-AppIcon-Light-512.png",
+      "type": "png",
+      "size_bytes": 35996,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "7f2f5e630e97eecc36feea1dc9827c22c74e43224641536d41c3c592af323115"
+    },
+    {
+      "relative_path": "icons/light/TimeDuck-Light.iconset/icon_128x128.png",
+      "type": "png",
+      "size_bytes": 9366,
+      "dimensions": {
+        "width": 128,
+        "height": 128
+      },
+      "sha256": "6ea28364a7214005026fb9608ca2729a0d96b76fd6cfe6a2ec437e432667be78"
+    },
+    {
+      "relative_path": "icons/light/TimeDuck-Light.iconset/icon_128x128@2x.png",
+      "type": "png",
+      "size_bytes": 18082,
+      "dimensions": {
+        "width": 256,
+        "height": 256
+      },
+      "sha256": "c9ba3dbee3757dead163e52f7ca85f04dfd5742dc3e2e2b62011e52080d30f53"
+    },
+    {
+      "relative_path": "icons/light/TimeDuck-Light.iconset/icon_16x16.png",
+      "type": "png",
+      "size_bytes": 850,
+      "dimensions": {
+        "width": 16,
+        "height": 16
+      },
+      "sha256": "6a9a3132114673a55d20f63b886ddad9bcaacc7a57035a00432c72432355b142"
+    },
+    {
+      "relative_path": "icons/light/TimeDuck-Light.iconset/icon_16x16@2x.png",
+      "type": "png",
+      "size_bytes": 2174,
+      "dimensions": {
+        "width": 32,
+        "height": 32
+      },
+      "sha256": "c9c76f92c48c1e86f9ab51f3029d8d7212a370895ac1626d32d1fbe5c6a12f67"
+    },
+    {
+      "relative_path": "icons/light/TimeDuck-Light.iconset/icon_256x256.png",
+      "type": "png",
+      "size_bytes": 18082,
+      "dimensions": {
+        "width": 256,
+        "height": 256
+      },
+      "sha256": "c9ba3dbee3757dead163e52f7ca85f04dfd5742dc3e2e2b62011e52080d30f53"
+    },
+    {
+      "relative_path": "icons/light/TimeDuck-Light.iconset/icon_256x256@2x.png",
+      "type": "png",
+      "size_bytes": 35996,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "7f2f5e630e97eecc36feea1dc9827c22c74e43224641536d41c3c592af323115"
+    },
+    {
+      "relative_path": "icons/light/TimeDuck-Light.iconset/icon_32x32.png",
+      "type": "png",
+      "size_bytes": 2174,
+      "dimensions": {
+        "width": 32,
+        "height": 32
+      },
+      "sha256": "c9c76f92c48c1e86f9ab51f3029d8d7212a370895ac1626d32d1fbe5c6a12f67"
+    },
+    {
+      "relative_path": "icons/light/TimeDuck-Light.iconset/icon_32x32@2x.png",
+      "type": "png",
+      "size_bytes": 5037,
+      "dimensions": {
+        "width": 64,
+        "height": 64
+      },
+      "sha256": "931ad3d675d2c44a7cd48b6a5be90e5679994dddb57e4b52ba7b82606dcfd88f"
+    },
+    {
+      "relative_path": "icons/light/TimeDuck-Light.iconset/icon_512x512.png",
+      "type": "png",
+      "size_bytes": 35996,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "7f2f5e630e97eecc36feea1dc9827c22c74e43224641536d41c3c592af323115"
+    },
+    {
+      "relative_path": "icons/light/TimeDuck-Light.iconset/icon_512x512@2x.png",
+      "type": "png",
+      "size_bytes": 26558,
+      "dimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "sha256": "d68b2c9f46bcd676e9dd7129d7c88189fb9ef38e72ac71e7e45b4f8ac6b5a91f"
+    },
+    {
+      "relative_path": "masters/.DS_Store",
+      "type": "",
+      "size_bytes": 6148,
+      "dimensions": null,
+      "sha256": "6a6df32cde8b7f40da47c7f8fd825c04c8bc9c38c554fc80b85eb9b4c38d1225"
+    },
+    {
+      "relative_path": "masters/expressions/expression_blink.png",
+      "type": "png",
+      "size_bytes": 165,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "1fa13049111e7db2713965d016a988bfee195ba063e662f9530f285d0881b745"
+    },
+    {
+      "relative_path": "masters/expressions/expression_happy_pet.png",
+      "type": "png",
+      "size_bytes": 178,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "cca3f669c297f13ddce85d28b4e89811c168e5385ad17920c49462e55e705e34"
+    },
+    {
+      "relative_path": "masters/expressions/expression_neutral.png",
+      "type": "png",
+      "size_bytes": 175,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "95bca8ca5cfae2fe749198071f1fd47789abe60cc5d74aedb9e775e61dcd02bc"
+    },
+    {
+      "relative_path": "masters/expressions/expression_peck.png",
+      "type": "png",
+      "size_bytes": 170,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "1b76241144d9b2386bcce44bdd4ee5d6c9aa0b5300954b0f910ab12665bae75a"
+    },
+    {
+      "relative_path": "masters/expressions/expression_quack.png",
+      "type": "png",
+      "size_bytes": 176,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "cee0c0da3e20e187e334b838fec7c17624cb469c9f51e1717bf924b89a472172"
+    },
+    {
+      "relative_path": "masters/expressions/expression_relax_shades.png",
+      "type": "png",
+      "size_bytes": 176,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "1def3fa3bbe5107da83457908eaa375a7b795f5632d812748ae937809393cb21"
+    },
+    {
+      "relative_path": "masters/expressions/expression_side_eye.png",
+      "type": "png",
+      "size_bytes": 180,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "6d349df187d5daf99c26c8b8ecc8a6382f38c05f3bd7045dd6c4bbbbc2af40c5"
+    },
+    {
+      "relative_path": "masters/expressions/expression_sleep.png",
+      "type": "png",
+      "size_bytes": 156,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "90be1e912397eb77d020c59be79f3b79ff1c5da95907140e2270e3d8d48c65e0"
+    },
+    {
+      "relative_path": "masters/habitat/CRUMB_COFFEE.png",
+      "type": "png",
+      "size_bytes": 82,
+      "dimensions": {
+        "width": 3,
+        "height": 3
+      },
+      "sha256": "aa08ea437cb405434072165aef3ade727349d27abdcaf82d6d6a2e01ad9816db"
+    },
+    {
+      "relative_path": "masters/habitat/CRUMB_GOLDEN.png",
+      "type": "png",
+      "size_bytes": 83,
+      "dimensions": {
+        "width": 3,
+        "height": 3
+      },
+      "sha256": "04222cd5899e67ca29e7bd53f8214e2366d098b5d4223449f685780e1ed1cdc1"
+    },
+    {
+      "relative_path": "masters/habitat/POND_CATTAIL.png",
+      "type": "png",
+      "size_bytes": 94,
+      "dimensions": {
+        "width": 5,
+        "height": 7
+      },
+      "sha256": "27145d49c7ff7c51c3d56ea030b856fd038e375817e2697bbe797c06312554b7"
+    },
+    {
+      "relative_path": "masters/habitat/POND_LILY.png",
+      "type": "png",
+      "size_bytes": 108,
+      "dimensions": {
+        "width": 7,
+        "height": 3
+      },
+      "sha256": "aff231067ad59c15df55d7cfcfe2944e8f074088c70ca790a52cd06ec7cfac1c"
+    },
+    {
+      "relative_path": "masters/habitat/POND_REED_A.png",
+      "type": "png",
+      "size_bytes": 84,
+      "dimensions": {
+        "width": 5,
+        "height": 7
+      },
+      "sha256": "8a4d2b465cb64786a3d616e013f033a71a8cef6d9e4d6c1d2c9a627c8e04d606"
+    },
+    {
+      "relative_path": "masters/habitat/POND_REED_B.png",
+      "type": "png",
+      "size_bytes": 86,
+      "dimensions": {
+        "width": 5,
+        "height": 7
+      },
+      "sha256": "76754e65ad318895894849512289e03dd247766e38533ba81b485660afe840f8"
+    },
+    {
+      "relative_path": "masters/native/TimeDuck-Native-Blink.png",
+      "type": "png",
+      "size_bytes": 165,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "1fa13049111e7db2713965d016a988bfee195ba063e662f9530f285d0881b745"
+    },
+    {
+      "relative_path": "masters/native/TimeDuck-Native-Celebration-A.png",
+      "type": "png",
+      "size_bytes": 178,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "511b1bc7321b432d210bdcc13054c791daa849aa3cd2b62778f4f3ba3f445b13"
+    },
+    {
+      "relative_path": "masters/native/TimeDuck-Native-Celebration-B.png",
+      "type": "png",
+      "size_bytes": 179,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "5a37334bbca44d65e6ca252fd1a16233c586cd9fa90946052faec1bebef99152"
+    },
+    {
+      "relative_path": "masters/native/TimeDuck-Native-IdleBreathe.png",
+      "type": "png",
+      "size_bytes": 171,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "37f9f3ce20c2ea03cf1ce0870b98f38205725301ad65d04c7fad7bfe4484d031"
+    },
+    {
+      "relative_path": "masters/native/TimeDuck-Native-IdleWag.png",
+      "type": "png",
+      "size_bytes": 175,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "ee07479fc4e229afd9d26457923af79374336a44ff6c8bd8034527821acd02d2"
+    },
+    {
+      "relative_path": "masters/native/TimeDuck-Native-Neutral.png",
+      "type": "png",
+      "size_bytes": 175,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "95bca8ca5cfae2fe749198071f1fd47789abe60cc5d74aedb9e775e61dcd02bc"
+    },
+    {
+      "relative_path": "masters/native/TimeDuck-Native-PetHappy.png",
+      "type": "png",
+      "size_bytes": 178,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "cca3f669c297f13ddce85d28b4e89811c168e5385ad17920c49462e55e705e34"
+    },
+    {
+      "relative_path": "masters/native/TimeDuck-Native-Quack.png",
+      "type": "png",
+      "size_bytes": 176,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "cee0c0da3e20e187e334b838fec7c17624cb469c9f51e1717bf924b89a472172"
+    },
+    {
+      "relative_path": "masters/native/TimeDuck-Native-Sleeping.png",
+      "type": "png",
+      "size_bytes": 156,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "90be1e912397eb77d020c59be79f3b79ff1c5da95907140e2270e3d8d48c65e0"
+    },
+    {
+      "relative_path": "masters/native/TimeDuck-Native-Waddle-A.png",
+      "type": "png",
+      "size_bytes": 190,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "d4b39b9eb2800f0ff8b603d29f408603f9f8205424473e576581c36dc06fc84c"
+    },
+    {
+      "relative_path": "masters/native/TimeDuck-Native-Waddle-B.png",
+      "type": "png",
+      "size_bytes": 180,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "59ba0311f293084ff0e04d82528c6cafcb3f79adfa7c7f510a2d69007f314a24"
+    },
+    {
+      "relative_path": "masters/native/TimeDuck-Native-Waddle-C.png",
+      "type": "png",
+      "size_bytes": 175,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "beb4e2c58eea1cb506fa3d37ee035b66d18060321e1badf5410791d125356385"
+    },
+    {
+      "relative_path": "masters/native/TimeDuck-Native-ZeroG-A.png",
+      "type": "png",
+      "size_bytes": 176,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "3d2231363ec666bb601e714ca0042eca9df302271d339d0aa4c0a7301bc285d1"
+    },
+    {
+      "relative_path": "masters/native/TimeDuck-Native-ZeroG-B.png",
+      "type": "png",
+      "size_bytes": 174,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "714cbe2755d8bf37a7afcd77ce25c0091ba916c8cbafbbea60b24de36b7b993b"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_BASE.png",
+      "type": "png",
+      "size_bytes": 175,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "95bca8ca5cfae2fe749198071f1fd47789abe60cc5d74aedb9e775e61dcd02bc"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_BLINK_ROWS.png",
+      "type": "png",
+      "size_bytes": 165,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "1fa13049111e7db2713965d016a988bfee195ba063e662f9530f285d0881b745"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_BOB.png",
+      "type": "png",
+      "size_bytes": 170,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "71a84084ceb6247067ae54aa2a6e5d53eec4be9d90bdf3892a783f42035b38b0"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_IDLE_B.png",
+      "type": "png",
+      "size_bytes": 171,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "37f9f3ce20c2ea03cf1ce0870b98f38205725301ad65d04c7fad7bfe4484d031"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_IDLE_WAG.png",
+      "type": "png",
+      "size_bytes": 175,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "ee07479fc4e229afd9d26457923af79374336a44ff6c8bd8034527821acd02d2"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_LOOK_BACK.png",
+      "type": "png",
+      "size_bytes": 169,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "4469c92de6da806d7820a905452ca28731aa76db0eba3b000cc83229b2529163"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_LOOK_UP.png",
+      "type": "png",
+      "size_bytes": 170,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "3af1088ddb11196f418484c2ac4fd3f5be45951c263b7dc06f52e81bd2345b04"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_PAUSE.png",
+      "type": "png",
+      "size_bytes": 169,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "4321c47e2845e81fd4b44d9f35665c3f895c5603d450711268c958976e6cd1c4"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_PECK_A.png",
+      "type": "png",
+      "size_bytes": 170,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "1b76241144d9b2386bcce44bdd4ee5d6c9aa0b5300954b0f910ab12665bae75a"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_PECK_B.png",
+      "type": "png",
+      "size_bytes": 158,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "ee5d3c20db1f0cbcc93d21616d9f2de97ecdaac1c7d4f06df732e0f10a04ccbd"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_PEEK_A.png",
+      "type": "png",
+      "size_bytes": 173,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "04da265cdf874d7a0b5f3af366b9b8aca26acbfb092653afb1c8763021e0c53a"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_PEEK_B.png",
+      "type": "png",
+      "size_bytes": 167,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "72fa3be4e9016add4ad38cb19995902957461e6f2cf3fc8273ecaed80b655a32"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_PET_ROWS.png",
+      "type": "png",
+      "size_bytes": 178,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "cca3f669c297f13ddce85d28b4e89811c168e5385ad17920c49462e55e705e34"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_PREEN_A.png",
+      "type": "png",
+      "size_bytes": 176,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "b64feb944adb1aa62a1f39c385a7714b714e34d5a07c95907e12c088cf279c1f"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_PREEN_B.png",
+      "type": "png",
+      "size_bytes": 179,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "5aeffa9460dad847292a2ace97324f4815e78adb8ac146c340c2579fa4ef26de"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_QUACK_ROWS.png",
+      "type": "png",
+      "size_bytes": 176,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "cee0c0da3e20e187e334b838fec7c17624cb469c9f51e1717bf924b89a472172"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_RELAX_ROWS.png",
+      "type": "png",
+      "size_bytes": 176,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "1def3fa3bbe5107da83457908eaa375a7b795f5632d812748ae937809393cb21"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_RUFFLE_A.png",
+      "type": "png",
+      "size_bytes": 171,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "094bab3e817628d7a1b468528d230d0212313a10c3483fa5d9ceb9a8ffe9e294"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_RUFFLE_B.png",
+      "type": "png",
+      "size_bytes": 168,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "9898fd3c00a67be582459dd3e73748dce4b7bd0edf8c8b4c93e8fc8cc624f2c4"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_RUN_A.png",
+      "type": "png",
+      "size_bytes": 190,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "d4b39b9eb2800f0ff8b603d29f408603f9f8205424473e576581c36dc06fc84c"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_RUN_B.png",
+      "type": "png",
+      "size_bytes": 180,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "59ba0311f293084ff0e04d82528c6cafcb3f79adfa7c7f510a2d69007f314a24"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_RUN_C.png",
+      "type": "png",
+      "size_bytes": 175,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "beb4e2c58eea1cb506fa3d37ee035b66d18060321e1badf5410791d125356385"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_SHUFFLE_A.png",
+      "type": "png",
+      "size_bytes": 175,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "0ea133a1810993b0f03d6e275a53a25e47cd2395561ed0ff2e9baf4402a645b8"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_SHUFFLE_B.png",
+      "type": "png",
+      "size_bytes": 174,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "06128c150184c71d40800edbb40f618ecd1358df8b963bfd90f0ddd1e54c044e"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_SIDE_EYE.png",
+      "type": "png",
+      "size_bytes": 180,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "6d349df187d5daf99c26c8b8ecc8a6382f38c05f3bd7045dd6c4bbbbc2af40c5"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_SIT.png",
+      "type": "png",
+      "size_bytes": 166,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "0654421bfddf6fb833fce80bc462ccc8fe2cf15d56ea2a7ddd8118f9f32fcc1d"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_SLEEP_DEEP.png",
+      "type": "png",
+      "size_bytes": 156,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "90be1e912397eb77d020c59be79f3b79ff1c5da95907140e2270e3d8d48c65e0"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_TACTICAL.png",
+      "type": "png",
+      "size_bytes": 170,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "4f5708e0d4f17cd1d5c02816bc02df5451e3e2f604b64b6fb547fb8a470185d4"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_YAY_A.png",
+      "type": "png",
+      "size_bytes": 178,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "511b1bc7321b432d210bdcc13054c791daa849aa3cd2b62778f4f3ba3f445b13"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_YAY_B.png",
+      "type": "png",
+      "size_bytes": 179,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "5a37334bbca44d65e6ca252fd1a16233c586cd9fa90946052faec1bebef99152"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_ZERO_G_A.png",
+      "type": "png",
+      "size_bytes": 176,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "3d2231363ec666bb601e714ca0042eca9df302271d339d0aa4c0a7301bc285d1"
+    },
+    {
+      "relative_path": "masters/poses/DUCK_ZERO_G_B.png",
+      "type": "png",
+      "size_bytes": 174,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "714cbe2755d8bf37a7afcd77ce25c0091ba916c8cbafbbea60b24de36b7b993b"
+    },
+    {
+      "relative_path": "masters/status-duck/status_alert.png",
+      "type": "png",
+      "size_bytes": 156,
+      "dimensions": {
+        "width": 14,
+        "height": 11
+      },
+      "sha256": "ca95a5fb750d2baf105161b1b6afa805cff42a0bd3ea7c806966301ec71f8e46"
+    },
+    {
+      "relative_path": "masters/status-duck/status_alert_template_18x18.png",
+      "type": "png",
+      "size_bytes": 163,
+      "dimensions": {
+        "width": 18,
+        "height": 18
+      },
+      "sha256": "0104e9f0f8875c978c4ed79888a5346afcfa9dd1efe99e646befb46111d894c4"
+    },
+    {
+      "relative_path": "masters/status-duck/status_blink.png",
+      "type": "png",
+      "size_bytes": 157,
+      "dimensions": {
+        "width": 14,
+        "height": 11
+      },
+      "sha256": "294476d48545566dac1bd64175178089fa5ab9af080be9759e2a10b700a5fdff"
+    },
+    {
+      "relative_path": "masters/status-duck/status_blink_template_18x18.png",
+      "type": "png",
+      "size_bytes": 165,
+      "dimensions": {
+        "width": 18,
+        "height": 18
+      },
+      "sha256": "0f944ce9f420b804926d0b9ab5d826e7041e8d297d73377906d2a52885289beb"
+    },
+    {
+      "relative_path": "masters/status-duck/status_bob.png",
+      "type": "png",
+      "size_bytes": 155,
+      "dimensions": {
+        "width": 14,
+        "height": 11
+      },
+      "sha256": "5c357b4c414cbabed3ab1c6e311de1ad581aede953b2ef4a322265a70f39f8f6"
+    },
+    {
+      "relative_path": "masters/status-duck/status_bob_template_18x18.png",
+      "type": "png",
+      "size_bytes": 161,
+      "dimensions": {
+        "width": 18,
+        "height": 18
+      },
+      "sha256": "47fc0e23597c12111174acd601ef6c8e1f891e4d36a3277ed253d3021d1e5e97"
+    },
+    {
+      "relative_path": "masters/status-duck/status_idle.png",
+      "type": "png",
+      "size_bytes": 155,
+      "dimensions": {
+        "width": 14,
+        "height": 11
+      },
+      "sha256": "2fb7db5985eed63f55d2263e3056a07770b7761b2e22084a4b4982e977aadbc8"
+    },
+    {
+      "relative_path": "masters/status-duck/status_idle_template_18x18.png",
+      "type": "png",
+      "size_bytes": 161,
+      "dimensions": {
+        "width": 18,
+        "height": 18
+      },
+      "sha256": "99ffc5db1c0c0a6b263b4676734fa4f244b4bc26f60bb2bfb72c731e12cb606d"
+    },
+    {
+      "relative_path": "masters/status-duck/status_lookUp.png",
+      "type": "png",
+      "size_bytes": 156,
+      "dimensions": {
+        "width": 14,
+        "height": 11
+      },
+      "sha256": "44a2719fa609c9a123a3aaba10389c777526eb8d6fd775418141dd85be1e41c0"
+    },
+    {
+      "relative_path": "masters/status-duck/status_lookUp_template_18x18.png",
+      "type": "png",
+      "size_bytes": 164,
+      "dimensions": {
+        "width": 18,
+        "height": 18
+      },
+      "sha256": "adec4402007034b7db9fb06a07a6b9c8ea401fc8dd698e231fae44746359334f"
+    },
+    {
+      "relative_path": "masters/status-duck/status_sleep.png",
+      "type": "png",
+      "size_bytes": 154,
+      "dimensions": {
+        "width": 14,
+        "height": 11
+      },
+      "sha256": "68124273d77cc224053ab2c83fb9c6180660d46e42eeb7a98be054eebcaeb528"
+    },
+    {
+      "relative_path": "masters/status-duck/status_sleep_template_18x18.png",
+      "type": "png",
+      "size_bytes": 160,
+      "dimensions": {
+        "width": 18,
+        "height": 18
+      },
+      "sha256": "2df0664970103ca37950f1d69c0cc430750fb52c52ccc6e9f0a5e584977d9c12"
+    },
+    {
+      "relative_path": "masters/status-duck/status_victoryA.png",
+      "type": "png",
+      "size_bytes": 145,
+      "dimensions": {
+        "width": 14,
+        "height": 9
+      },
+      "sha256": "8f1829f92fa0b144a62782389e2a200398a50ac3e890c6c4f1371cbf6b0db067"
+    },
+    {
+      "relative_path": "masters/status-duck/status_victoryA_template_18x18.png",
+      "type": "png",
+      "size_bytes": 151,
+      "dimensions": {
+        "width": 18,
+        "height": 18
+      },
+      "sha256": "e824e52375749be4a8e2b69f9bcc75d2c63a860b361cb33b75e23671af3a6793"
+    },
+    {
+      "relative_path": "masters/status-duck/status_victoryB.png",
+      "type": "png",
+      "size_bytes": 153,
+      "dimensions": {
+        "width": 14,
+        "height": 10
+      },
+      "sha256": "7f06dd750f6c542974b06d7729b6cffc6025ed4ef5ab3a28f4bcf6849e71670f"
+    },
+    {
+      "relative_path": "masters/status-duck/status_victoryB_template_18x18.png",
+      "type": "png",
+      "size_bytes": 160,
+      "dimensions": {
+        "width": 18,
+        "height": 18
+      },
+      "sha256": "70b66f9c9d8e2b37f2e986509706dfc39ecb500a0b011a17716068bf5aee8a76"
+    },
+    {
+      "relative_path": "palette/TIMEDUCK-PALETTE.md",
+      "type": "md",
+      "size_bytes": 3470,
+      "dimensions": null,
+      "sha256": "150c1767f833660cb045933803c60fea0f6a999d79f0fbbf76a9675354816725"
+    },
+    {
+      "relative_path": "palette/TimeDuck-Palette.json",
+      "type": "json",
+      "size_bytes": 4792,
+      "dimensions": null,
+      "sha256": "607e74375ed49c7f4d157a8e946df6416f00f1f042a5b99310c8d527a7eca3cf"
+    },
+    {
+      "relative_path": "palette/TimeDuck-Palette.png",
+      "type": "png",
+      "size_bytes": 38058,
+      "dimensions": {
+        "width": 800,
+        "height": 600
+      },
+      "sha256": "a91ad6352c8133e230948bf75f525c5c05780536a05d41ebc37ecace6d31a4d0"
+    },
+    {
+      "relative_path": "palette/TimeDuck-Palette.svg",
+      "type": "svg",
+      "size_bytes": 7214,
+      "dimensions": null,
+      "sha256": "8d1c753b87a74b57d7068b75a33bbdc216fd9ba357338b784deb2c488897ee7e"
+    },
+    {
+      "relative_path": "promo/TimeDuck-Banner.png",
+      "type": "png",
+      "size_bytes": 13537,
+      "dimensions": {
+        "width": 1280,
+        "height": 640
+      },
+      "sha256": "c30aaf3a408da11c6f7b3104462db0331d8ca839660599ec8596909ebad861cc"
+    },
+    {
+      "relative_path": "promo/TimeDuck-Banner.webp",
+      "type": "webp",
+      "size_bytes": 3820,
+      "dimensions": {
+        "width": 1280,
+        "height": 640
+      },
+      "sha256": "ecb33095b2342ae6927542a097012a3193b9ed878cb593ca0f706b5a6e88f7bd"
+    },
+    {
+      "relative_path": "promo/TimeDuck-Hero-16x.png",
+      "type": "png",
+      "size_bytes": 664,
+      "dimensions": {
+        "width": 208,
+        "height": 160
+      },
+      "sha256": "5fdd36ca2b4eef7fcfaa46bcd81e111a519606058410f049c95a1a3951f622c0"
+    },
+    {
+      "relative_path": "promo/TimeDuck-Hero-16x.webp",
+      "type": "webp",
+      "size_bytes": 142,
+      "dimensions": {
+        "width": 208,
+        "height": 160
+      },
+      "sha256": "11d45f71063ee48f22cb74c3d958f0eb8f5fa1b5ca54f4edca3db89bc9e30b54"
+    },
+    {
+      "relative_path": "promo/TimeDuck-Hero-4x.png",
+      "type": "png",
+      "size_bytes": 274,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "9aa56c1d3254a2c0d78fee82bc5317d167dca96a10beefd7dbbbba3db9a5c973"
+    },
+    {
+      "relative_path": "promo/TimeDuck-Hero-4x.webp",
+      "type": "webp",
+      "size_bytes": 134,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "9ed8d11bb1071d7c377240ba05fa58580b99c6cc24138fd3d58c5e4d1b54a808"
+    },
+    {
+      "relative_path": "promo/TimeDuck-Hero-8x.png",
+      "type": "png",
+      "size_bytes": 405,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "b7609ab4a52d25a7049f8043b36f1fe2308ad1142521e130fe40ebd292d538f9"
+    },
+    {
+      "relative_path": "promo/TimeDuck-Hero-8x.webp",
+      "type": "webp",
+      "size_bytes": 138,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "7def540046e53e369fd263e00b48dd21435dbc477e72a18262eb9173aa9c4f4c"
+    },
+    {
+      "relative_path": "promo/TimeDuck-Hero-Transparent.png",
+      "type": "png",
+      "size_bytes": 175,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "95bca8ca5cfae2fe749198071f1fd47789abe60cc5d74aedb9e775e61dcd02bc"
+    },
+    {
+      "relative_path": "promo/TimeDuck-Hero-Transparent.webp",
+      "type": "webp",
+      "size_bytes": 114,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "a85b70b6a9ae77f441dcfb3a8475f40f36f74e90dd3cd3889c8645e351cf99c1"
+    },
+    {
+      "relative_path": "promo/TimeDuck-Retro-Roadmap-Poster.png",
+      "type": "png",
+      "size_bytes": 160176,
+      "dimensions": {
+        "width": 1200,
+        "height": 1800
+      },
+      "sha256": "c9864b41bc4d6f506f9cdb18d5927d4183c68280c2fe0fdeebd2accef4affcd9"
+    },
+    {
+      "relative_path": "promo/TimeDuck-Retro-Roadmap-Poster.webp",
+      "type": "webp",
+      "size_bytes": 58524,
+      "dimensions": {
+        "width": 1200,
+        "height": 1800
+      },
+      "sha256": "71e0682d01176a1ba1ec537e086757cc41df23d3f417ff165379e3399e96c0fb"
+    },
+    {
+      "relative_path": "promo/TimeDuck-Square.png",
+      "type": "png",
+      "size_bytes": 3601,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "4feb55afa00ac56992a2557d91c8b30dd31864c486ca426a1e6bda48eafa561b"
+    },
+    {
+      "relative_path": "promo/TimeDuck-Square.webp",
+      "type": "webp",
+      "size_bytes": 368,
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "sha256": "3e1e038988785db4b41d6dce8b5bb31b99094352883812b1883c402089467003"
+    },
+    {
+      "relative_path": "qa/INTEGRITY-REPORT.md",
+      "type": "md",
+      "size_bytes": 1521,
+      "dimensions": null,
+      "sha256": "de24939cd35df6daebe176da219c9f73edd80bd8fad7ea71459c54aa65150cec"
+    },
+    {
+      "relative_path": "qa/integrity-test.py",
+      "type": "py",
+      "size_bytes": 2369,
+      "dimensions": null,
+      "sha256": "1c9a6e1d3242378491d85453b1080117ebf2091892d705f12c513ce8cb807709"
+    },
+    {
+      "relative_path": "qa/background-tests/test_bg_black.png",
+      "type": "png",
+      "size_bytes": 552,
+      "dimensions": {
+        "width": 160,
+        "height": 120
+      },
+      "sha256": "8b48d40bf56b6c60a5487198357b11f685a17d770174096d334644158a01009a"
+    },
+    {
+      "relative_path": "qa/background-tests/test_bg_crt_amber.png",
+      "type": "png",
+      "size_bytes": 564,
+      "dimensions": {
+        "width": 160,
+        "height": 120
+      },
+      "sha256": "75a2f22546fb7bb1f9c6fb82733e426cc2e84f2df8f2688cb4e607a07a29973f"
+    },
+    {
+      "relative_path": "qa/background-tests/test_bg_crt_arcade.png",
+      "type": "png",
+      "size_bytes": 565,
+      "dimensions": {
+        "width": 160,
+        "height": 120
+      },
+      "sha256": "2da2b3464cc5a0b8eb72613346469062573666c4255a3d45e7cda1bdb33d31fc"
+    },
+    {
+      "relative_path": "qa/background-tests/test_bg_crt_gameboy.png",
+      "type": "png",
+      "size_bytes": 581,
+      "dimensions": {
+        "width": 160,
+        "height": 120
+      },
+      "sha256": "863d4d72650cdbc1ee4c91e2e0951cbcb28069e7e1303546b142f46a3a422e2b"
+    },
+    {
+      "relative_path": "qa/background-tests/test_bg_crt_paperwhite.png",
+      "type": "png",
+      "size_bytes": 564,
+      "dimensions": {
+        "width": 160,
+        "height": 120
+      },
+      "sha256": "885eae190ced021d16c76d2fa60acdf56099260ef8d42f63e760cabbab11426a"
+    },
+    {
+      "relative_path": "qa/background-tests/test_bg_crt_pond.png",
+      "type": "png",
+      "size_bytes": 571,
+      "dimensions": {
+        "width": 160,
+        "height": 120
+      },
+      "sha256": "eb85554501bf1b16e022acbab09a066eb4f0c9ebcce0b4d79597a085242127f0"
+    },
+    {
+      "relative_path": "qa/background-tests/test_bg_crt_synthwave.png",
+      "type": "png",
+      "size_bytes": 569,
+      "dimensions": {
+        "width": 160,
+        "height": 120
+      },
+      "sha256": "59e7630954b3dae453cb70e7364be5fee439ed8839b8fd9810efb8c58f088235"
+    },
+    {
+      "relative_path": "qa/background-tests/test_bg_crt_terminal.png",
+      "type": "png",
+      "size_bytes": 567,
+      "dimensions": {
+        "width": 160,
+        "height": 120
+      },
+      "sha256": "fca0721afd2e59cec5742f6f358f2688f6f5ec264c4e6f7db3b07aab9aa191b3"
+    },
+    {
+      "relative_path": "qa/background-tests/test_bg_gray.png",
+      "type": "png",
+      "size_bytes": 586,
+      "dimensions": {
+        "width": 160,
+        "height": 120
+      },
+      "sha256": "2d0a991d04681c5991fa87506ec4091fe69de2c648c36d43d8e6ab060f29242a"
+    },
+    {
+      "relative_path": "qa/background-tests/test_bg_white.png",
+      "type": "png",
+      "size_bytes": 541,
+      "dimensions": {
+        "width": 160,
+        "height": 120
+      },
+      "sha256": "2d0213e5b5418ca135e74dd8299971f1875f18649cd3889aeb1f4bc6b923e82d"
+    },
+    {
+      "relative_path": "reference/ANCHORS.md",
+      "type": "md",
+      "size_bytes": 1177,
+      "dimensions": null,
+      "sha256": "da5f09ff6da597be888c6669853df986e45bd12c465bed44f70d6bfd3e477b9e"
+    },
+    {
+      "relative_path": "reference/TimeDuck-Character-Sheet.png",
+      "type": "png",
+      "size_bytes": 55324,
+      "dimensions": {
+        "width": 1200,
+        "height": 900
+      },
+      "sha256": "5f9e2fd72a89748ff4459e3e5834d7be3876f19956c5a13f0611033a6b70ae45"
+    },
+    {
+      "relative_path": "reference/TimeDuck-Character-Sheet.svg",
+      "type": "svg",
+      "size_bytes": 561,
+      "dimensions": null,
+      "sha256": "fb82f4b3fe7a7f13ddcf07e57ef85434da421d7f7c8d26b8ac585cc5a4e1a8ef"
+    },
+    {
+      "relative_path": "reference/TimeDuck-Character-Sheet.webp",
+      "type": "webp",
+      "size_bytes": 17230,
+      "dimensions": {
+        "width": 1200,
+        "height": 900
+      },
+      "sha256": "13ee9abdd359fcc5a7ba99b665cd299bba35b273d1d15e55fe2a39864fce226a"
+    },
+    {
+      "relative_path": "svg/TimeDuck-Canonical-Layered.svg",
+      "type": "svg",
+      "size_bytes": 1990,
+      "dimensions": null,
+      "sha256": "cd14dfbc5e3d7abf88dde41409c6047d5c7cbf29ffd5ff51e135d306963ff7b6"
+    },
+    {
+      "relative_path": "svg/TimeDuck-Canonical-Transparent.svg",
+      "type": "svg",
+      "size_bytes": 4592,
+      "dimensions": null,
+      "sha256": "781ed0d46f2563f871cba3205f1e2e957b450059d16a397c6408f9d8ba11d4a5"
+    },
+    {
+      "relative_path": "svg/TimeDuck-Canonical.svg",
+      "type": "svg",
+      "size_bytes": 4640,
+      "dimensions": null,
+      "sha256": "36a060474dce1bcda293973f8fbce40230e05e1fe31a9d8deabb70474197bc58"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_BASE.svg",
+      "type": "svg",
+      "size_bytes": 4592,
+      "dimensions": null,
+      "sha256": "781ed0d46f2563f871cba3205f1e2e957b450059d16a397c6408f9d8ba11d4a5"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_BLINK_ROWS.svg",
+      "type": "svg",
+      "size_bytes": 4592,
+      "dimensions": null,
+      "sha256": "7b7fac5da74c3a6fc2a3944aed887b35b8f6fa7d68c08c217aff488ce4b731c9"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_BOB.svg",
+      "type": "svg",
+      "size_bytes": 4070,
+      "dimensions": null,
+      "sha256": "7ec8835bb677355c25c218db8a0c088dbec00abac903ae8b04e4ad6a94ed2079"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_IDLE_B.svg",
+      "type": "svg",
+      "size_bytes": 4128,
+      "dimensions": null,
+      "sha256": "b72a13f6fe83436ea777b3c186022856308cc0305cd28546e469a627f9ee1c20"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_IDLE_WAG.svg",
+      "type": "svg",
+      "size_bytes": 4650,
+      "dimensions": null,
+      "sha256": "a756eb8873c563673852dc51eb315cb57e9d060f8b05071737575a13a0ad2671"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_LOOK_BACK.svg",
+      "type": "svg",
+      "size_bytes": 4362,
+      "dimensions": null,
+      "sha256": "7c33baed147bce2cfc487b786e39a0cc47090a276deca1a1046b964476f85378"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_LOOK_UP.svg",
+      "type": "svg",
+      "size_bytes": 4708,
+      "dimensions": null,
+      "sha256": "c435374d119f1802738fff30eef97c56d3e5eda8c464d0393a413f34de9ba9ce"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_PAUSE.svg",
+      "type": "svg",
+      "size_bytes": 3894,
+      "dimensions": null,
+      "sha256": "fc4b92e4e29872a91067135a127bbd7bcdd173f50228671ec000041f92c989f1"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_PECK_A.svg",
+      "type": "svg",
+      "size_bytes": 4305,
+      "dimensions": null,
+      "sha256": "bcd56b31837f25617a7e1bb7b710a8223152527b9eda8516ddefd6f37c0b7d4e"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_PECK_B.svg",
+      "type": "svg",
+      "size_bytes": 3378,
+      "dimensions": null,
+      "sha256": "0abf17ec4a8d5f15e766df5f64997116af5065ae6f96370e458edcfbdbe48edb"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_PEEK_A.svg",
+      "type": "svg",
+      "size_bytes": 4825,
+      "dimensions": null,
+      "sha256": "edae683f154bbe230375b3d0777c0f742674ab633a769a56c8669efb3e7d6d4b"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_PEEK_B.svg",
+      "type": "svg",
+      "size_bytes": 4773,
+      "dimensions": null,
+      "sha256": "9c703484c8f35fe55b0f66465b323b0e64c16009987fc19e33dd8845ffc0788e"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_PET_ROWS.svg",
+      "type": "svg",
+      "size_bytes": 4651,
+      "dimensions": null,
+      "sha256": "18b86b4c2631c57dbada7b4dce2516db3a34568ad093b4d4c20eb2ecf66648a4"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_PREEN_A.svg",
+      "type": "svg",
+      "size_bytes": 4417,
+      "dimensions": null,
+      "sha256": "b40003c85dc65f465e5cd86950afe261cf7c2306fd14595bc863372eb14e38e0"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_PREEN_B.svg",
+      "type": "svg",
+      "size_bytes": 4417,
+      "dimensions": null,
+      "sha256": "068ec5f3834a104b13a40625ece55af17e8a264f8abab101405900b7bfa3244d"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_QUACK_ROWS.svg",
+      "type": "svg",
+      "size_bytes": 4711,
+      "dimensions": null,
+      "sha256": "a65a0a9bba6c321974c8294a15397011cfc35c0003e5390885cfd21beba1bc2c"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_RELAX_ROWS.svg",
+      "type": "svg",
+      "size_bytes": 4194,
+      "dimensions": null,
+      "sha256": "2f5e886794aa4468420b1076ebb5dc7c53c148bc7ddc778fe4988bbe267076e1"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_RUFFLE_A.svg",
+      "type": "svg",
+      "size_bytes": 4592,
+      "dimensions": null,
+      "sha256": "c2707d4dc0455d457d34155faf3ad29992f152479eb615e807a87489d066a242"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_RUFFLE_B.svg",
+      "type": "svg",
+      "size_bytes": 4710,
+      "dimensions": null,
+      "sha256": "aa324c0393e54639031bd8d031cf4be29ae8b0ce872b7399a5854279a317192f"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_RUN_A.svg",
+      "type": "svg",
+      "size_bytes": 4652,
+      "dimensions": null,
+      "sha256": "c8cdfac6f9c0981bfbf75faba12fed02a60cf6224211475c1092f5f9e838755e"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_RUN_B.svg",
+      "type": "svg",
+      "size_bytes": 4011,
+      "dimensions": null,
+      "sha256": "7798a4368f7b83b79f4d569b3c8bdc3b21a01f398a18d95da820052c3c925247"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_RUN_C.svg",
+      "type": "svg",
+      "size_bytes": 4709,
+      "dimensions": null,
+      "sha256": "1a544950f8d8cacc3ecf271ffbb821feb139b234ac90421630c91c7ee105f730"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_SHUFFLE_A.svg",
+      "type": "svg",
+      "size_bytes": 4592,
+      "dimensions": null,
+      "sha256": "f3156b14194dc3d23f6631c9734aff826e8dce1618760845b736e749fa0e0f86"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_SHUFFLE_B.svg",
+      "type": "svg",
+      "size_bytes": 4592,
+      "dimensions": null,
+      "sha256": "24d0af27022f5eb55a1bd021c6a773298da737bb3901dfd60dbf790732e016d4"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_SIDE_EYE.svg",
+      "type": "svg",
+      "size_bytes": 4651,
+      "dimensions": null,
+      "sha256": "5872a0211f30ec0b7fca5a708d1d0c937c0c22381cc0c534fa2d8d4063256679"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_SIT.svg",
+      "type": "svg",
+      "size_bytes": 4301,
+      "dimensions": null,
+      "sha256": "f7008613b61f6989adbcce7125eb1084a638d2fd36387a9c9c1c5e2866491852"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_SLEEP_DEEP.svg",
+      "type": "svg",
+      "size_bytes": 3720,
+      "dimensions": null,
+      "sha256": "2fd638359b42c3e5ef2aa114e9b2d1820ee2a12c27e0c7c3ecd804a5ddc4de3b"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_TACTICAL.svg",
+      "type": "svg",
+      "size_bytes": 3780,
+      "dimensions": null,
+      "sha256": "e3ab616514f9bb80e629737044e69680473cc7655df8d1510a4dab69ff1571f1"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_YAY_A.svg",
+      "type": "svg",
+      "size_bytes": 4244,
+      "dimensions": null,
+      "sha256": "47a4b5327090f81e996afde8110e8211aaec2cddeca26863fa88e4901eb2adc4"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_YAY_B.svg",
+      "type": "svg",
+      "size_bytes": 4127,
+      "dimensions": null,
+      "sha256": "3c3e88993d2a7c95978157ad3b01caab6056ba6c2ba31683420eb35f7438ef55"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_ZERO_G_A.svg",
+      "type": "svg",
+      "size_bytes": 4533,
+      "dimensions": null,
+      "sha256": "d10601e1daaca032b47d580814e201cd23f21df173b44746a499faf1220c4341"
+    },
+    {
+      "relative_path": "svg/poses/DUCK_ZERO_G_B.svg",
+      "type": "svg",
+      "size_bytes": 4534,
+      "dimensions": null,
+      "sha256": "ed1fe1d3c493a8d6cf8f5c0a98d9a916c9cba9e792ac9777f78ea1320ead3afe"
+    },
+    {
+      "relative_path": "wardrobe/WARDROBE-SPEC.md",
+      "type": "md",
+      "size_bytes": 2737,
+      "dimensions": null,
+      "sha256": "ef86462e8e694c9ac11fccec19d7770b6db7182f78488eccce5bc4ca47466e57"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_ARTIST-4x.png",
+      "type": "png",
+      "size_bytes": 357,
+      "dimensions": {
+        "width": 52,
+        "height": 56
+      },
+      "sha256": "8ffae8061d8ebb963b260fcb32b8d0fbb78829fdb4a0e006c768804f6a8ce43b"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_ARTIST-8x.png",
+      "type": "png",
+      "size_bytes": 545,
+      "dimensions": {
+        "width": 104,
+        "height": 112
+      },
+      "sha256": "879c0bd5901ab84d1eb66acd946b7319a2092af1f3853c216a1172794d8c62f3"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_ARTIST.png",
+      "type": "png",
+      "size_bytes": 216,
+      "dimensions": {
+        "width": 13,
+        "height": 14
+      },
+      "sha256": "f5fd2a0ef845730aaa48bb24496ab7c8dce495db6f0a05c7ed4989ef1ca2b1a0"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_BANDANA_CRIMSON-4x.png",
+      "type": "png",
+      "size_bytes": 356,
+      "dimensions": {
+        "width": 52,
+        "height": 56
+      },
+      "sha256": "daa88f48c95775a9bd456803aa4fdec6ffbb146b0468729e6dcf146cf805a54e"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_BANDANA_CRIMSON-8x.png",
+      "type": "png",
+      "size_bytes": 502,
+      "dimensions": {
+        "width": 104,
+        "height": 112
+      },
+      "sha256": "aa1ce1a62dab76c1208cc2eec69fc2cfcf809c47fcf771ea8ad8c0a18c821a36"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_BANDANA_CRIMSON.png",
+      "type": "png",
+      "size_bytes": 235,
+      "dimensions": {
+        "width": 13,
+        "height": 14
+      },
+      "sha256": "4ed4e6cf0099c568fff4f6564a002e5c3ce60dd0a6698c12652a6039fb91762b"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_BANDANA_DESERT-4x.png",
+      "type": "png",
+      "size_bytes": 352,
+      "dimensions": {
+        "width": 52,
+        "height": 56
+      },
+      "sha256": "f387ebf72c716060dfc6fa668a97cdfb1e8bb04ac601b51109e25c15063cd283"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_BANDANA_DESERT-8x.png",
+      "type": "png",
+      "size_bytes": 496,
+      "dimensions": {
+        "width": 104,
+        "height": 112
+      },
+      "sha256": "00c793e4b7fbeb4c86b60609904cdb94afa8672c0b379ef210325cfa0516af8c"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_BANDANA_DESERT.png",
+      "type": "png",
+      "size_bytes": 232,
+      "dimensions": {
+        "width": 13,
+        "height": 14
+      },
+      "sha256": "9f79ef0f41ea0404b6f9365433e718b3bf4b5496c3254f032e0ecf8b4ded14b1"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_BANDANA_FOREST-4x.png",
+      "type": "png",
+      "size_bytes": 355,
+      "dimensions": {
+        "width": 52,
+        "height": 56
+      },
+      "sha256": "263b5ac65eb8b9268c61ef23e892303f58db9ffeefc2d9d5a53bce7e24153f2f"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_BANDANA_FOREST-8x.png",
+      "type": "png",
+      "size_bytes": 504,
+      "dimensions": {
+        "width": 104,
+        "height": 112
+      },
+      "sha256": "df984ee9a463c38469cadd6d525700ad637436d3a4c8226311bca69940b379b3"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_BANDANA_FOREST.png",
+      "type": "png",
+      "size_bytes": 228,
+      "dimensions": {
+        "width": 13,
+        "height": 14
+      },
+      "sha256": "4ca41f200a628b0a681b8d0bd248976691c04d7ea0992ac7b6a20b33a88395eb"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_BANDANA_MIDNIGHT-4x.png",
+      "type": "png",
+      "size_bytes": 340,
+      "dimensions": {
+        "width": 52,
+        "height": 56
+      },
+      "sha256": "ff83a2253e0111624bb22771073fa042deea109032bd3d14b7767ad3bb08c843"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_BANDANA_MIDNIGHT-8x.png",
+      "type": "png",
+      "size_bytes": 486,
+      "dimensions": {
+        "width": 104,
+        "height": 112
+      },
+      "sha256": "e7d4d14d1006cc17a19e1a2dc7861a5f105216a0b7c0aba417692277dab463dd"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_BANDANA_MIDNIGHT.png",
+      "type": "png",
+      "size_bytes": 229,
+      "dimensions": {
+        "width": 13,
+        "height": 14
+      },
+      "sha256": "af94e5a4fa3ceda8dff2be659a10cc351feb34493326bd9e70570addb593b33d"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_BARISTA-4x.png",
+      "type": "png",
+      "size_bytes": 331,
+      "dimensions": {
+        "width": 52,
+        "height": 56
+      },
+      "sha256": "db4a6403c122e506710a94f467323f74bc2ee74866cd171fedd96040550046f4"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_BARISTA-8x.png",
+      "type": "png",
+      "size_bytes": 507,
+      "dimensions": {
+        "width": 104,
+        "height": 112
+      },
+      "sha256": "29d1f61bcaf1876ce5f17c49763e83bd29f1605b7044da8d6c9a5c38da6b9326"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_BARISTA.png",
+      "type": "png",
+      "size_bytes": 204,
+      "dimensions": {
+        "width": 13,
+        "height": 14
+      },
+      "sha256": "f97237bc4f2ddbcc72c3eef1fa4b101532bc1c03b85cfe46b3d19483a80400c8"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_CHEF-4x.png",
+      "type": "png",
+      "size_bytes": 308,
+      "dimensions": {
+        "width": 52,
+        "height": 56
+      },
+      "sha256": "d48876f2c15d69539f595995011bfed30522c3e20b62602fecb9012de01b20ff"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_CHEF-8x.png",
+      "type": "png",
+      "size_bytes": 500,
+      "dimensions": {
+        "width": 104,
+        "height": 112
+      },
+      "sha256": "1bdbd124c840acf02610e6850f3680a6a92707e7e5401427913bee4ff8c979b1"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_CHEF.png",
+      "type": "png",
+      "size_bytes": 196,
+      "dimensions": {
+        "width": 13,
+        "height": 14
+      },
+      "sha256": "beb84f11dbb056e56c4b875c8f44f8a7f3f9a216796dfc0d0e3c5009a5ac2a82"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_COSMONAUT-4x.png",
+      "type": "png",
+      "size_bytes": 346,
+      "dimensions": {
+        "width": 52,
+        "height": 56
+      },
+      "sha256": "01a392cf4481e22fc3d286cc8aebc28cd997fc69a7da87dca609d231f5a97d14"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_COSMONAUT-8x.png",
+      "type": "png",
+      "size_bytes": 532,
+      "dimensions": {
+        "width": 104,
+        "height": 112
+      },
+      "sha256": "d5ec2008d8ebcf77d3fb35ccf2a7834a8a754df3dea2a418a4910f6c82533bd9"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_COSMONAUT.png",
+      "type": "png",
+      "size_bytes": 219,
+      "dimensions": {
+        "width": 13,
+        "height": 14
+      },
+      "sha256": "bac8f667c9f99f4c06a9e7e7a606ab7584d8742f57a88b5c38035bf28a495bfd"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_CROWN-4x.png",
+      "type": "png",
+      "size_bytes": 337,
+      "dimensions": {
+        "width": 52,
+        "height": 56
+      },
+      "sha256": "4977e30c3c34cf02ea6d4dcb9f175fe79b5b4d8c52945ce690ae10e25c544c87"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_CROWN-8x.png",
+      "type": "png",
+      "size_bytes": 506,
+      "dimensions": {
+        "width": 104,
+        "height": 112
+      },
+      "sha256": "6ca9143b23e4af3308b2e779702ead6928b6be44bb18bc70bb9c2a7d3bb893a3"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_CROWN.png",
+      "type": "png",
+      "size_bytes": 196,
+      "dimensions": {
+        "width": 13,
+        "height": 14
+      },
+      "sha256": "ec789b6c22a06bf986453bbea661cb80341020608b34ffed2fc022f261dd3946"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_CYBER-4x.png",
+      "type": "png",
+      "size_bytes": 311,
+      "dimensions": {
+        "width": 52,
+        "height": 56
+      },
+      "sha256": "1a8ef0f09ecdd8c8a992926942c2f3252d2261d151bc4dbe2ad36b038a1ab473"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_CYBER-8x.png",
+      "type": "png",
+      "size_bytes": 477,
+      "dimensions": {
+        "width": 104,
+        "height": 112
+      },
+      "sha256": "9a1fa86ac952bf2a6f12bf2e43d1004de518a29521e6c03368161b92bbb5de7e"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_CYBER.png",
+      "type": "png",
+      "size_bytes": 196,
+      "dimensions": {
+        "width": 13,
+        "height": 14
+      },
+      "sha256": "7e69713bbd8ec1e89bf08e56c9c0e03733cc10232bbb24887d88bf53d273b5d5"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_CYBER_ONI-4x.png",
+      "type": "png",
+      "size_bytes": 379,
+      "dimensions": {
+        "width": 52,
+        "height": 56
+      },
+      "sha256": "9bc7d60273a44c648bb51d8e0ad99c5e94a9139a944f646c9f3f313a1d75ce63"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_CYBER_ONI-8x.png",
+      "type": "png",
+      "size_bytes": 561,
+      "dimensions": {
+        "width": 104,
+        "height": 112
+      },
+      "sha256": "1ce0903107cbfad9285214fff3dcea72698598b4944b304bf479446daa1d9673"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_CYBER_ONI.png",
+      "type": "png",
+      "size_bytes": 230,
+      "dimensions": {
+        "width": 13,
+        "height": 14
+      },
+      "sha256": "f85c51ddf5c5cad481c1c17a4b229f884e40c5c5419e579d5e8779228c5ba655"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_DETECTIVE-4x.png",
+      "type": "png",
+      "size_bytes": 321,
+      "dimensions": {
+        "width": 52,
+        "height": 56
+      },
+      "sha256": "48a671f2fb694d6ec80aa2daaa3108cdbb734162887e53f3b9e8fc804fc5b33e"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_DETECTIVE-8x.png",
+      "type": "png",
+      "size_bytes": 497,
+      "dimensions": {
+        "width": 104,
+        "height": 112
+      },
+      "sha256": "436214c7f07774222a428283e578891727e8aa5c39a0d55653441aec6ad01d88"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_DETECTIVE.png",
+      "type": "png",
+      "size_bytes": 199,
+      "dimensions": {
+        "width": 13,
+        "height": 14
+      },
+      "sha256": "8bd082e0531b8c0be5caed75f9a5e9b28513262a401bfcf47b53c65b454c7eee"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_GENTLEDOM-4x.png",
+      "type": "png",
+      "size_bytes": 346,
+      "dimensions": {
+        "width": 52,
+        "height": 56
+      },
+      "sha256": "d52751397ace220feb69e63c0a8bae615bfe1cf22445f35ba6b42c21cc9bf30f"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_GENTLEDOM-8x.png",
+      "type": "png",
+      "size_bytes": 526,
+      "dimensions": {
+        "width": 104,
+        "height": 112
+      },
+      "sha256": "4e7090a568def9180c68d89cabb21b0ebcd6a6eceb33084f7f4fe7bdb4c36ca8"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_GENTLEDOM.png",
+      "type": "png",
+      "size_bytes": 218,
+      "dimensions": {
+        "width": 13,
+        "height": 14
+      },
+      "sha256": "ba68a7f1864b1fd76ebf2dc1255681afb97da1a4e75b8bda6b5fc05cfe279d8d"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_SLEEPCAP-4x.png",
+      "type": "png",
+      "size_bytes": 342,
+      "dimensions": {
+        "width": 52,
+        "height": 56
+      },
+      "sha256": "605644d841a4bd544f4f9005f16b21b50e2336b8bf5d506f9803f39f274d1230"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_SLEEPCAP-8x.png",
+      "type": "png",
+      "size_bytes": 530,
+      "dimensions": {
+        "width": 104,
+        "height": 112
+      },
+      "sha256": "d8c699ce69c2b2b4ac6726aa9bc5621e8b814a7515709e02bfc26331891c1be2"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_SLEEPCAP.png",
+      "type": "png",
+      "size_bytes": 215,
+      "dimensions": {
+        "width": 13,
+        "height": 14
+      },
+      "sha256": "8722dff0cc9a25e9739f760a6820496f5586a7add1cd7d5bd54708a7d8efbcc4"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_STEAMPUNK-4x.png",
+      "type": "png",
+      "size_bytes": 348,
+      "dimensions": {
+        "width": 52,
+        "height": 56
+      },
+      "sha256": "91dfa62a440044d81136c93c79792b7eb2972538fbd9fa6f4ef3229a3614f639"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_STEAMPUNK-8x.png",
+      "type": "png",
+      "size_bytes": 531,
+      "dimensions": {
+        "width": 104,
+        "height": 112
+      },
+      "sha256": "1325130465ac28490d90d5d4e0b3c374caf6563ce16100dc3df65c86a0e7d137"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_STEAMPUNK.png",
+      "type": "png",
+      "size_bytes": 214,
+      "dimensions": {
+        "width": 13,
+        "height": 14
+      },
+      "sha256": "5426e437cfc1191be610da68e7c31ca53c7c5399d1c3d40b6f9008e1bd6bc75f"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_WIZARD-4x.png",
+      "type": "png",
+      "size_bytes": 342,
+      "dimensions": {
+        "width": 52,
+        "height": 56
+      },
+      "sha256": "31269263782d07a10c79f00804e8808d9febd79c8510c0f445a526cd86b784c6"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_WIZARD-8x.png",
+      "type": "png",
+      "size_bytes": 526,
+      "dimensions": {
+        "width": 104,
+        "height": 112
+      },
+      "sha256": "4f7d1b20a6e068606bef3b4d98a79eafced3d1393e6f52ce3419006c8584dd10"
+    },
+    {
+      "relative_path": "wardrobe/composites/Composite_HAT_WIZARD.png",
+      "type": "png",
+      "size_bytes": 206,
+      "dimensions": {
+        "width": 13,
+        "height": 14
+      },
+      "sha256": "2227daaa80381f85c20a1c5eb9ab2f461eac1876907eba204989089b9f48854d"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_ARTIST-4x.png",
+      "type": "png",
+      "size_bytes": 189,
+      "dimensions": {
+        "width": 52,
+        "height": 24
+      },
+      "sha256": "2ec7f6ebb41f5f403f1602fe65b0c33f0b31dd00be23554b2fcfd8476ccd962b"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_ARTIST-8x.png",
+      "type": "png",
+      "size_bytes": 267,
+      "dimensions": {
+        "width": 104,
+        "height": 48
+      },
+      "sha256": "1abe3adaa24ecb9a42fd49ece134094587ec83928eb9e82261aa430657c3be73"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_ARTIST.png",
+      "type": "png",
+      "size_bytes": 116,
+      "dimensions": {
+        "width": 13,
+        "height": 6
+      },
+      "sha256": "efccb449fb21794f0cc5d70f52134e91c4be95ae53c06db08f0e035f61a81798"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_BANDANA_CRIMSON-4x.png",
+      "type": "png",
+      "size_bytes": 208,
+      "dimensions": {
+        "width": 52,
+        "height": 32
+      },
+      "sha256": "51f5d7f713bb6a5a92b11346f684db224f8291c432eb2c44b385c0739a4fdf1d"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_BANDANA_CRIMSON-8x.png",
+      "type": "png",
+      "size_bytes": 265,
+      "dimensions": {
+        "width": 104,
+        "height": 64
+      },
+      "sha256": "bbe1613fb7be418e8784240303d68452665a74b8b3960f4798f391c510237cf5"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_BANDANA_CRIMSON.png",
+      "type": "png",
+      "size_bytes": 126,
+      "dimensions": {
+        "width": 13,
+        "height": 8
+      },
+      "sha256": "3523d39d6a1c5812d54a761b5df70c25e5409871fa7df5fa319f072e75b588ef"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_BANDANA_DESERT-4x.png",
+      "type": "png",
+      "size_bytes": 228,
+      "dimensions": {
+        "width": 52,
+        "height": 32
+      },
+      "sha256": "f19ff71ac9bf708f983dc83b711cabfdcc22b20493822b5cab1e74a732388a6c"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_BANDANA_DESERT-8x.png",
+      "type": "png",
+      "size_bytes": 292,
+      "dimensions": {
+        "width": 104,
+        "height": 64
+      },
+      "sha256": "6e633082d8af2ef1ecdead4ad0763131a6a0a3dc006d77eceade12a743a7d4e7"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_BANDANA_DESERT.png",
+      "type": "png",
+      "size_bytes": 114,
+      "dimensions": {
+        "width": 13,
+        "height": 8
+      },
+      "sha256": "ecaf943ec4cd49ad894760414dcf6a8a5ec483aef4f926958d9cb38f09335235"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_BANDANA_FOREST-4x.png",
+      "type": "png",
+      "size_bytes": 228,
+      "dimensions": {
+        "width": 52,
+        "height": 32
+      },
+      "sha256": "03be1afc62e278af8fba6fa219e18444e891f92e85eb21dcec5856cd4530bcf7"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_BANDANA_FOREST-8x.png",
+      "type": "png",
+      "size_bytes": 292,
+      "dimensions": {
+        "width": 104,
+        "height": 64
+      },
+      "sha256": "d3b537ab5cb5af54a8c8abac21f2ba537a7d7ce5c1fe08d6de574ea4f1789218"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_BANDANA_FOREST.png",
+      "type": "png",
+      "size_bytes": 118,
+      "dimensions": {
+        "width": 13,
+        "height": 8
+      },
+      "sha256": "3523d761bf3c48e67c83010f75bf2358afbd2500bf8fe34b84eb85fe123d96c5"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_BANDANA_MIDNIGHT-4x.png",
+      "type": "png",
+      "size_bytes": 201,
+      "dimensions": {
+        "width": 52,
+        "height": 32
+      },
+      "sha256": "4f16937c143548a1cbbfe11ad3ad380966e144843cc97da0bb08e6b65c9e5c9b"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_BANDANA_MIDNIGHT-8x.png",
+      "type": "png",
+      "size_bytes": 259,
+      "dimensions": {
+        "width": 104,
+        "height": 64
+      },
+      "sha256": "5c4bf127c8ce8d389771601d647abf58ad52c6f51b1639e631291b77261f9ba6"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_BANDANA_MIDNIGHT.png",
+      "type": "png",
+      "size_bytes": 99,
+      "dimensions": {
+        "width": 13,
+        "height": 8
+      },
+      "sha256": "87332253c5a5cb728fbcc0737397ad12a6a20ee0887904a413372584156ae8c2"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_BARISTA-4x.png",
+      "type": "png",
+      "size_bytes": 142,
+      "dimensions": {
+        "width": 52,
+        "height": 24
+      },
+      "sha256": "e7de033673156c9d8bf597740b2c0bf6082387b70e5966d74439aa4177b8c2d9"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_BARISTA-8x.png",
+      "type": "png",
+      "size_bytes": 189,
+      "dimensions": {
+        "width": 104,
+        "height": 48
+      },
+      "sha256": "0f59d806430ea1c2bf6ae6becf46aeeb34bbfbc771a4429a376f083819a01405"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_BARISTA.png",
+      "type": "png",
+      "size_bytes": 100,
+      "dimensions": {
+        "width": 13,
+        "height": 6
+      },
+      "sha256": "7a2eddcbcbb13e18e475211548619bb1a0b74df01a5aad2224edf2a39aebb033"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_CHEF-4x.png",
+      "type": "png",
+      "size_bytes": 142,
+      "dimensions": {
+        "width": 52,
+        "height": 24
+      },
+      "sha256": "6b39275e1a3a62ccd98878e3350994293d2107cd7291b5fa348dc317b2250389"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_CHEF-8x.png",
+      "type": "png",
+      "size_bytes": 221,
+      "dimensions": {
+        "width": 104,
+        "height": 48
+      },
+      "sha256": "88b9e037ebc316edcfde96079b0879b4e1700efb5dd57e6ae9b8f3ac117e35fe"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_CHEF.png",
+      "type": "png",
+      "size_bytes": 103,
+      "dimensions": {
+        "width": 13,
+        "height": 6
+      },
+      "sha256": "dd227db388ba16b2f40ad17f26eefcc1c3f99ac6195b099010a88d1ae33bc33d"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_COSMONAUT-4x.png",
+      "type": "png",
+      "size_bytes": 186,
+      "dimensions": {
+        "width": 52,
+        "height": 24
+      },
+      "sha256": "9b7e9bf05efe251b5fadc96bafaba4568b58121bfc73c57d56668d9b04f9f1cf"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_COSMONAUT-8x.png",
+      "type": "png",
+      "size_bytes": 262,
+      "dimensions": {
+        "width": 104,
+        "height": 48
+      },
+      "sha256": "238f7df5638302303f52e73517c9f799aeb1710bd0b83fa9e68d0349f2b53aab"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_COSMONAUT.png",
+      "type": "png",
+      "size_bytes": 127,
+      "dimensions": {
+        "width": 13,
+        "height": 6
+      },
+      "sha256": "76fbac02e9704c242b9b348f964c22e993a4504066d6af5c59fca4ac3f8e8aa2"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_CROWN-4x.png",
+      "type": "png",
+      "size_bytes": 162,
+      "dimensions": {
+        "width": 52,
+        "height": 24
+      },
+      "sha256": "ba3567aaf937c5c364852fb7a71c11d6bd6eb56349d1298259984b12f1e8187a"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_CROWN-8x.png",
+      "type": "png",
+      "size_bytes": 211,
+      "dimensions": {
+        "width": 104,
+        "height": 48
+      },
+      "sha256": "457dba048d7ac2e225441511614ba013e8e97f439883fe33a46c062deb281341"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_CROWN.png",
+      "type": "png",
+      "size_bytes": 99,
+      "dimensions": {
+        "width": 13,
+        "height": 6
+      },
+      "sha256": "1ae70d1c4e7f1c0c402bc0d3223a3a8411d201cc6bcfa67b10c1b67062ac3b8e"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_CYBER-4x.png",
+      "type": "png",
+      "size_bytes": 127,
+      "dimensions": {
+        "width": 52,
+        "height": 24
+      },
+      "sha256": "5727bf3447e4327a6f9eed93700af1d187a3d63eb5bc9f21b1fa467d3b809af2"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_CYBER-8x.png",
+      "type": "png",
+      "size_bytes": 164,
+      "dimensions": {
+        "width": 104,
+        "height": 48
+      },
+      "sha256": "bdd1d40c451a6506656bdc97bcc1dd5926088f308bf1ab47bcd2bfb3246c9ba4"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_CYBER.png",
+      "type": "png",
+      "size_bytes": 91,
+      "dimensions": {
+        "width": 13,
+        "height": 6
+      },
+      "sha256": "d687593476bef85580c3e2220a97cc6a42288fe673b3590ce9e7c5b5635e4ede"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_CYBER_ONI-4x.png",
+      "type": "png",
+      "size_bytes": 223,
+      "dimensions": {
+        "width": 52,
+        "height": 24
+      },
+      "sha256": "c78c53b1a1ecc3c12df57781d918dffd322690c007df69f47779db4cae02e020"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_CYBER_ONI-8x.png",
+      "type": "png",
+      "size_bytes": 295,
+      "dimensions": {
+        "width": 104,
+        "height": 48
+      },
+      "sha256": "901ecae42e1ecc4c559f77b08783c3c846e558c18019304831d151e0d1e5701e"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_CYBER_ONI.png",
+      "type": "png",
+      "size_bytes": 133,
+      "dimensions": {
+        "width": 13,
+        "height": 6
+      },
+      "sha256": "e3ec16ae8e663dd9a13d61fed1f66f812244b557e9e0f6030d45853cdec8e1be"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_DETECTIVE-4x.png",
+      "type": "png",
+      "size_bytes": 148,
+      "dimensions": {
+        "width": 52,
+        "height": 24
+      },
+      "sha256": "173efb1cfe4a0cf7d6ee45de40f860ea4345e2fec5a32b1b4943df854b214136"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_DETECTIVE-8x.png",
+      "type": "png",
+      "size_bytes": 203,
+      "dimensions": {
+        "width": 104,
+        "height": 48
+      },
+      "sha256": "8224cfbb72dbe7d6910f2c2d3d9e4d9b3b5dffd34f4db993726a6c10b0fab969"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_DETECTIVE.png",
+      "type": "png",
+      "size_bytes": 103,
+      "dimensions": {
+        "width": 13,
+        "height": 6
+      },
+      "sha256": "4dced6f9b0a8ff542e20d40e688e35f607c69b85b2056cd9d07e0c4f46c55272"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_GENTLEDOM-4x.png",
+      "type": "png",
+      "size_bytes": 185,
+      "dimensions": {
+        "width": 52,
+        "height": 24
+      },
+      "sha256": "3f906d4ad0e402136ed5fbcde01a8a218124c844e9ee1937ee30a6a9e0b5b88a"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_GENTLEDOM-8x.png",
+      "type": "png",
+      "size_bytes": 261,
+      "dimensions": {
+        "width": 104,
+        "height": 48
+      },
+      "sha256": "6280465c943c756760515484e1aaa7dee5212b136a37fe71a7d6c3a0593b8cac"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_GENTLEDOM.png",
+      "type": "png",
+      "size_bytes": 119,
+      "dimensions": {
+        "width": 13,
+        "height": 6
+      },
+      "sha256": "96bebcaae365bb33a776af585eade64ed439a0a5255232317c5e355187f40fbe"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_SLEEPCAP-4x.png",
+      "type": "png",
+      "size_bytes": 166,
+      "dimensions": {
+        "width": 52,
+        "height": 24
+      },
+      "sha256": "26f114ddf7e41148175134fe3ee68041c0b47be8b3c3b1784c6473a9ba18d8f3"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_SLEEPCAP-8x.png",
+      "type": "png",
+      "size_bytes": 239,
+      "dimensions": {
+        "width": 104,
+        "height": 48
+      },
+      "sha256": "be676cdbd358ddbbec4f449c980f2019d0ee2c4ce3f4fbc032ef08776fc3d03e"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_SLEEPCAP.png",
+      "type": "png",
+      "size_bytes": 119,
+      "dimensions": {
+        "width": 13,
+        "height": 6
+      },
+      "sha256": "3cb8961444f7ab68e71d4e6c430a1a4f7115c3188b1375c3dadebc19f1b2b152"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_STEAMPUNK-4x.png",
+      "type": "png",
+      "size_bytes": 181,
+      "dimensions": {
+        "width": 52,
+        "height": 24
+      },
+      "sha256": "11609394ecd4ecb89b7e01d9acd0aa786a6702775117a2b84b62aca2a3d3e2e4"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_STEAMPUNK-8x.png",
+      "type": "png",
+      "size_bytes": 244,
+      "dimensions": {
+        "width": 104,
+        "height": 48
+      },
+      "sha256": "5f1012831dcad45fd6c1eacd1f7e5084857a5fde8c48542ff17f4df88478ce26"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_STEAMPUNK.png",
+      "type": "png",
+      "size_bytes": 119,
+      "dimensions": {
+        "width": 13,
+        "height": 6
+      },
+      "sha256": "f8c042d85424edcca99469fb516a9cc40058bc33f88684b9203d4afdf9db914d"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_WIZARD-4x.png",
+      "type": "png",
+      "size_bytes": 168,
+      "dimensions": {
+        "width": 52,
+        "height": 24
+      },
+      "sha256": "08e47a07e053dfca41e676c879d112292645609434c57f1dd09b0821ea411fb2"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_WIZARD-8x.png",
+      "type": "png",
+      "size_bytes": 232,
+      "dimensions": {
+        "width": 104,
+        "height": 48
+      },
+      "sha256": "e80c43c902af66178469fd524d18e77071c499ede6ec3c80d37b97a4922cc9c2"
+    },
+    {
+      "relative_path": "wardrobe/masters/HAT_WIZARD.png",
+      "type": "png",
+      "size_bytes": 109,
+      "dimensions": {
+        "width": 13,
+        "height": 6
+      },
+      "sha256": "0dd2ed33e29539fb79a774397d9ad823d31fe52b1eee83c20c51844d1c71e81e"
+    },
+    {
+      "relative_path": "webp/hi-res/16x/TimeDuck-Blink-16x.webp",
+      "type": "webp",
+      "size_bytes": 122,
+      "dimensions": {
+        "width": 208,
+        "height": 160
+      },
+      "sha256": "82a89b16a5d31720b2aea9a1a9a4224aa1fca368d139f642928d8a773e978da7"
+    },
+    {
+      "relative_path": "webp/hi-res/16x/TimeDuck-Celebration-16x.webp",
+      "type": "webp",
+      "size_bytes": 152,
+      "dimensions": {
+        "width": 208,
+        "height": 160
+      },
+      "sha256": "26a02e1999fd5bb50203ef72c6aab78c8352ffaf6e9c9f2d8a623801b8e5cd96"
+    },
+    {
+      "relative_path": "webp/hi-res/16x/TimeDuck-IdleWag-16x.webp",
+      "type": "webp",
+      "size_bytes": 144,
+      "dimensions": {
+        "width": 208,
+        "height": 160
+      },
+      "sha256": "03efa4b2777586ca7996eda9d9766806fd1d4b844a624853c9c80d1e98d02c43"
+    },
+    {
+      "relative_path": "webp/hi-res/16x/TimeDuck-Neutral-16x.webp",
+      "type": "webp",
+      "size_bytes": 142,
+      "dimensions": {
+        "width": 208,
+        "height": 160
+      },
+      "sha256": "11d45f71063ee48f22cb74c3d958f0eb8f5fa1b5ca54f4edca3db89bc9e30b54"
+    },
+    {
+      "relative_path": "webp/hi-res/16x/TimeDuck-PetHappy-16x.webp",
+      "type": "webp",
+      "size_bytes": 146,
+      "dimensions": {
+        "width": 208,
+        "height": 160
+      },
+      "sha256": "b7c55c793036a99371a4675d931949734b00d194f70daeb5efa3d97994bb26c5"
+    },
+    {
+      "relative_path": "webp/hi-res/16x/TimeDuck-Quack-16x.webp",
+      "type": "webp",
+      "size_bytes": 154,
+      "dimensions": {
+        "width": 208,
+        "height": 160
+      },
+      "sha256": "66c87237ff38194c5bb1b4da7bd99722635fa7bdafa9d3fdb09d579b86cfc33b"
+    },
+    {
+      "relative_path": "webp/hi-res/16x/TimeDuck-Sleeping-16x.webp",
+      "type": "webp",
+      "size_bytes": 120,
+      "dimensions": {
+        "width": 208,
+        "height": 160
+      },
+      "sha256": "0c8a54ce1f14a7ecacd9bbadbe8f9b82adccca98f2f86b5e3d084ff715302430"
+    },
+    {
+      "relative_path": "webp/hi-res/16x/TimeDuck-Tactical-16x.webp",
+      "type": "webp",
+      "size_bytes": 130,
+      "dimensions": {
+        "width": 208,
+        "height": 160
+      },
+      "sha256": "dfd8424a0dc03e22d67039a823537ce7a08e5634c91616442451906523e48131"
+    },
+    {
+      "relative_path": "webp/hi-res/16x/TimeDuck-Waddle-16x.webp",
+      "type": "webp",
+      "size_bytes": 150,
+      "dimensions": {
+        "width": 208,
+        "height": 160
+      },
+      "sha256": "f2763d3f6d689fc31f021dce589854f5e8393a038c9bb773478157c11cfb79de"
+    },
+    {
+      "relative_path": "webp/hi-res/16x/TimeDuck-ZeroG-16x.webp",
+      "type": "webp",
+      "size_bytes": 140,
+      "dimensions": {
+        "width": 208,
+        "height": 160
+      },
+      "sha256": "da4c0589bf52c86c940f869f0059b4da90c1ee1825e18156e9af5ebe257287a1"
+    },
+    {
+      "relative_path": "webp/hi-res/2x/TimeDuck-Blink-2x.webp",
+      "type": "webp",
+      "size_bytes": 106,
+      "dimensions": {
+        "width": 26,
+        "height": 20
+      },
+      "sha256": "6c6478a7cf8d4c5a31aad98d6aaffe31c90837eda343fe90e1b69d5738f8e594"
+    },
+    {
+      "relative_path": "webp/hi-res/2x/TimeDuck-Celebration-2x.webp",
+      "type": "webp",
+      "size_bytes": 126,
+      "dimensions": {
+        "width": 26,
+        "height": 20
+      },
+      "sha256": "e105c630eec2a920610bd55026c6e5692f928ea44b4e0ae9797c11d99002e1b2"
+    },
+    {
+      "relative_path": "webp/hi-res/2x/TimeDuck-IdleWag-2x.webp",
+      "type": "webp",
+      "size_bytes": 120,
+      "dimensions": {
+        "width": 26,
+        "height": 20
+      },
+      "sha256": "524607f194aa272812937f4f5522ca1aae161af6fb89e1815003b7571c7ac557"
+    },
+    {
+      "relative_path": "webp/hi-res/2x/TimeDuck-Neutral-2x.webp",
+      "type": "webp",
+      "size_bytes": 118,
+      "dimensions": {
+        "width": 26,
+        "height": 20
+      },
+      "sha256": "805e61a467195ed2ccf93256246e9d21866efa709daffcbf4574a3183bb8c5cb"
+    },
+    {
+      "relative_path": "webp/hi-res/2x/TimeDuck-PetHappy-2x.webp",
+      "type": "webp",
+      "size_bytes": 122,
+      "dimensions": {
+        "width": 26,
+        "height": 20
+      },
+      "sha256": "38b08daf1687e1d076e5b899742b1a8917c324b7b74aa9f5aef94f98480b61b7"
+    },
+    {
+      "relative_path": "webp/hi-res/2x/TimeDuck-Quack-2x.webp",
+      "type": "webp",
+      "size_bytes": 128,
+      "dimensions": {
+        "width": 26,
+        "height": 20
+      },
+      "sha256": "52e149a20f9587baaf2fe59121a5c62a8748a82a8ab1239f578e16a043a5dc94"
+    },
+    {
+      "relative_path": "webp/hi-res/2x/TimeDuck-Sleeping-2x.webp",
+      "type": "webp",
+      "size_bytes": 108,
+      "dimensions": {
+        "width": 26,
+        "height": 20
+      },
+      "sha256": "5a93f17131c5f0d43433b0cd363653f8441df730011f7ac18009d5e3aff7cc33"
+    },
+    {
+      "relative_path": "webp/hi-res/2x/TimeDuck-Tactical-2x.webp",
+      "type": "webp",
+      "size_bytes": 112,
+      "dimensions": {
+        "width": 26,
+        "height": 20
+      },
+      "sha256": "c6e535f5ad27935a4fa88939de74a32a3937442f84d6240b59573e279a836182"
+    },
+    {
+      "relative_path": "webp/hi-res/2x/TimeDuck-Waddle-2x.webp",
+      "type": "webp",
+      "size_bytes": 126,
+      "dimensions": {
+        "width": 26,
+        "height": 20
+      },
+      "sha256": "ee09c8ae4552bbfdc3c58e8b5a158f946d81faf9a749048e568a60188b96bc9b"
+    },
+    {
+      "relative_path": "webp/hi-res/2x/TimeDuck-ZeroG-2x.webp",
+      "type": "webp",
+      "size_bytes": 118,
+      "dimensions": {
+        "width": 26,
+        "height": 20
+      },
+      "sha256": "6180e33e9d2272f22fdb668e54fcf601851fa95cb3eecfa1bd395911106f3db0"
+    },
+    {
+      "relative_path": "webp/hi-res/32x/TimeDuck-Blink-32x.webp",
+      "type": "webp",
+      "size_bytes": 124,
+      "dimensions": {
+        "width": 416,
+        "height": 320
+      },
+      "sha256": "67a860319941f9e863a62f95c70383d3d02a57a74831abaf10a219f05fb3a3c6"
+    },
+    {
+      "relative_path": "webp/hi-res/32x/TimeDuck-Celebration-32x.webp",
+      "type": "webp",
+      "size_bytes": 176,
+      "dimensions": {
+        "width": 416,
+        "height": 320
+      },
+      "sha256": "9a2bea0d047e6ec34ecab713982e971b286435f3263f9020ab2662bb0bf5a6e5"
+    },
+    {
+      "relative_path": "webp/hi-res/32x/TimeDuck-IdleWag-32x.webp",
+      "type": "webp",
+      "size_bytes": 166,
+      "dimensions": {
+        "width": 416,
+        "height": 320
+      },
+      "sha256": "acec3ea371ef5de36192995b95e4b6e12a487d13622155fe9a9e5f9e0b9668b5"
+    },
+    {
+      "relative_path": "webp/hi-res/32x/TimeDuck-Neutral-32x.webp",
+      "type": "webp",
+      "size_bytes": 166,
+      "dimensions": {
+        "width": 416,
+        "height": 320
+      },
+      "sha256": "b9d3d744d9aede1aa62565e97ae257a626b4348fb10b8e22faa745244855a2cf"
+    },
+    {
+      "relative_path": "webp/hi-res/32x/TimeDuck-PetHappy-32x.webp",
+      "type": "webp",
+      "size_bytes": 168,
+      "dimensions": {
+        "width": 416,
+        "height": 320
+      },
+      "sha256": "9b813015e1ea805486ac8d55f9fccaa7176af4ded30b40793b2c205f07c90ed8"
+    },
+    {
+      "relative_path": "webp/hi-res/32x/TimeDuck-Quack-32x.webp",
+      "type": "webp",
+      "size_bytes": 174,
+      "dimensions": {
+        "width": 416,
+        "height": 320
+      },
+      "sha256": "9e144dfa9b0fd46dc9cb4d7b9514677fedcdcd7fe683a07f3cac6baa4b7bf972"
+    },
+    {
+      "relative_path": "webp/hi-res/32x/TimeDuck-Sleeping-32x.webp",
+      "type": "webp",
+      "size_bytes": 146,
+      "dimensions": {
+        "width": 416,
+        "height": 320
+      },
+      "sha256": "9d94158b6d7bc483d422aecf69f2309e97079114e5620f8fc36842831ffad123"
+    },
+    {
+      "relative_path": "webp/hi-res/32x/TimeDuck-Tactical-32x.webp",
+      "type": "webp",
+      "size_bytes": 156,
+      "dimensions": {
+        "width": 416,
+        "height": 320
+      },
+      "sha256": "749137246aa6c3371be71d62c3296e5a76a02655511d88e181ecf307c3400f1f"
+    },
+    {
+      "relative_path": "webp/hi-res/32x/TimeDuck-Waddle-32x.webp",
+      "type": "webp",
+      "size_bytes": 174,
+      "dimensions": {
+        "width": 416,
+        "height": 320
+      },
+      "sha256": "adf4bbafd941856fc932fdd59f82aff70c303f595ba8142a23ed6f9b2b6729c2"
+    },
+    {
+      "relative_path": "webp/hi-res/32x/TimeDuck-ZeroG-32x.webp",
+      "type": "webp",
+      "size_bytes": 164,
+      "dimensions": {
+        "width": 416,
+        "height": 320
+      },
+      "sha256": "6a80b1da2011af4254522a0928b55df3059ee19faf68cf8cb55da145980427a0"
+    },
+    {
+      "relative_path": "webp/hi-res/4x/TimeDuck-Blink-4x.webp",
+      "type": "webp",
+      "size_bytes": 108,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "cff21e945e1c3ff2db7f2da4a1d52dc8f077c0f75dd046eac92e9d3524d272b6"
+    },
+    {
+      "relative_path": "webp/hi-res/4x/TimeDuck-Celebration-4x.webp",
+      "type": "webp",
+      "size_bytes": 142,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "ca2b497c3ae20c292fbbad3692ba579b498b11c1265bc45df7cbf15101ff55fe"
+    },
+    {
+      "relative_path": "webp/hi-res/4x/TimeDuck-IdleWag-4x.webp",
+      "type": "webp",
+      "size_bytes": 136,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "2f7f7f635d4be64b1c776b08a660d9a2a02c86df731a6ab311056f7edeb2e51c"
+    },
+    {
+      "relative_path": "webp/hi-res/4x/TimeDuck-Neutral-4x.webp",
+      "type": "webp",
+      "size_bytes": 134,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "9ed8d11bb1071d7c377240ba05fa58580b99c6cc24138fd3d58c5e4d1b54a808"
+    },
+    {
+      "relative_path": "webp/hi-res/4x/TimeDuck-PetHappy-4x.webp",
+      "type": "webp",
+      "size_bytes": 142,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "ceaecfb004a97e5b062b1607b04f98417bce0605d60a9b71c2f9e7d2dd6d661d"
+    },
+    {
+      "relative_path": "webp/hi-res/4x/TimeDuck-Quack-4x.webp",
+      "type": "webp",
+      "size_bytes": 142,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "25144165136ca98f2e4d40c40fb61dcd702a13a164b5c20345cee8c803861ca3"
+    },
+    {
+      "relative_path": "webp/hi-res/4x/TimeDuck-Sleeping-4x.webp",
+      "type": "webp",
+      "size_bytes": 116,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "b6685f7106bccb985a1835407c442ea55a1ee393927e82c602171e58614fcb97"
+    },
+    {
+      "relative_path": "webp/hi-res/4x/TimeDuck-Tactical-4x.webp",
+      "type": "webp",
+      "size_bytes": 124,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "de23d0ec3d555986992b03a52cca112ad3a8b5f1e794b9fd17fb5ecd4a582988"
+    },
+    {
+      "relative_path": "webp/hi-res/4x/TimeDuck-Waddle-4x.webp",
+      "type": "webp",
+      "size_bytes": 142,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "b6c8021bed2b59ffee4faf9eeb8a305b7418961fb2a8762f5b91452af4bc0d68"
+    },
+    {
+      "relative_path": "webp/hi-res/4x/TimeDuck-ZeroG-4x.webp",
+      "type": "webp",
+      "size_bytes": 130,
+      "dimensions": {
+        "width": 52,
+        "height": 40
+      },
+      "sha256": "67cf3d3f14a0d4a74c69a90abafdb966d9cbf88a766da449c8e8043d8a816607"
+    },
+    {
+      "relative_path": "webp/hi-res/64x/TimeDuck-Blink-64x.webp",
+      "type": "webp",
+      "size_bytes": 178,
+      "dimensions": {
+        "width": 832,
+        "height": 640
+      },
+      "sha256": "0168905152a395d794f772f74af67408a9a862cc7a1e84ce4e3ba085bb39ab40"
+    },
+    {
+      "relative_path": "webp/hi-res/64x/TimeDuck-Celebration-64x.webp",
+      "type": "webp",
+      "size_bytes": 258,
+      "dimensions": {
+        "width": 832,
+        "height": 640
+      },
+      "sha256": "ea599a02829b982862b84d38fdeac6a6620eb23ad6bbbaf4b9a9800dc8a1bf5e"
+    },
+    {
+      "relative_path": "webp/hi-res/64x/TimeDuck-IdleWag-64x.webp",
+      "type": "webp",
+      "size_bytes": 250,
+      "dimensions": {
+        "width": 832,
+        "height": 640
+      },
+      "sha256": "27a3a079ff0994d21573ac1fd1c92efbfdf52eefcf1dac768591d84c03f42594"
+    },
+    {
+      "relative_path": "webp/hi-res/64x/TimeDuck-Neutral-64x.webp",
+      "type": "webp",
+      "size_bytes": 248,
+      "dimensions": {
+        "width": 832,
+        "height": 640
+      },
+      "sha256": "b15ad35c0667781793ad646ab76acff40a521b7d4443873a86bc20d99bf48859"
+    },
+    {
+      "relative_path": "webp/hi-res/64x/TimeDuck-PetHappy-64x.webp",
+      "type": "webp",
+      "size_bytes": 250,
+      "dimensions": {
+        "width": 832,
+        "height": 640
+      },
+      "sha256": "7e4d143b20db2c4f92f0c146af08315680f0fae40b7fa8599fcef50503640e39"
+    },
+    {
+      "relative_path": "webp/hi-res/64x/TimeDuck-Quack-64x.webp",
+      "type": "webp",
+      "size_bytes": 260,
+      "dimensions": {
+        "width": 832,
+        "height": 640
+      },
+      "sha256": "3ec0c9b3beec3873d3e0f347a4ed4f4a2440a4d60d370387f41893bdede27768"
+    },
+    {
+      "relative_path": "webp/hi-res/64x/TimeDuck-Sleeping-64x.webp",
+      "type": "webp",
+      "size_bytes": 220,
+      "dimensions": {
+        "width": 832,
+        "height": 640
+      },
+      "sha256": "09fe7a8c427dc1f246cb2e942dce3c506e90f29b522a7b205879dd034f2d9cd9"
+    },
+    {
+      "relative_path": "webp/hi-res/64x/TimeDuck-Tactical-64x.webp",
+      "type": "webp",
+      "size_bytes": 232,
+      "dimensions": {
+        "width": 832,
+        "height": 640
+      },
+      "sha256": "b956f60e9d2d3c54bbd3250037a2999abd2dbacd48366d8cf0465c9700bba88d"
+    },
+    {
+      "relative_path": "webp/hi-res/64x/TimeDuck-Waddle-64x.webp",
+      "type": "webp",
+      "size_bytes": 258,
+      "dimensions": {
+        "width": 832,
+        "height": 640
+      },
+      "sha256": "7053f644818c8f326e8bdfb317bd732c9abeda674548df8d3b03361856895ead"
+    },
+    {
+      "relative_path": "webp/hi-res/64x/TimeDuck-ZeroG-64x.webp",
+      "type": "webp",
+      "size_bytes": 246,
+      "dimensions": {
+        "width": 832,
+        "height": 640
+      },
+      "sha256": "4c83c51a7bf85d04f591147ba7f5ed22feed3a00bee12d697e788c99f0c04ca2"
+    },
+    {
+      "relative_path": "webp/hi-res/8x/TimeDuck-Blink-8x.webp",
+      "type": "webp",
+      "size_bytes": 118,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "a96944b225ad33be8ad1e01a6722203242fd885edc1dcb205940a477859f9a71"
+    },
+    {
+      "relative_path": "webp/hi-res/8x/TimeDuck-Celebration-8x.webp",
+      "type": "webp",
+      "size_bytes": 152,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "dce3d0f6f8b62bd30a0e095cd3d596199ff34089afdff6a9ba8c6c937d27484c"
+    },
+    {
+      "relative_path": "webp/hi-res/8x/TimeDuck-IdleWag-8x.webp",
+      "type": "webp",
+      "size_bytes": 138,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "f8fd75bd5afc031ddc38dad0e32374d2a1a0811b44ee1604531dbbe94610e30b"
+    },
+    {
+      "relative_path": "webp/hi-res/8x/TimeDuck-Neutral-8x.webp",
+      "type": "webp",
+      "size_bytes": 138,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "7def540046e53e369fd263e00b48dd21435dbc477e72a18262eb9173aa9c4f4c"
+    },
+    {
+      "relative_path": "webp/hi-res/8x/TimeDuck-PetHappy-8x.webp",
+      "type": "webp",
+      "size_bytes": 140,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "286dd0064149581c940bcabfd68388470b9037217c2a97c15ad1b33b4d170d76"
+    },
+    {
+      "relative_path": "webp/hi-res/8x/TimeDuck-Quack-8x.webp",
+      "type": "webp",
+      "size_bytes": 152,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "747d98cd99f935e34ce4e61eefd99e48e715ab89255fbebaf431241e287964da"
+    },
+    {
+      "relative_path": "webp/hi-res/8x/TimeDuck-Sleeping-8x.webp",
+      "type": "webp",
+      "size_bytes": 120,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "018aecac6600882e397f9df0ded031e56fb9b274fa3e622e37fdb622ef8eedef"
+    },
+    {
+      "relative_path": "webp/hi-res/8x/TimeDuck-Tactical-8x.webp",
+      "type": "webp",
+      "size_bytes": 126,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "1a2072354eff00e6ed8937571fadc4b01b55612b48973e282075738b0e82ca74"
+    },
+    {
+      "relative_path": "webp/hi-res/8x/TimeDuck-Waddle-8x.webp",
+      "type": "webp",
+      "size_bytes": 148,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "212865cef68d3d83c067b2692937c4e8eba2cff31ecd937b91911b364cdde566"
+    },
+    {
+      "relative_path": "webp/hi-res/8x/TimeDuck-ZeroG-8x.webp",
+      "type": "webp",
+      "size_bytes": 136,
+      "dimensions": {
+        "width": 104,
+        "height": 80
+      },
+      "sha256": "f872c659cc646a5214f9864ed8d1b591c9ec4c6afe2447da0f874922dc816756"
+    },
+    {
+      "relative_path": "webp/transparent/TimeDuck-Blink.webp",
+      "type": "webp",
+      "size_bytes": 102,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "b98df9597d0a260231d2551190c24cbdf72b5304d3be66ed2cc202c3f9edd480"
+    },
+    {
+      "relative_path": "webp/transparent/TimeDuck-Celebration.webp",
+      "type": "webp",
+      "size_bytes": 120,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "b5cfcc8e32779474b8b2bd4dfa248d103a9745f7edd835e97151c1fff8596f54"
+    },
+    {
+      "relative_path": "webp/transparent/TimeDuck-IdleWag.webp",
+      "type": "webp",
+      "size_bytes": 114,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "95b19dc0c4ffdd0f3fe0c6a4447e958da9e1e5a207de1724fd635e3214fa4891"
+    },
+    {
+      "relative_path": "webp/transparent/TimeDuck-Neutral.webp",
+      "type": "webp",
+      "size_bytes": 114,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "a85b70b6a9ae77f441dcfb3a8475f40f36f74e90dd3cd3889c8645e351cf99c1"
+    },
+    {
+      "relative_path": "webp/transparent/TimeDuck-PetHappy.webp",
+      "type": "webp",
+      "size_bytes": 116,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "f61471bc78af87253dfc10df04ceba6f6ad53e467cddd04b896ed7c984b13323"
+    },
+    {
+      "relative_path": "webp/transparent/TimeDuck-Quack.webp",
+      "type": "webp",
+      "size_bytes": 120,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "68a65f92c5c68023e362ff0c433dfdb83bfcabab31d5f720b1fdbf20c722b55a"
+    },
+    {
+      "relative_path": "webp/transparent/TimeDuck-Sleeping.webp",
+      "type": "webp",
+      "size_bytes": 108,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "2da8b3105d38b4af09f938c00c989eb1f357a532b525e03ffb61673ac7bce77b"
+    },
+    {
+      "relative_path": "webp/transparent/TimeDuck-Tactical.webp",
+      "type": "webp",
+      "size_bytes": 108,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "f0a555fec92a9c4d812239c5faf7d6f56647f124794f7f2191d5245e8184da67"
+    },
+    {
+      "relative_path": "webp/transparent/TimeDuck-Waddle.webp",
+      "type": "webp",
+      "size_bytes": 118,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "9622a02aff492fd7cdf1b119e266b4dc170b31b2f814310b4924703d35d7f2f7"
+    },
+    {
+      "relative_path": "webp/transparent/TimeDuck-ZeroG.webp",
+      "type": "webp",
+      "size_bytes": 112,
+      "dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "sha256": "6cbae92d29045ae6eca2b8f52df08f548cc49ba093556a76c606c9c24990f29d"
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 // MARK: - TimeDuck · Persistence.swift
 // Atomic JSON state persistence with debouncing and safe schema fallback.
+// Wave 8: Added TimeCompanion and Achievement progression persistence.
 
 import Foundation
 
@@ -31,14 +32,30 @@ struct PersistedState: Codable {
     var todayPomos: Int?
     var streakDays: Int?
     var lastActiveDate: String?
+    // Wave 8 Additions
+    var selectedCompanion: String?
+    var unlockedCompanions: [String]?
+    var unlockedAchievements: [String: String]?
+    var breadcrumbsFedTotal: Int?
+    var costumesTried: [Int]?
 }
 
 enum Store {
     private static let isoFormatter = ISO8601DateFormatter()
     private static let saveQueue = DispatchQueue(label: "com.oxalpha.timeduck.persistence", qos: .utility)
+    private static let saveQueueKey: DispatchSpecificKey<Void> = {
+        let key = DispatchSpecificKey<Void>()
+        saveQueue.setSpecific(key: key, value: ())
+        return key
+    }()
     private static var pendingSaveItem: DispatchWorkItem?
+    static var storageDirectoryOverrideURL: URL?
 
     static var storageDirectoryURL: URL {
+        if let override = storageDirectoryOverrideURL {
+            try? FileManager.default.createDirectory(at: override, withIntermediateDirectories: true)
+            return override
+        }
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
         let dir = appSupport.appendingPathComponent("TimeDuck", isDirectory: true)
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
@@ -49,11 +66,9 @@ enum Store {
         storageDirectoryURL.appendingPathComponent("state.json")
     }
 
-    /// Saves state immediately to disk synchronously or asynchronously.
-
     /// Cancels any pending debounced save so that a subsequent immediate save is not overwritten by a stale async item.
     static func cancelPending() {
-        saveQueue.async {
+        syncOnSaveQueue {
             pendingSaveItem?.cancel()
             pendingSaveItem = nil
         }
@@ -70,7 +85,11 @@ enum Store {
         crt: Bool
     ) {
         let st = makeSnapshot(sw: sw, tm: tm, pomo: pomo, stats: stats, mode: mode, theme: theme, hat: hat, crt: crt)
-        writeState(st)
+        syncOnSaveQueue {
+            pendingSaveItem?.cancel()
+            pendingSaveItem = nil
+            writeState(st)
+        }
     }
 
     /// Coalesces rapid updates (e.g. scroll wheel time tweaks, rapid clicks) into a single write.
@@ -90,9 +109,18 @@ enum Store {
             pendingSaveItem?.cancel()
             let item = DispatchWorkItem {
                 writeState(st)
+                pendingSaveItem = nil
             }
             pendingSaveItem = item
             saveQueue.asyncAfter(deadline: .now() + delay, execute: item)
+        }
+    }
+
+    private static func syncOnSaveQueue(_ work: () -> Void) {
+        if DispatchQueue.getSpecific(key: saveQueueKey) != nil {
+            work()
+        } else {
+            saveQueue.sync(execute: work)
         }
     }
 
@@ -106,7 +134,13 @@ enum Store {
         hat: DuckHat,
         crt: Bool
     ) -> PersistedState {
-        PersistedState(
+        // Collect achievement date map
+        var achMap: [String: String] = [:]
+        for (k, v) in AchievementEngine.shared.unlockedTimestamps {
+            achMap[k] = isoFormatter.string(from: v)
+        }
+
+        return PersistedState(
             mode: mode.rawValue,
             swBanked: sw.banked,
             swRunning: sw.isRunning,
@@ -133,7 +167,12 @@ enum Store {
             todayFocusSecs: stats.todayFocusSeconds,
             todayPomos: stats.todayPomodoros,
             streakDays: stats.streakDays,
-            lastActiveDate: stats.lastActiveDateStr
+            lastActiveDate: stats.lastActiveDateStr,
+            selectedCompanion: TimeCompanionRegistry.shared.unlockedCompanionIds.contains(TimeCompanionRegistry.shared.activeCompanionId) ? TimeCompanionRegistry.shared.activeCompanionId.rawValue : TimeCompanionId.timeDuck.rawValue,
+            unlockedCompanions: TimeCompanionRegistry.shared.unlockedCompanionIds.map(\.rawValue),
+            unlockedAchievements: achMap,
+            breadcrumbsFedTotal: AchievementEngine.shared.breadcrumbsFedTotal,
+            costumesTried: Array(AchievementEngine.shared.costumesTried)
         )
     }
 

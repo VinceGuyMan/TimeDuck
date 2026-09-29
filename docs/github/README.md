@@ -1,18 +1,21 @@
 # GitHub presentation assets
 
-All stills and the window GIF are captured from the shipping TimeDuck v1.0.0 build. The social preview is a crop/composite of those captures plus the production app icon — not a substitute render of the duck.
+This folder contains the canonical v1.2.0 repository artwork and release captures. Keep these files in sync with the front page and the GitHub release body.
 
-| File | Source |
+| File | Use |
 | --- | --- |
-| `screenshot-timer.png` | Full window, Timer mode, 01:00, Sleepy Cap |
-| `screenshot-target-reached.png` | Timer complete overlay |
-| `screenshot-mini-hud.png` | Compact HUD, stopwatch running |
-| `demo-timer.gif` | Live window recording |
-| `app-icon.png` | Production icon (1024x1024) |
-| `mascot-showcase.png` | Official mascot specification & personality showcase |
-| `costume-showcase.png` | Official costume lineup (7 hats) |
-| `theme-showcase.png` | Official theme palettes (5 CRT themes) |
-| `social-preview.png` | Canonical composite for repository social image |
-| `animations/` | Official mascot animation GIFs (`anim_blink_cycle.gif`, `anim_tactical_scan.gif`, `anim_waddle_stride.gif`) |
+| `NewHero.gif` | Animated repository header and release hero |
+| `social-preview.png` | Repository social preview image |
+| `app-icon.png` | Production app icon |
+| `screenshot-mini-hud.webp` | MiniHUD release capture |
+| `screenshot-target-reached.webp` | Completion celebration capture |
+| `demo-timer.gif` | Live timer recording |
+| `mascot-showcase.png` | Mascot and personality reference |
+| `costume-showcase.png` | Costume lineup |
+| `theme-showcase.png` | CRT palette lineup |
+| `animations/` | Official mascot animation loops |
+| `roadmap.png` | Public roadmap poster |
 
-After cloning, set Settings → General → Social preview to `docs/github/social-preview.png`.
+The `.webp` captures are the current release references. The older `.png` stills remain available for compatibility with existing links.
+
+To update the repository social preview after publishing, choose `docs/github/social-preview.png` in GitHub repository settings.

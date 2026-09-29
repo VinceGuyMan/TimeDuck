@@ -37,3 +37,14 @@ xcuserdata/
 *~
 .idea/
 .vscode/
+
+# Local Developer Overrides & QA Configs
+.timeduck_dev_unlock
+*.dev.json
+dev_override.json
+.dev_unlock
+developer_override.json
+dev_config.json
+
+# Local compiler artifact
+main

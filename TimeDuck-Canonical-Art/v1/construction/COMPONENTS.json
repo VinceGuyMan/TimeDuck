@@ -1,0 +1,705 @@
+{
+  "version": "1.0.0",
+  "canvas_dimensions": {
+    "width": 13,
+    "height": 10
+  },
+  "components": [
+    {
+      "id": "comp_head_crown_skull",
+      "name": "Head Crown & Skull",
+      "category": "head",
+      "z_order": 50,
+      "parent": "comp_body_core",
+      "bounding_box": {
+        "min_x": 2,
+        "min_y": 0,
+        "max_x": 8,
+        "max_y": 3,
+        "width": 7,
+        "height": 4
+      },
+      "registered_dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "origin": {
+        "x": 2,
+        "y": 0
+      },
+      "pivot": {
+        "x": 6,
+        "y": 9
+      },
+      "file": "components/head/comp_head_crown_skull.png",
+      "sha256": "2cf3390f98af4c3e4a251c3a9302f7443514f1ebeae13c012e5a12799b2f9fce"
+    },
+    {
+      "id": "comp_eye_neutral_open",
+      "name": "Neutral Eye (Open Sclera+Pupil)",
+      "category": "eyes",
+      "z_order": 70,
+      "parent": "comp_head_crown_skull",
+      "bounding_box": {
+        "min_x": 6,
+        "min_y": 2,
+        "max_x": 7,
+        "max_y": 2,
+        "width": 2,
+        "height": 1
+      },
+      "registered_dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "origin": {
+        "x": 6,
+        "y": 2
+      },
+      "pivot": {
+        "x": 6,
+        "y": 9
+      },
+      "file": "components/eyes/comp_eye_neutral_open.png",
+      "sha256": "454a162ba7ede671e79179f214544f02b0ae75927ea987a8e04dadd1069f9e92"
+    },
+    {
+      "id": "comp_eye_pupil",
+      "name": "Eye Pupil (Dark)",
+      "category": "eyes",
+      "z_order": 71,
+      "parent": "comp_eye_neutral_open",
+      "bounding_box": {
+        "min_x": 6,
+        "min_y": 2,
+        "max_x": 6,
+        "max_y": 2,
+        "width": 1,
+        "height": 1
+      },
+      "registered_dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "origin": {
+        "x": 6,
+        "y": 2
+      },
+      "pivot": {
+        "x": 6,
+        "y": 9
+      },
+      "file": "components/eyes/comp_eye_pupil.png",
+      "sha256": "b76b8c1cce5cf467f901b2d911e63116f4168d0d6bf294171ffdd44eebc7284f"
+    },
+    {
+      "id": "comp_eye_sclera",
+      "name": "Eye Catchlight / Sclera (White)",
+      "category": "eyes",
+      "z_order": 72,
+      "parent": "comp_eye_neutral_open",
+      "bounding_box": {
+        "min_x": 7,
+        "min_y": 2,
+        "max_x": 7,
+        "max_y": 2,
+        "width": 1,
+        "height": 1
+      },
+      "registered_dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "origin": {
+        "x": 7,
+        "y": 2
+      },
+      "pivot": {
+        "x": 6,
+        "y": 9
+      },
+      "file": "components/eyes/comp_eye_sclera.png",
+      "sha256": "7c0f69eb8acde87bed8ff5df9cf4ef28cb4f0f15e8032c2191bd71a189856e3e"
+    },
+    {
+      "id": "comp_beak_neutral",
+      "name": "Neutral Beak Bill",
+      "category": "beak",
+      "z_order": 60,
+      "parent": "comp_head_crown_skull",
+      "bounding_box": {
+        "min_x": 8,
+        "min_y": 3,
+        "max_x": 10,
+        "max_y": 4,
+        "width": 3,
+        "height": 2
+      },
+      "registered_dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "origin": {
+        "x": 8,
+        "y": 3
+      },
+      "pivot": {
+        "x": 6,
+        "y": 9
+      },
+      "file": "components/beak/comp_beak_neutral.png",
+      "sha256": "110d50af6802fb12eb688076bae13acd224c28f5768340f73bb2e7e8b66611f4"
+    },
+    {
+      "id": "comp_beak_upper",
+      "name": "Upper Beak Bill",
+      "category": "beak",
+      "z_order": 61,
+      "parent": "comp_beak_neutral",
+      "bounding_box": {
+        "min_x": 8,
+        "min_y": 3,
+        "max_x": 10,
+        "max_y": 3,
+        "width": 3,
+        "height": 1
+      },
+      "registered_dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "origin": {
+        "x": 8,
+        "y": 3
+      },
+      "pivot": {
+        "x": 6,
+        "y": 9
+      },
+      "file": "components/beak/comp_beak_upper.png",
+      "sha256": "b13743bb62fc1fc9465f4815d2586bc23d9a293beb9a04738735b9abfa7b9827"
+    },
+    {
+      "id": "comp_beak_lower",
+      "name": "Lower Beak Bill",
+      "category": "beak",
+      "z_order": 62,
+      "parent": "comp_beak_neutral",
+      "bounding_box": {
+        "min_x": 9,
+        "min_y": 4,
+        "max_x": 10,
+        "max_y": 4,
+        "width": 2,
+        "height": 1
+      },
+      "registered_dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "origin": {
+        "x": 9,
+        "y": 4
+      },
+      "pivot": {
+        "x": 6,
+        "y": 9
+      },
+      "file": "components/beak/comp_beak_lower.png",
+      "sha256": "d077952bd79f57b8b4c74e64d24aa25e677ee13ecd113561240bfd764fce9544"
+    },
+    {
+      "id": "comp_body_core",
+      "name": "Body Core & Chest Torso",
+      "category": "body",
+      "z_order": 20,
+      "parent": null,
+      "bounding_box": {
+        "min_x": 2,
+        "min_y": 4,
+        "max_x": 10,
+        "max_y": 8,
+        "width": 9,
+        "height": 5
+      },
+      "registered_dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "origin": {
+        "x": 2,
+        "y": 4
+      },
+      "pivot": {
+        "x": 6,
+        "y": 9
+      },
+      "file": "components/body/comp_body_core.png",
+      "sha256": "17d5e774a82a850d04633c029d397fe1db85a58fab6b86b02043a65a04ef0200"
+    },
+    {
+      "id": "comp_tail_neutral",
+      "name": "Tail Feathers (Neutral Shading)",
+      "category": "tail",
+      "z_order": 10,
+      "parent": "comp_body_core",
+      "bounding_box": {
+        "min_x": 0,
+        "min_y": 4,
+        "max_x": 2,
+        "max_y": 6,
+        "width": 3,
+        "height": 3
+      },
+      "registered_dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "origin": {
+        "x": 0,
+        "y": 4
+      },
+      "pivot": {
+        "x": 6,
+        "y": 9
+      },
+      "file": "components/tail/comp_tail_neutral.png",
+      "sha256": "d1b676484a116ed6504f86515bf3608cb492580a83de60d569d9ea5abf0ecff2"
+    },
+    {
+      "id": "comp_shading_underbelly",
+      "name": "Underbelly & Wing Crease Shading",
+      "category": "shading",
+      "z_order": 30,
+      "parent": "comp_body_core",
+      "bounding_box": {
+        "min_x": 1,
+        "min_y": 7,
+        "max_x": 4,
+        "max_y": 8,
+        "width": 4,
+        "height": 2
+      },
+      "registered_dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "origin": {
+        "x": 1,
+        "y": 7
+      },
+      "pivot": {
+        "x": 6,
+        "y": 9
+      },
+      "file": "components/shading/comp_shading_underbelly.png",
+      "sha256": "f4824b713e4b778fb40bb13d058677e2c6e9a3c0a6d22f4d75cb91699ed8a3f4"
+    },
+    {
+      "id": "comp_feet_standing",
+      "name": "Standing Feet Pair",
+      "category": "feet",
+      "z_order": 80,
+      "parent": "comp_body_core",
+      "bounding_box": {
+        "min_x": 3,
+        "min_y": 9,
+        "max_x": 8,
+        "max_y": 9,
+        "width": 6,
+        "height": 1
+      },
+      "registered_dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "origin": {
+        "x": 3,
+        "y": 9
+      },
+      "pivot": {
+        "x": 6,
+        "y": 9
+      },
+      "file": "components/feet/comp_feet_standing.png",
+      "sha256": "417d9f5077225a4b44a58a1e34c54a590bafd3be05eb3a2fd6921ee7f38ced03"
+    },
+    {
+      "id": "comp_feet_left",
+      "name": "Back / Left Foot",
+      "category": "feet",
+      "z_order": 81,
+      "parent": "comp_feet_standing",
+      "bounding_box": {
+        "min_x": 3,
+        "min_y": 9,
+        "max_x": 4,
+        "max_y": 9,
+        "width": 2,
+        "height": 1
+      },
+      "registered_dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "origin": {
+        "x": 3,
+        "y": 9
+      },
+      "pivot": {
+        "x": 6,
+        "y": 9
+      },
+      "file": "components/feet/comp_feet_left.png",
+      "sha256": "1bfc44da87673f73476f26e12d42ec8e3c3e070667a0c49281026e614a4e1bf4"
+    },
+    {
+      "id": "comp_feet_right",
+      "name": "Front / Right Foot",
+      "category": "feet",
+      "z_order": 82,
+      "parent": "comp_feet_standing",
+      "bounding_box": {
+        "min_x": 7,
+        "min_y": 9,
+        "max_x": 8,
+        "max_y": 9,
+        "width": 2,
+        "height": 1
+      },
+      "registered_dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "origin": {
+        "x": 7,
+        "y": 9
+      },
+      "pivot": {
+        "x": 6,
+        "y": 9
+      },
+      "file": "components/feet/comp_feet_right.png",
+      "sha256": "854e349f6ba31d0c635fa4ec264829110725465cb3250cd68cd824350c9c8ffa"
+    },
+    {
+      "id": "comp_eye_blink",
+      "name": "Blink Eyelid (Closed)",
+      "category": "eyes",
+      "z_order": 70,
+      "parent": "comp_head_crown_skull",
+      "bounding_box": {
+        "min_x": 6,
+        "min_y": 2,
+        "max_x": 7,
+        "max_y": 2,
+        "width": 2,
+        "height": 1
+      },
+      "registered_dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "origin": {
+        "x": 6,
+        "y": 2
+      },
+      "pivot": {
+        "x": 6,
+        "y": 9
+      },
+      "file": "components/eyes/comp_eye_blink.png",
+      "sha256": "1b2096a031fbab39a0f08eae027c5bfda1e4795e92a704df2f5d0193c1707aea"
+    },
+    {
+      "id": "comp_eye_sleep",
+      "name": "Sleeping Eye (Slumber)",
+      "category": "eyes",
+      "z_order": 70,
+      "parent": "comp_head_crown_skull",
+      "bounding_box": {
+        "min_x": 6,
+        "min_y": 4,
+        "max_x": 8,
+        "max_y": 4,
+        "width": 3,
+        "height": 1
+      },
+      "registered_dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "origin": {
+        "x": 6,
+        "y": 4
+      },
+      "pivot": {
+        "x": 6,
+        "y": 9
+      },
+      "file": "components/eyes/comp_eye_sleep.png",
+      "sha256": "4b5cd59c43d7eee4f38f23bf2edbcc69fa2baf2005b5640ae71a97588ce99af1"
+    },
+    {
+      "id": "comp_eye_side_eye",
+      "name": "Suspicious Side-Eye",
+      "category": "eyes",
+      "z_order": 70,
+      "parent": "comp_head_crown_skull",
+      "bounding_box": {
+        "min_x": 6,
+        "min_y": 2,
+        "max_x": 7,
+        "max_y": 2,
+        "width": 2,
+        "height": 1
+      },
+      "registered_dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "origin": {
+        "x": 6,
+        "y": 2
+      },
+      "pivot": {
+        "x": 6,
+        "y": 9
+      },
+      "file": "components/eyes/comp_eye_side_eye.png",
+      "sha256": "18e71e903467ffc8c880e542c7ab637ce21e0e3ab5bbc5844995b284027148b6"
+    },
+    {
+      "id": "comp_eye_pet_heart",
+      "name": "Pet / Heart Joy Eye",
+      "category": "eyes",
+      "z_order": 70,
+      "parent": "comp_head_crown_skull",
+      "bounding_box": {
+        "min_x": 6,
+        "min_y": 2,
+        "max_x": 7,
+        "max_y": 2,
+        "width": 2,
+        "height": 1
+      },
+      "registered_dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "origin": {
+        "x": 6,
+        "y": 2
+      },
+      "pivot": {
+        "x": 6,
+        "y": 9
+      },
+      "file": "components/eyes/comp_eye_pet_heart.png",
+      "sha256": "33bf883442a14057518ef53e03e33bcc3f974144bc44ba7df3ffb78e6b442072"
+    },
+    {
+      "id": "comp_cheek_blush",
+      "name": "Cheek Blush",
+      "category": "head",
+      "z_order": 55,
+      "parent": "comp_head_crown_skull",
+      "bounding_box": {
+        "min_x": 8,
+        "min_y": 3,
+        "max_x": 8,
+        "max_y": 3,
+        "width": 1,
+        "height": 1
+      },
+      "registered_dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "origin": {
+        "x": 8,
+        "y": 3
+      },
+      "pivot": {
+        "x": 6,
+        "y": 9
+      },
+      "file": "components/head/comp_cheek_blush.png",
+      "sha256": "f2518c9d7ecdd7ba46315584586a1c2b79b3329a2bc12768455f9cfa82f2320f"
+    },
+    {
+      "id": "comp_beak_quack",
+      "name": "Quack Open Beak",
+      "category": "beak",
+      "z_order": 60,
+      "parent": "comp_head_crown_skull",
+      "bounding_box": {
+        "min_x": 8,
+        "min_y": 3,
+        "max_x": 11,
+        "max_y": 4,
+        "width": 4,
+        "height": 2
+      },
+      "registered_dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "origin": {
+        "x": 8,
+        "y": 3
+      },
+      "pivot": {
+        "x": 6,
+        "y": 9
+      },
+      "file": "components/beak/comp_beak_quack.png",
+      "sha256": "ba4747d98363300d02f211aa16f750d7650f57f46820c64433000c0e45a58b3c"
+    },
+    {
+      "id": "comp_tail_wag_lift",
+      "name": "Lifted Tail Wag",
+      "category": "tail",
+      "z_order": 10,
+      "parent": "comp_body_core",
+      "bounding_box": {
+        "min_x": 0,
+        "min_y": 4,
+        "max_x": 2,
+        "max_y": 6,
+        "width": 3,
+        "height": 3
+      },
+      "registered_dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "origin": {
+        "x": 0,
+        "y": 4
+      },
+      "pivot": {
+        "x": 6,
+        "y": 9
+      },
+      "file": "components/tail/comp_tail_wag_lift.png",
+      "sha256": "ac53e72937ba893c3a7e34bcf0612b46187b10b5cfea41b5ef71343ffb23900d"
+    },
+    {
+      "id": "comp_feet_waddle_a",
+      "name": "Waddle Stride Feet (Pose A)",
+      "category": "feet",
+      "z_order": 80,
+      "parent": "comp_body_core",
+      "bounding_box": {
+        "min_x": 4,
+        "min_y": 9,
+        "max_x": 10,
+        "max_y": 9,
+        "width": 7,
+        "height": 1
+      },
+      "registered_dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "origin": {
+        "x": 4,
+        "y": 9
+      },
+      "pivot": {
+        "x": 6,
+        "y": 9
+      },
+      "file": "components/feet/comp_feet_waddle_a.png",
+      "sha256": "3533bc4fb29cab017aac754d8f6ccfa4055087d53010910916bcbb3041921b98"
+    },
+    {
+      "id": "comp_feet_waddle_b",
+      "name": "Waddle Stride Feet (Pose B)",
+      "category": "feet",
+      "z_order": 80,
+      "parent": "comp_body_core",
+      "bounding_box": {
+        "min_x": 2,
+        "min_y": 9,
+        "max_x": 9,
+        "max_y": 9,
+        "width": 8,
+        "height": 1
+      },
+      "registered_dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "origin": {
+        "x": 2,
+        "y": 9
+      },
+      "pivot": {
+        "x": 6,
+        "y": 9
+      },
+      "file": "components/feet/comp_feet_waddle_b.png",
+      "sha256": "704ebb734a1a388cb5a7efa153f13d2486e0cf6370363cbefd1fca932a1e57d4"
+    },
+    {
+      "id": "comp_feet_sit_tucked",
+      "name": "Sitting Loaf Tucked Feet",
+      "category": "feet",
+      "z_order": 80,
+      "parent": "comp_body_core",
+      "bounding_box": {
+        "min_x": 2,
+        "min_y": 9,
+        "max_x": 9,
+        "max_y": 9,
+        "width": 8,
+        "height": 1
+      },
+      "registered_dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "origin": {
+        "x": 2,
+        "y": 9
+      },
+      "pivot": {
+        "x": 6,
+        "y": 9
+      },
+      "file": "components/feet/comp_feet_sit_tucked.png",
+      "sha256": "f0eb6bbac0bf075db60efbb6533cb7051a704084f622e7049e99232c2b8e77a8"
+    },
+    {
+      "id": "comp_feet_sleep_spread",
+      "name": "Deep Sleep Relaxed Feet",
+      "category": "feet",
+      "z_order": 80,
+      "parent": "comp_body_core",
+      "bounding_box": {
+        "min_x": 2,
+        "min_y": 9,
+        "max_x": 9,
+        "max_y": 9,
+        "width": 8,
+        "height": 1
+      },
+      "registered_dimensions": {
+        "width": 13,
+        "height": 10
+      },
+      "origin": {
+        "x": 2,
+        "y": 9
+      },
+      "pivot": {
+        "x": 6,
+        "y": 9
+      },
+      "file": "components/feet/comp_feet_sleep_spread.png",
+      "sha256": "97b44968f3efc4469985fb5c7ca3493b705af5d5945fabb75d2413fa4fc12f82"
+    }
+  ]
+}
